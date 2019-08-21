@@ -1,0 +1,25 @@
+BASIC
+
+[機能]	MSX-Disk BASICに制御を移す.
+
+[書式]	BASIC [プログラム名]
+
+[解説]	プログラム名は,ディスク上のBASICのプログラムの名前です.
+
+	制御は内蔵の MSX-BASICに渡され, プログラム名が指定され
+	た場合には, そのBASICプログラムがロード後,実行されます.
+	RAMディスクが設定されている場合には, BASICでも引続き使
+	用できます.
+
+	BASICのコマンドCALL SYSTEM("command")を使用してMSX-DOS
+	に戻ることができますが, この場合,MSX-DOSで実行可能な任
+	意のコマンドを指定して, それを実行させることができます.
+	コマンドが指定されないと, REBOOT.BATというバッチファイ
+	ルを検索し,あればREBOOT.BATを実行します.
+
+[例]	BASIC
+	MSX-Disk BASICのモードにする.
+
+	BASIC MYPROG.BAS
+	MSX-Disk BASICのモードとし, MYPROG.BASというBASICのプ
+	ログラムをロード後, 実行する.

@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+  <title>Sjasm 0.42 manual - XL2S Entertainment</title>
+  <meta name="title" content="XL2S Entertainment - Software for MSX computers">
+  <meta name="description" content="XL2S Entertainment - Software for MSX computers">
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+  <meta http-equiv="content-style-type" content="text/css">
+  <link rel="stylesheet" href="stijl.css" type="text/css">
+</head>
+  
+<body>
+<div class="titelbalk"><h1>XL2S Entertainment</h1></div>
+<div class="menu">
+<ul><li><i>Sjasm 0.42c manual</i></li>
+</ul>
+</div>
+<div class="navi"><a href="sjasmmanual.html">Sjasm manual</a> > Listing format</div><div class="navi">
+<a href="sjasmman0.html">Introduction</a>
+<a href="sjasmman1.html">Command&nbsp;line&nbsp;options</a>
+<a href="sjasmman2.html">Source&nbsp;Format</a>
+<a href="sjasmman3.html">Labels</a>
+<a href="sjasmman4.html">Expressions</a>
+<a href="sjasmman5.html">Z80&nbsp;Assembly&nbsp;syntax</a>
+<a href="sjasmman6.html">Data&nbsp;definition</a>
+<a href="sjasmman7.html">Output;&nbsp;paging&nbsp;and&nbsp;code&nbsp;parts</a>
+<a href="sjasmman8.html">File&nbsp;handling</a>
+<a href="sjasmman9.html">Conditional&nbsp;assembly</a>
+<a href="sjasmman10.html">Loops</a>
+<a href="sjasmman11.html">Macros</a>
+Listing&nbsp;format
+</div>
+<div class="tekst">
+<h3>Listing format</h3><h5>
+<a href="#s0">Assembly listing</a><br>
+<a href="#s1">Label listing</a><br>
+<a href="#s2">Output listing</a><br>
+</h5>
+<p>The assembly listing shows both the source and the generated code. This can help you debugging the source (or the generated code :). The file also contains a list of symbols and an overview of outputs, pages and code parts, so you can see where Sjasm puts your code.</p>
+<a name="s0"></a><h4>Assembly listing</h4>
+<p>The listing follows the source code, and not the order in which the code parts may be placed in the output.</p>
+<a name="s1"></a><h4>Label listing</h4>
+<p>The label listing lists all labels preceded by the page and the value. If the label is not used, this is marked with an X. Similarly a - (minus) indicates that the code part containing this label was not referenced and not assembled. An S indicates that the label may have had other values during the assembly, because it had its value set with the := command. </p>
+<p>The labels are listed in order of appearance. Temporary labels and labels local to macros or loops are not listed.</p>
+<pre>
+    LABELS
+---------------------------------------
+00:00000080 X emU1
+00:000000C0 X emUb
+00:000000E6 S FT
+00:0000010A   ppInit
+00:0000011B - ppExit
+</pre>
+<a name="s2"></a><h4>Output listing</h4>
+<p>Add more information here :)</p>
+</div>
+<div class="navi">
+<a href="sjasmman0.html">Introduction</a>
+<a href="sjasmman1.html">Command&nbsp;line&nbsp;options</a>
+<a href="sjasmman2.html">Source&nbsp;Format</a>
+<a href="sjasmman3.html">Labels</a>
+<a href="sjasmman4.html">Expressions</a>
+<a href="sjasmman5.html">Z80&nbsp;Assembly&nbsp;syntax</a>
+<a href="sjasmman6.html">Data&nbsp;definition</a>
+<a href="sjasmman7.html">Output;&nbsp;paging&nbsp;and&nbsp;code&nbsp;parts</a>
+<a href="sjasmman8.html">File&nbsp;handling</a>
+<a href="sjasmman9.html">Conditional&nbsp;assembly</a>
+<a href="sjasmman10.html">Loops</a>
+<a href="sjasmman11.html">Macros</a>
+Listing&nbsp;format
+</div>
+<div class="menu">
+<ul><li><i>Sjasm 0.42c manual</i></li>
+</ul>
+</div>
+
+<div class="voetnoot">Copyright 2011 XL2S Entertainment</div>
+<div class="xl2sweblogo"></div>
+</body></html>

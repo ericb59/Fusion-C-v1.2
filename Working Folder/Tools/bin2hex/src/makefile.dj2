@@ -1,0 +1,66 @@
+# makefile.dj2	Makefile for building with DJGPP on MSDOS.
+# Copyright (c) 1997 by Christopher Heng. All rights reserved.
+
+# $Id: makefile.dj2,v 1.2 2005/03/06 05:40:49 chris Exp $
+
+# This makefile requires the GNU make to work (we use the GNU extensions).
+
+# Define the following if you need
+#
+#	DEBUG	to add debugging information, eg "make DEBUG=1 all"
+
+
+ifdef DEBUG
+CDEBUG = -g
+LDEBUG = -g
+else
+CDEBUG = -O2
+LDEBUG = -s
+endif
+
+# programs
+CC = gcc
+CD = cd
+LD = gcc
+MAKE = make
+RM = deltree /y
+
+# flags
+CFLAGS = $(DEFINES) $(TFLAG) $(CDEBUG) -c -Wall
+LDFLAGS = $(LDEBUG)
+
+# directories
+LIBDIR = lib
+
+# filenames
+BINTOH = bintoh.exe
+BINFROMH = binfromh.exe
+
+# lists of filenames
+# Linux, BSD, and other Unix-type systems already have a fully-functioning 
+# and thoroughly-debugged version of getopt()
+OBJS = bin2froh.o
+
+# implicit rules
+.c.o:
+	$(CC) $(CFLAGS) $<
+
+# user visible rules
+all: $(BINTOH) $(BINFROMH)
+
+clean:
+	$(RM) $(OBJS)
+
+clobber: clean
+	$(RM) $(BINTOH) $(BINFROMH)
+
+# real rules
+$(BINTOH): $(OBJS)
+	$(CC) $(LDFLAGS) -o $(BINTOH) $(OBJS)
+
+$(BINFROMH): $(BINTOH)
+	stubify -g $(BINFROMH)
+	stubedit $(BINFROMH) runfile=bintoh
+
+# objects
+bin2froh.o: bin2froh.c config.h version.h

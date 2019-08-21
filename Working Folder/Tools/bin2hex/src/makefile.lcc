@@ -1,0 +1,61 @@
+# makefile.lcc	Makefile for building with LCC-Win32
+# Copyright (c) 2002-2005 by Christopher Heng. All rights reserved.
+
+# $Id: makefile.lcc,v 1.3 2005/03/14 14:18:40 chris Exp $
+
+# WARNING: This makefile produces a version of BINTOH.EXE and BINFROMH.EXE
+# that does *not* handle wildcards on the command line. If you want the
+# executable to handle wildcards, used the supplied executables. I haven't
+# figured out how to get wildcard preprocessing of command line arguments
+# with LCC-Win32 yet. Is there a obj file somewhere that I can link into
+# the application without having to write my own command line globbing routine?
+
+# This makefile assumes the LCC-Win32 default MAKE.EXE
+# It creates a Win32 console application.
+# Unlike the other makefiles, this is a barebones makefile - it was
+# created by the LCC-Win32 IDE, Wedit, with minor modifications.
+
+SRCDIR=.
+CFLAGS=-Ic:\lcc\include -Ilib -O -A
+CC=lcc.exe
+LINKER=lcclnk.exe
+RM = del
+
+OBJS=\
+	bin2froh.obj \
+	getopt.obj
+
+LIBS=
+
+all: bintoh.exe binfromh.exe
+
+clean:
+	$(RM) $(OBJS)
+
+clobber: clean
+	$(RM) bintoh.exe binfromh.exe
+
+bintoh.exe:	$(OBJS)
+	$(LINKER)  -s -subsystem console -o $(SRCDIR)\bintoh.exe $(OBJS) $(LIBS)
+
+binfromh.exe: bintoh.exe
+	copy bintoh.exe binfromh.exe
+
+# Build TOFRODOS.C
+TOFRODOS_C=\
+	$(SRCDIR)\config.h\
+	$(SRCDIR)\version.h\
+
+bin2froh.obj: $(TOFRODOS_C) $(SRCDIR)\bin2froh.c
+	$(CC) -c $(CFLAGS) $(SRCDIR)\bin2froh.c
+
+# Build GETOPT.C
+GETOPT_C=\
+	$(SRCDIR)\lib\getopt.h\
+
+getopt.obj: $(GETOPT_C) $(SRCDIR)\lib\getopt.c
+	$(CC) -c $(CFLAGS) $(SRCDIR)\lib\getopt.c
+
+link:
+	$(LINKER)  -s -subsystem console -o $(SRCDIR)\bintoh.exe $(OBJS) $(LIBS)
+

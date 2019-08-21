@@ -1,0 +1,11 @@
+FUSION-C 1.2                                         EBSOFT - 2019
+
+
+This version comes with the support of GFX9000/V9990 's graphic cartridge, and TCPIP Protocole for the Gr8NET Cartridge
+Both in beta version. There is no documentation available right now. 
+Please take a look inside definition files :
+- fusion-c/header/g9klib.h
+- fusion-c/header/gr8net-tcpip.h
+
+to check all functions available.
+Thank you.

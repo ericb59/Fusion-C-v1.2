@@ -1,0 +1,479 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+  <title>Sjasm 0.42 manual - XL2S Entertainment</title>
+  <meta name="title" content="XL2S Entertainment - Software for MSX computers">
+  <meta name="description" content="XL2S Entertainment - Software for MSX computers">
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+  <meta http-equiv="content-style-type" content="text/css">
+  <link rel="stylesheet" href="stijl.css" type="text/css">
+</head>
+  
+<body>
+<div class="titelbalk"><h1>XL2S Entertainment</h1></div>
+<div class="menu">
+<ul><li><i>Sjasm 0.42c manual</i></li>
+</ul>
+</div>
+<div class="navi"><a href="sjasmmanual.html">Sjasm manual</a> > Macros</div><div class="navi">
+<a href="sjasmman0.html">Introduction</a>
+<a href="sjasmman1.html">Command&nbsp;line&nbsp;options</a>
+<a href="sjasmman2.html">Source&nbsp;Format</a>
+<a href="sjasmman3.html">Labels</a>
+<a href="sjasmman4.html">Expressions</a>
+<a href="sjasmman5.html">Z80&nbsp;Assembly&nbsp;syntax</a>
+<a href="sjasmman6.html">Data&nbsp;definition</a>
+<a href="sjasmman7.html">Output;&nbsp;paging&nbsp;and&nbsp;code&nbsp;parts</a>
+<a href="sjasmman8.html">File&nbsp;handling</a>
+<a href="sjasmman9.html">Conditional&nbsp;assembly</a>
+<a href="sjasmman10.html">Loops</a>
+Macros
+<a href="sjasmman12.html">Listing&nbsp;format</a>
+</div>
+<div class="tekst">
+<h3>Macros</h3><h5>
+<a href="#s0">Text macros without arguments</a><br>
+<a href="#s1">Text macros with arguments</a><br>
+<a href="#s2">Procedure macros</a><br>
+<a href="#s3">Named parameters</a><br>
+<a href="#s4">Numbered parameters</a><br>
+<a href="#s5">Variable amount of parameters</a><br>
+<a href="#s6">Macro functions</a><br>
+<a href="#s7">Recursive macros</a><br>
+<a href="#s8">Labels in macros and loops</a><br>
+</h5>
+<p>Macros are a kind of a search and replace mechanism, so you can avoid writing the same code over and over again. The assembler supports text macros as well as procedure macros and macro functions. Macros are only expanded in the first pass.</p>
+<a name="s0"></a><h4>Text macros without arguments</h4>
+<p>Text macros are defined with the assembler command DEFINE. The syntax for DEFINE without arguments is:</p>
+<pre>
+  DEFINE name replacement
+</pre>
+<p>Text macros simply replace some text with another. The text to replace can be anywhere on a source line, except in strings. So the following code:</p>
+<pre>
+  define kip &quot;hoppa!&quot;
+  byte kip,0,0,kip
+  byte &quot;kip&quot;
+</pre>
+<p>will expand to:</p>
+<pre>
+  byte &quot;hoppa!&quot;,0,0,&quot;hoppa!&quot;
+  byte &quot;kip&quot;
+</pre>
+<p>When the text in a string should also be replaced, you should precede the string with a @:</p>
+<pre>
+  define defbyte byte
+  defbyte &quot;defbyte&quot;
+  defbyte @&quot;defbyte&quot;
+</pre>
+<p>expands to:</p>
+<pre>
+  byte &quot;defbyte&quot;
+  byte &quot;byte&quot;
+</pre>
+<p>When the replacement is omitted, the name is replaced with itself. It is possible to re-define a text macro:</p>
+<pre>
+  define one
+</pre>
+<pre>
+  byte one
+  define one 1
+  byte one
+  define one 2
+  byte one
+</pre>
+<p>expands to:</p>
+<pre>
+  byte one
+  byte 1
+  byte 2
+</pre>
+<p>Macro expansions can be nested and are expanded when they are used, so:</p>
+<pre>
+  define two one+one
+  define one 1
+  byte two
+</pre>
+<p>expands to:</p>
+<pre>
+  byte 1+1
+</pre>
+<p>even though one was not defined at the definition of two. A text macro will not be expanded within itself, so circular references do not result in infinite loops:</p>
+<pre>
+  define one two
+  define two one
+  byte one
+</pre>
+<p>expands to:</p>
+<pre>
+  byte one
+</pre>
+<p>because one will expand to two, which will expand to one, which will not expand again. </p>
+<p>When the expansion should occur at the definition, use XDEFINE:</p>
+<pre>
+  define one 1
+  xdefine two one+one
+  define one 3
+  byte two
+</pre>
+<p>expands to:</p>
+<pre>
+  byte 1+1
+</pre>
+<p>because two has been expanded to 1+1 at the definition.</p>
+<p>The ASSIGN command evaluates an expression at the time the command is processed:</p>
+<pre>
+  ASSIGN name expression
+</pre>
+<p>Like the other text macros without arguments, macros defined with ASSIGN can be redefined later:</p>
+<pre>
+  assign c 1
+  assign c c+1
+</pre>
+<p>Here is an example to show the differences between DEFINE, XDEFINE and ASSIGN:</p>
+<pre>
+  define c 1
+  define c c+1   ; c expands to c+1
+
+  define c 1
+  xdefine c c+1  ; c expands to 1+1
+
+  define c 1
+  assign c c+1   ; c expands to 2
+</pre>
+<p>Text macros can be undefined with the UNDEF command:</p>
+<pre>
+  define kip hop
+  undef kip
+  byte kip
+</pre>
+<p>will expand to:</p>
+<pre>
+  byte kip
+</pre>
+<p>since the macro kip is not defined anymore.</p>
+<p>DEFINE and XDEFINE are case-sensitive, so after DEFINE KIP only KIP will be expanded, kip, Kip, kIP and so on will not. By using IDEFINE or XIDEFINE instead of DEFINE or XDEFINE you define a case-insensitive macro. So:</p>
+<pre>
+  idefine kip 1
+  byte kip,KIP,kiP,Kip
+</pre>
+<p>expands to:</p>
+<pre>
+  byte 1,1,1,1
+</pre>
+<a name="s1"></a><h4>Text macros with arguments</h4>
+<p>The syntax for DEFINE with arguments is:</p>
+<pre>
+  DEFINE name(arguments) replacement
+</pre>
+<p>There should be no space between the macro name and the opening parenthesis ( and when there are more then one arguments, they should be separated by commas. Instead of DEFINE, you can also use IDEFINE, XDEFINE or XIDEFINE, which mean the same as with macros without arguments. For example:</p>
+<pre>
+  idefine hop(param) byte param*param\ word 0
+  Hop(1)
+  Hop(2)
+</pre>
+<p>will expand to:</p>
+<pre>
+  byte 1*1
+  word 0
+  byte 2*2
+  word 0
+</pre>
+<p>You cannot use UNDEF on text macros with arguments, and you cannot re-define them. However, it is possible to overload them, meaning defining a new macro with the same name, but with a different number of arguments:</p>
+<pre>
+  define hop(param) byte param*param
+  define hop(param1, param2) byte param1*param1, param2+param2
+  hop(3)
+  hop(4,5)
+</pre>
+<p>expands to:</p>
+<pre>
+  byte 3*3
+  byte 4*4, 5+5
+</pre>
+<p>When there are multiple parameters, they should be separated by commas. When you need to pass a comma as part of a parameter, the parameter (or just the comma) should be surrounded by { and } (braces). Braces are filtered out.</p>
+<p>To expand to multiple lines, the \ (backslash) operator can be used:</p>
+<pre>
+  define bywo(p1,p2) byte p1\ word p2
+  bywo(40h,8000h)
+</pre>
+<p>will eventually result in:</p>
+<pre>
+  byte 40h
+  word 8000h
+</pre>
+<a name="s2"></a><h4>Procedure macros</h4>
+<p>Procedure macros can be used like assembler commands or assembler mnemonics and can expand to multiple lines. The syntax is:</p>
+<pre>
+  MACRO name parameters
+  statements
+  ENDMACRO
+</pre>
+<p>Macros are case-sensitive, unless you use IMACRO instead of MACRO.</p>
+<p>An example without parameters:</p>
+<pre>
+  macro BDOS
+  call 5
+  endmacro
+
+  ld c,5
+  BDOS
+</pre>
+<p>results in:</p>
+<pre>
+  ld c,5
+  call 5
+</pre>
+<p>If you define a macro with the same name as an assembler command or a Z80 mnemonic, you can use @ (at) to not invoke the macro:</p>
+<pre>
+  macro ccf
+  byte 0
+  endmacro
+
+  ccf   ; macro
+  @ccf  ; the Z80 instruction
+</pre>
+<a name="s3"></a><h4>Named parameters</h4>
+<p>Macro parameters exist in two kinds: named parameters and numbered parameters. The named parameters will be explained first.</p>
+<p>An example with one named parameter:</p>
+<pre>
+  macro BDOS fun       ; macro definition
+  ld c,fun
+  call 5
+  endmacro
+  BDOS 5               ; macro call
+</pre>
+<p>expands to:</p>
+<pre>
+  ld c,5
+  call 5
+</pre>
+<p>With : (colon) you can specify defaults for omitted parameters.</p>
+<pre>
+  macro BDOS fun:5
+  ld c,fun
+  call 5
+  endmacro
+  BDOS
+</pre>
+<p>expands to:</p>
+<pre>
+  ld c,5
+  call 5
+</pre>
+<p>When there are multiple parameters, they should be separated by commas. When you need to pass a comma as part of a parameter, the parameter (or just the comma) should be surrounded by { and } (braces). This way you can also include commas in the default:</p>
+<pre>
+  macro string param: { &quot;default&quot;,0 }
+  byte param
+  endmacro
+  string { &quot;mooi weer&quot;,0,0 }
+  string
+</pre>
+<p>expands to:</p>
+<pre>
+  byte &quot;mooi weer&quot;,0,0
+  byte &quot;default&quot;,0
+</pre>
+<p>When you define the last parameter to be 'greedy' with + (plus), all following parameters will be put into the last one, including the commas:</p>
+<pre>
+  macro string param+
+  byte param
+  endmacro
+  string &quot;kip&quot;,0,34
+</pre>
+<p>expands to:</p>
+<pre>
+  byte &quot;kip&quot;,0,34
+</pre>
+<p>Of course it is also possible to give the greedy parameter a default:</p>
+<pre>
+  macro string num:32, str+:&quot;default&quot;,0
+  byte num, str
+  endmacro
+</pre>
+<a name="s4"></a><h4>Numbered parameters</h4>
+<p>Instead of naming the parameters it is also possible to define the number of parameters:</p>
+<pre>
+  macro dbyte 2
+  byte @1, @2
+  endmacro
+</pre>
+<p>defines a macro dbyte which expects two parameters. Use @1 to refer to the first parameter, @2 to the second and so on. It is also possible to define a range:</p>
+<pre>
+  macro dbyte 2..3
+  byte @1, @2
+  ifnb @3
+  byte @3
+  endif
+  endmacro
+</pre>
+<p>This defines a macro that needs two parameters and takes at most three. The IFNB statement is used to check if the third parameter is used. It is possible to define defaults for omitted parameters:</p>
+<pre>
+  macro string 0..1 &quot;Hoppa!&quot;
+  byte @1
+  endmacro
+</pre>
+<p>And the last numbered parameter can be made greedy:</p>
+<pre>
+  macro string 0..1+ &quot;Hoppa!&quot;,0
+  byte @1
+  endmacro
+</pre>
+<p>It is also possible to combine named and numbered parameters, by putting a comma between them:</p>
+<pre>
+  macro onzin name:&quot;Kees&quot;, 3
+  byte name,0
+  byte @1, @2, @3
+  endmacro
+</pre>
+<p>Just like text macros, procedure macros can be overloaded:</p>
+<pre>
+  macro out9
+  xor a
+  endmacro
+
+  macro out9 reg
+  ld a,reg
+  endmacro
+
+  macro out9 reg1,reg2
+  out9 reg1
+  out9 reg2
+  endmacro
+</pre>
+<a name="s5"></a><h4>Variable amount of parameters</h4>
+<p>You can use * (asterisk) to define macros with many parameters, or when the number of parameters is not known at the time of definition.</p>
+<pre>
+  macro atleastone 1..*
+  byte @0
+  endmacro
+  macro anynumber *
+  byte @0
+  endmacro
+</pre>
+<p>@0 Contains the number of numbered arguments passed to the macro. You can use the REPEAT statement together with ROTATE to iterate through the arguments:</p>
+<pre>
+  macro cbyte 1..*
+  byte @0
+  repeat @0
+  byte @1
+  rotate 1
+  endrepeat
+  endmacro
+</pre>
+<p>ROTATE rotates the arguments to the left by the given number of places. So rotate 1 will rotate the value of @2 to @1, @3 to @2 and so on. The last value will get the value of @1. If the argument to ROTATE is negative, the arguments are rotated to the right.</p>
+<a name="s6"></a><h4>Macro functions</h4>
+<p>Macro functions are a bit like defined text macros. The call is replaced with the returned text. Use the EXITMACRO command to return text:</p>
+<pre>
+  macro defined name
+  ifdef name
+  exitmacro -1
+  else
+  exitmacro 0
+  endif
+  endmacro
+</pre>
+<p>You could also use EXITMACRO in a macro procedure; it just stops the macro expansion and does not return a value.</p>
+<p>When invoking or calling a macro function you must enclose the argument list in parentheses, even when there are no arguments. There are no spaces allowed between the name and the opening parentheses:</p>
+<pre>
+  if defined(DEBUG) or not defined(HOPPA)
+  byte 0
+  endif
+</pre>
+<p>If you want to return the result of an expression and not the expression itself as text, use XEXITMACRO:</p>
+<pre>
+  macro twotimes 1
+  xexitmacro @1+@1
+  endmacro
+
+lab=2
+  byte twotimes(lab)
+</pre>
+<p>this expands to: byte 4</p>
+<p>and not to: byte lab+lab</p>
+<p>It is not possible to generate code from macro functions; all assembler instructions and data definitions are ignored.</p>
+<a name="s7"></a><h4>Recursive macros</h4>
+<p>Normally Sjasm will not expand a macro within itself. If you want to expand a macro recursively, use macro.recursive:</p>
+<pre>
+  macro.recursive HOP count
+  if count
+    byte count
+    HOP count-1
+  endif
+  endmacro
+
+  HOP 3
+</pre>
+<p>this expands to:</p>
+<pre>
+   byte 3
+   byte 2
+   byte 1
+</pre>
+<p>Most of the time it is easier to just use a loop.</p>
+<a name="s8"></a><h4>Labels in macros and loops</h4>
+<p>When you define a local label inside a macro, the label will be local to the macro, each time it is expanded. You must use @ to escape from this behavior, if desirable:</p>
+<pre>
+  macro test
+kip0
+.kip1
+@.kip2
+  endmacro
+
+  module main
+hoi
+  test
+</pre>
+<p>This defines the following labels: main.hoi, main.kip0, 0&gt;kip1, main.kip0.kip2. As you can see labels local to macros get the form number&gt;labelname. After the first @ the system behaves the same as labels outside macros.</p>
+<p>To access a label that has the same name that is defined in an outside macro or loop, use .@ in front of a label instead of . (dot). The number of @s denotes the number of nesting levels:</p>
+<pre>
+  macro test
+.hop              ; hop 1
+  repeat 2
+  call .hop       ; hop 2
+  jp .@hop        ; hop 1
+  call .@@hop     ; hop 0
+.hop              ; hop 2
+  endrepeat
+  endmacro
+
+  macro test2
+.hop              ; hop 0
+  test
+  endmacro
+
+  test2
+</pre>
+<p>To set a new value to a label defined outside a loop (or macro), you should also use .@:</p>
+<pre>
+  macro test 1
+.teller:=0
+  repeat $1
+.@teller:=.teller+1
+  byte .teller
+  endrepeat
+  endmacro
+</pre>
+<p>If you would use just .teller, you would define a new label, local to the repeat loop.</p>
+</div>
+<div class="navi">
+<a href="sjasmman0.html">Introduction</a>
+<a href="sjasmman1.html">Command&nbsp;line&nbsp;options</a>
+<a href="sjasmman2.html">Source&nbsp;Format</a>
+<a href="sjasmman3.html">Labels</a>
+<a href="sjasmman4.html">Expressions</a>
+<a href="sjasmman5.html">Z80&nbsp;Assembly&nbsp;syntax</a>
+<a href="sjasmman6.html">Data&nbsp;definition</a>
+<a href="sjasmman7.html">Output;&nbsp;paging&nbsp;and&nbsp;code&nbsp;parts</a>
+<a href="sjasmman8.html">File&nbsp;handling</a>
+<a href="sjasmman9.html">Conditional&nbsp;assembly</a>
+<a href="sjasmman10.html">Loops</a>
+Macros
+<a href="sjasmman12.html">Listing&nbsp;format</a>
+</div>
+<div class="menu">
+<ul><li><i>Sjasm 0.42c manual</i></li>
+</ul>
+</div>
+
+<div class="voetnoot">Copyright 2011 XL2S Entertainment</div>
+<div class="xl2sweblogo"></div>
+</body></html>

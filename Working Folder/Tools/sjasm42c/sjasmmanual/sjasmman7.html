@@ -1,0 +1,297 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+  <title>Sjasm 0.42 manual - XL2S Entertainment</title>
+  <meta name="title" content="XL2S Entertainment - Software for MSX computers">
+  <meta name="description" content="XL2S Entertainment - Software for MSX computers">
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+  <meta http-equiv="content-style-type" content="text/css">
+  <link rel="stylesheet" href="stijl.css" type="text/css">
+</head>
+  
+<body>
+<div class="titelbalk"><h1>XL2S Entertainment</h1></div>
+<div class="menu">
+<ul><li><i>Sjasm 0.42c manual</i></li>
+</ul>
+</div>
+<div class="navi"><a href="sjasmmanual.html">Sjasm manual</a> > Output; paging and code parts</div><div class="navi">
+<a href="sjasmman0.html">Introduction</a>
+<a href="sjasmman1.html">Command&nbsp;line&nbsp;options</a>
+<a href="sjasmman2.html">Source&nbsp;Format</a>
+<a href="sjasmman3.html">Labels</a>
+<a href="sjasmman4.html">Expressions</a>
+<a href="sjasmman5.html">Z80&nbsp;Assembly&nbsp;syntax</a>
+<a href="sjasmman6.html">Data&nbsp;definition</a>
+Output;&nbsp;paging&nbsp;and&nbsp;code&nbsp;parts
+<a href="sjasmman8.html">File&nbsp;handling</a>
+<a href="sjasmman9.html">Conditional&nbsp;assembly</a>
+<a href="sjasmman10.html">Loops</a>
+<a href="sjasmman11.html">Macros</a>
+<a href="sjasmman12.html">Listing&nbsp;format</a>
+</div>
+<div class="tekst">
+<h3>Output; paging and code parts</h3><h5>
+<a href="#s0">Output</a><br>
+<a href="#s1">Pages</a><br>
+<a href="#s2">Code parts</a><br>
+<a href="#s3">Overlapping code parts</a><br>
+<a href="#s4">File updating</a><br>
+<a href="#s5">Dos .COM file example</a><br>
+<a href="#s6">Basic .BIN file example</a><br>
+<a href="#s7">.ROM file example</a><br>
+</h5>
+<p>Sjasm can output multiple files from one source file. Every output has one or more pages, and every page has one or more code parts.</p>
+<a name="s0"></a><h4>Output</h4>
+<p>With OUTPUT it is possible to create multiple files from one source. All following instructions will be assembled to this file.</p>
+<p>The syntax is:</p>
+<pre>
+OUTPUT filename
+</pre>
+<p>If the filename contains spaces, you'd better use some quotes.</p>
+<p>Example:</p>
+<pre>
+  output file1.dat
+  byte &quot;first file&quot;
+
+  output file2.dat
+  byte &quot;second file&quot;
+</pre>
+<p>This will create two files: file1.dat and file2.dat.</p>
+<a name="s1"></a><h4>Pages</h4>
+<p>To use a page, it has to be defined first with DEFPAGE:</p>
+<pre>
+DEFPAGE page [, origin [, size]]
+</pre>
+<p>The first argument specifies a page or a page range. There can be only 256 pages, numbered from 0 to 255. The second argument is optional and specifies the origin address of the page. You can use * as origin if you want the page to start where the previous one ended. The last argument is also optional and specifies the size. You can use * as size to make the page just big enough to fit all code. When the optional arguments are omitted, the arguments from the previous page definition are used.</p>
+<pre>
+  defpage 0, 0, *        ; page 0, org 0, any size
+  defpage 1, 4000h,4000h ; page 1, org 4000h, size: 16384 bytes
+  defpage 2..7           ; page 2 until (including) 7, org 4000h, s: 16384
+</pre>
+<p>To select a page, use the PAGE command; all following code and data will be put into the selected page.</p>
+<pre>
+  page 1
+  nop
+  page 2
+  nop
+</pre>
+<p>It is also possible to specify more pages, or page ranges. If you specify more than one page, Sjasm will try the specified pages until the part fits.</p>
+<pre>
+ page 1,3,4    ; put the following code in page 1,3 or 4
+ page 4..6     ; put the following code in page 4,5 or 6
+ page 1,3..5,7 ; put the following code in page 1,3,4,5 or 7
+</pre>
+<a name="s2"></a><h4>Code parts</h4>
+<p>You can define the parts to fill the pages with, with the CODE command:</p>
+<pre>
+CODE [?], [@ address], [# alignment], [PAGE page]
+</pre>
+<p>Just CODE without parameters will put the following code and data somewhere in the current page.</p>
+<p>The ? indicates that the following part can be omitted when none of the labels in it are referenced. So, if in the following example HaveFun is never called, the part is not assembled:</p>
+<pre>
+  code ?
+HaveFun
+  xor a
+  ret
+</pre>
+<p>Normally the code parts are sorted by size and then put into the page, the biggest part first. When you give an address, the part will be put at that address. When you give an address range, the first byte of the part will be put into that range.</p>
+<pre>
+  code               ; part sorted by size
+  code @ 100h        ; part will be put at 100h
+  code @ 100h..1000h ; part will be put in the given range
+</pre>
+<p>Because of the pre-processor it is a good idea to always keep a space between the @ and the following address.</p>
+<p>With the #, the start address of the part can be aligned.</p>
+<pre>
+  code # 2           ; word align
+</pre>
+<p>When you specify ## as alignment, the part will not cross a 256 bytes border. You can use this to make sure you can use 8 bit address calculations because the high byte will not change.</p>
+<p>The part will be put into the current page, as specified with the PAGE command. To override this default you can specify pages, or page ranges, to put the part in. If you specify more than one page, Sjasm will try the specified pages until the part fits.</p>
+<pre>
+  code                ; put into the last specified page
+  code page 1         ; put part into page 1
+  code page 1..2      ; put part into page 1 or page 2
+  code page 4,6..8,2  ; put part into page 4, 6, 7, 8 or 2.
+</pre>
+<p>To find out in which page the code has been put, you can use the :&lt;label&gt; operator, which returns the page of the label:</p>
+<pre>
+  code page 1..3
+hop
+  dz &quot;Hop!&quot;
+
+  code
+printhop
+  ld a,:hop
+  call selectpage
+  ld hl,hop
+  jp print
+</pre>
+<p>Of course you can combine these parameters by separating them with commas:</p>
+<pre>
+  code @ 8000h, page 2
+  code @ 100h..300h, # 64, page 0
+</pre>
+<p>When you want to know how much room the parts take in the page, you use the ::&lt;page number&gt; operator. The :: operator gives the highest address subtracted by the origin of the page.</p>
+<a name="s3"></a><h4>Overlapping code parts</h4>
+<p>Normally, code parts cannot overlap. However, there are code parts that can overlap other parts, but not each other:</p>
+<pre>
+CODE ! address
+</pre>
+<p>So in the following example, the output will contain 'KIP':</p>
+<pre>
+  defpage 0
+  page 0
+
+  code @ 0
+  byte &quot;KOP&quot;
+
+  code ! 1
+  byte &quot;I&quot;
+</pre>
+<a name="s4"></a><h4>File updating</h4>
+<p>Sjasm can also be used to update existing files. To do this, open the file with UPDATE instead of OUTPUT. After that you can use code parts to specify which parts of the file should be updated:</p>
+<pre>
+  defpage 0
+  page 0
+
+  update kip.txt
+
+  code @ 1
+  byte &quot;O&quot;
+</pre>
+<p>If the file kip.txt contained &quot;KIP&quot;, it will contain &quot;KOP&quot; afterwards.</p>
+<p>You can also include a file with INCBIN, and overwrite parts of it with CODE! parts:</p>
+<pre>
+  defpage 0
+  page 0
+
+  code @ 0
+  incbin kip.txt
+
+  code ! 1
+  byte &quot;O&quot;
+</pre>
+<p>If the file kip.txt contained &quot;KIP&quot;, the output will contain &quot;KOP&quot;. This way the file kip.txt will stay intact.</p>
+<a name="s5"></a><h4>Dos .COM file example</h4>
+<p>It is necessary to use 'code @ 100h' to make sure the entry code is assembled to the right place.</p>
+<pre>
+  output test.com
+
+  defpage 0,100h
+
+  page 0
+
+  code @ 100h
+entry
+  ld de,txthelloworld
+  ld c,9h
+  call 5
+  ret
+
+  code
+txthelloworld
+  byte &quot;Hello world!$&quot;
+
+  end
+</pre>
+<a name="s6"></a><h4>Basic .BIN file example</h4>
+<p>Here we put the header in a separate page. Since that page has only one code part, it is not necessary to specify where to put it. Note how we use the :: operator to calculate the end address.</p>
+<pre>
+  output test.bin
+
+  defpage 0
+  defpage 1,9000h
+
+  page 0
+
+  code
+binheader
+  byte 0feh
+  word 9000h
+  word 9000h+(::1)-1
+  word entry
+
+  page 1
+
+  code
+entry
+  ld hl,txthelloworld
+  call print
+  ret
+
+  code
+print
+  ld a,(hl)
+  inc hl
+  or a
+  ret z
+  out (152),a
+  jr print
+
+  code
+txthelloworld
+  dz &quot;Hello world!&quot;
+
+  end
+</pre>
+<a name="s7"></a><h4>.ROM file example</h4>
+<p>Of course Sjasm does not generate any code by itself, so you still have to select the right slots and map the right pages and so on yourself. Which this example does not do :)</p>
+<pre>
+  output test.rom
+
+  defpage 0,4000h,16384
+  defpage 1,8000h
+
+  page 0
+
+  code @ 4000h
+romheader
+  byte &quot;AB&quot;
+  word init
+  word 0,0,0,0,0,0
+
+  code
+init
+  ld hl,txthelloworld
+  call print
+  ret
+
+  code
+print
+  ld a,(hl)
+  inc hl
+  or a
+  ret z
+  out (152),a
+  jr print
+
+  code
+txthelloworld
+  dz &quot;Hello world!&quot;
+
+  end
+</pre>
+</div>
+<div class="navi">
+<a href="sjasmman0.html">Introduction</a>
+<a href="sjasmman1.html">Command&nbsp;line&nbsp;options</a>
+<a href="sjasmman2.html">Source&nbsp;Format</a>
+<a href="sjasmman3.html">Labels</a>
+<a href="sjasmman4.html">Expressions</a>
+<a href="sjasmman5.html">Z80&nbsp;Assembly&nbsp;syntax</a>
+<a href="sjasmman6.html">Data&nbsp;definition</a>
+Output;&nbsp;paging&nbsp;and&nbsp;code&nbsp;parts
+<a href="sjasmman8.html">File&nbsp;handling</a>
+<a href="sjasmman9.html">Conditional&nbsp;assembly</a>
+<a href="sjasmman10.html">Loops</a>
+<a href="sjasmman11.html">Macros</a>
+<a href="sjasmman12.html">Listing&nbsp;format</a>
+</div>
+<div class="menu">
+<ul><li><i>Sjasm 0.42c manual</i></li>
+</ul>
+</div>
+
+<div class="voetnoot">Copyright 2011 XL2S Entertainment</div>
+<div class="xl2sweblogo"></div>
+</body></html>

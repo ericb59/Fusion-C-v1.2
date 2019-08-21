@@ -1,0 +1,220 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+  <title>Sjasm 0.42 manual - XL2S Entertainment</title>
+  <meta name="title" content="XL2S Entertainment - Software for MSX computers">
+  <meta name="description" content="XL2S Entertainment - Software for MSX computers">
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+  <meta http-equiv="content-style-type" content="text/css">
+  <link rel="stylesheet" href="stijl.css" type="text/css">
+</head>
+  
+<body>
+<div class="titelbalk"><h1>XL2S Entertainment</h1></div>
+<div class="menu">
+<ul><li><i>Sjasm 0.42c manual</i></li>
+</ul>
+</div>
+<div class="navi"><a href="sjasmmanual.html">Sjasm manual</a> > Data definition</div><div class="navi">
+<a href="sjasmman0.html">Introduction</a>
+<a href="sjasmman1.html">Command&nbsp;line&nbsp;options</a>
+<a href="sjasmman2.html">Source&nbsp;Format</a>
+<a href="sjasmman3.html">Labels</a>
+<a href="sjasmman4.html">Expressions</a>
+<a href="sjasmman5.html">Z80&nbsp;Assembly&nbsp;syntax</a>
+Data&nbsp;definition
+<a href="sjasmman7.html">Output;&nbsp;paging&nbsp;and&nbsp;code&nbsp;parts</a>
+<a href="sjasmman8.html">File&nbsp;handling</a>
+<a href="sjasmman9.html">Conditional&nbsp;assembly</a>
+<a href="sjasmman10.html">Loops</a>
+<a href="sjasmman11.html">Macros</a>
+<a href="sjasmman12.html">Listing&nbsp;format</a>
+</div>
+<div class="tekst">
+<h3>Data definition</h3><h5>
+<a href="#s0">Define space</a><br>
+<a href="#s1">Definition with offset</a><br>
+<a href="#s2">Character mapping</a><br>
+<a href="#s3">Structures</a><br>
+</h5>
+<p>These commands define initialized data:</p>
+<pre>
+DB    8-bit constants and strings
+DC    strings; every last character of a string will have bit 7 set
+DD    32-bit constants
+DT    24-bit constants
+DW    16-bit constants
+DZ    strings; each string will be zero terminated
+BYTE  8-bit constants and strings
+WORD  16-bit constants
+DWORD 32-bit constants
+DEFB  8-bit constants and strings
+DEFM  8-bit constants and strings
+DEFW  16-bit constants
+DEFD  32-bit constants
+</pre>
+<p>The syntax is:</p>
+<pre>
+[label] [[repeatcount]] COMMAND [expr][,expr]... [comment]
+</pre>
+<p>where expr is an expression, constant or label where constants are allowed, or a string where strings are allowed.</p>
+<p>Examples:</p>
+<pre>
+  db 0x55
+  db 'a'-2, &quot;hoppa!&quot;
+  db 2*7
+  dc &quot;kip&quot;,&quot;abc&quot;
+  dw &quot;a&quot;
+  dz &quot;kip&quot;,&quot;abc&quot;
+</pre>
+<a name="s0"></a><h4>Define space</h4>
+<p>To define a space you can use DS (or BLOCK or |DEFS, there is no difference). The first argument specifies the number of bytes to fill with the second argument. When the second argument is omitted, zero is used:</p>
+<pre>
+  ds 10     ; byte 0,0,0,0,0,0,0,0,0,0
+  ds 5,3    ; byte 3,3,3,3,3
+  block 2   ; byte 0,0
+</pre>
+<a name="s1"></a><h4>Definition with offset</h4>
+<p>The following commands add an offset to the specified bytes or string: ABYTE, ABYTEC and ABYTEZ. ABYTEC and ABYTEZ work similar to DC and DZ, and allow only strings. The syntax is:</p>
+<pre>
+[label] [repeatcount] ABYTE [offset] [expr][,expr]... [comment]
+</pre>
+<p>Examples:</p>
+<pre>
+  abyte 1 0,1,2,3  ; byte 1,2,3,4
+  abytez 3 &quot;abc&quot;   ; byte &quot;def&quot;,0
+</pre>
+<a name="s2"></a><h4>Character mapping</h4>
+<p>It is also possible to define a mapping table with ASCMAP and use that to translate the strings using the ASC command. This way it is possible to map any character to any other. The first argument to ASCMAP defines a character or a character range; the second argument defines an expression telling how to translate the characters. In this expression $ specifies the character currently being translated.</p>
+<pre>
+  ascmap 'a'..'z', $+1         ; a=&gt;b, b=&gt;c, c=&gt;d, ...
+  ascmap 'a'..'z', $+'A'-'a'   ; make uppercase
+  ascmap '*', 'a'              ; translate * to a
+</pre>
+<p>Another, less flexible, way is to specify the range of characters to translate, the first character to translate to and optionally a step increment. The increment is one if the step increment is omitted.</p>
+<pre>
+  ascmap '0'..'9', =&gt; 0        ; 48 ('0') =&gt;0, 49=&gt;1, ...
+  ascmap 'a'..'z', =&gt; 'A'      ; make uppercase
+  ascmap 'a'..'z', =&gt; 65,2     ; a=&gt;A, b=&gt;C, c=&gt;E, ...
+  ascmap 'a'..'z', =&gt; 'z',-1   ; a=&gt;z, b=&gt;y, c=&gt;x, d=&gt;w, ...
+</pre>
+<p>Instead of ascmap 0..255, $ you can use ASCMAP.RESET to get the default 1:1 mapping back. You can use ASCMAP.CLEAR to get all characters translate to 0.</p>
+<p>To use the defined mapping table, use the ASC command instead of DB:</p>
+<pre>
+  asc &quot;de kip&quot;,13,&quot;a&quot;+12
+</pre>
+<p>Likewise ASCC and ASCZ work like DC and DZ:</p>
+<pre>
+  ascz &quot;de kip&quot;       ; only strings allowed
+</pre>
+<a name="s3"></a><h4>Structures</h4>
+<p>Structures can be used to define data structures in memory more easily. A structure is a group of fields that can have different sizes. When you declare a structure, Sjasm will create labels with the offsets of the fields, so you could use a structure instead of a storage map. The name of the structure will be used to create a label with the total size of the structure.</p>
+<p>You declare a structure with the STRUCT and the ENDSTRUCT commands:</p>
+<pre>
+  STRUCT name [, initial offset, alignment]
+  &lt;fields&gt;
+  ENDSTRUCT
+</pre>
+<p>You could use ENDS instead of ENDSTRUCT.</p>
+<p>When you declare the structure in a module, the module name will be part of the name, just like labels. If you do not want this, put an @ before the name.</p>
+<p>The initial offset and the alignment are both optional. Normally this offset is 0, but it can be set to any value. You can specify a default alignment that is used for all the fields.</p>
+<p>The syntax for defining the structure fields is as follows:</p>
+<pre>
+label type operands
+</pre>
+<p>All fields are optional, and not all types have operands. Sjasm recognises the following types:</p>
+<pre>
+DB [&lt;defaultvalue&gt;]           ; define a 1 byte field
+DW [&lt;defaultvalue&gt;]           ; define a 2 byte field
+DT [&lt;defaultvalue&gt;]           ; define a 3 byte field
+DD [&lt;defaultvalue&gt;]           ; define a 4 byte field
+DS length [,&lt;defaultvalue&gt;]   ; define a field of the given length
+## alignment value            ; align the following field
+#  length                     ; define a field of the given length
+</pre>
+<p>BYTE can be used instead of DB, WORD instead of DW, DWORD instead of DD and ALIGN instead of ##.</p>
+<p>The default value is used when no initialisation value is given when the structure is defined. The default of a DS field can contain more than one expression or string, as long the length of the field is not exceeded.</p>
+<p>The default alignment and the alignment field only align the structure offsets, and not the actual addresses where the structure is used.</p>
+<p>Some examples of structure declarations:</p>
+<pre>
+  struct scolor
+red   db 4
+green db 5
+blue  db 6
+  endstruct
+</pre>
+<p>This will create the following labels:</p>
+<pre>
+scolor.red   ; 0   offsets
+scolor.green ; 1
+scolor.blue  ; 2
+scolor       ; 3   length of the structure
+</pre>
+<p>In the following example we will use a default alignment:</p>
+<pre>
+  struct spul,,2
+x    db 0
+y    db 0
+name ds 8, &quot;noname&quot;,1
+  endstruct
+</pre>
+<p>This will create the following labels:</p>
+<pre>
+spul.x     ; 0   offsets
+spul.y     ; 2
+spul.name  ; 4
+spul       ; 12   length
+</pre>
+<p>When a structure is declared, you can define labels with it:</p>
+<pre>
+color1  scolor
+color2  scolor 12,,14
+</pre>
+<p>This is identical to:</p>
+<pre>
+color1
+.red   db 4
+.green db 5
+.blue  db 6
+color2
+.red   db 12
+.green db 5
+.blue  db 14
+</pre>
+<p>As you see, the default values are overwritten when you specify new values. Fields declared as # will always be initialized with zero and cannot be overwritten.</p>
+<p>When you use a structure without a preceding label, no labels are generated, but of course, the data will be defined as expected:</p>
+<pre>
+  spul
+</pre>
+<p>wil generate the following data:</p>
+<pre>
+  db 0            ; x
+  ds 1            ; align
+  db 0            ; y
+  ds 1            ; align
+  db &quot;noname&quot;,1   ; name
+  ds 1            ; padding
+</pre>
+</div>
+<div class="navi">
+<a href="sjasmman0.html">Introduction</a>
+<a href="sjasmman1.html">Command&nbsp;line&nbsp;options</a>
+<a href="sjasmman2.html">Source&nbsp;Format</a>
+<a href="sjasmman3.html">Labels</a>
+<a href="sjasmman4.html">Expressions</a>
+<a href="sjasmman5.html">Z80&nbsp;Assembly&nbsp;syntax</a>
+Data&nbsp;definition
+<a href="sjasmman7.html">Output;&nbsp;paging&nbsp;and&nbsp;code&nbsp;parts</a>
+<a href="sjasmman8.html">File&nbsp;handling</a>
+<a href="sjasmman9.html">Conditional&nbsp;assembly</a>
+<a href="sjasmman10.html">Loops</a>
+<a href="sjasmman11.html">Macros</a>
+<a href="sjasmman12.html">Listing&nbsp;format</a>
+</div>
+<div class="menu">
+<ul><li><i>Sjasm 0.42c manual</i></li>
+</ul>
+</div>
+
+<div class="voetnoot">Copyright 2011 XL2S Entertainment</div>
+<div class="xl2sweblogo"></div>
+</body></html>

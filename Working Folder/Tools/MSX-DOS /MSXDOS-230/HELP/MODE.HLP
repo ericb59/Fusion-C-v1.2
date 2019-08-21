@@ -1,0 +1,19 @@
+MODE
+----
+
+Format:      MODE number
+
+Purpose:     Changes the number of characters/line on the screen.
+
+Use:	     The number must be in the range 1 to 80 inclusive,  and
+	the  number of characters per line on the screen will be set
+	to this.  The screen will be cleared and the cursor moved to
+	the top left corner in the process.
+
+Examples:
+
+	MODE 80
+
+	     The  screen is set to 80 column mode and is cleared  in
+	the process.
+

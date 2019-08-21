@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+  <title>Sjasm 0.42 manual - XL2S Entertainment</title>
+  <meta name="title" content="XL2S Entertainment - Software for MSX computers">
+  <meta name="description" content="XL2S Entertainment - Software for MSX computers">
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+  <meta http-equiv="content-style-type" content="text/css">
+  <link rel="stylesheet" href="stijl.css" type="text/css">
+</head>
+  
+<body>
+<div class="titelbalk"><h1>XL2S Entertainment</h1></div>
+<div class="menu">
+<ul><li><i>Sjasm 0.42c manual</i></li>
+</ul>
+</div>
+<div class="navi"><a href="sjasmmanual.html">Sjasm manual</a> > Loops</div><div class="navi">
+<a href="sjasmman0.html">Introduction</a>
+<a href="sjasmman1.html">Command&nbsp;line&nbsp;options</a>
+<a href="sjasmman2.html">Source&nbsp;Format</a>
+<a href="sjasmman3.html">Labels</a>
+<a href="sjasmman4.html">Expressions</a>
+<a href="sjasmman5.html">Z80&nbsp;Assembly&nbsp;syntax</a>
+<a href="sjasmman6.html">Data&nbsp;definition</a>
+<a href="sjasmman7.html">Output;&nbsp;paging&nbsp;and&nbsp;code&nbsp;parts</a>
+<a href="sjasmman8.html">File&nbsp;handling</a>
+<a href="sjasmman9.html">Conditional&nbsp;assembly</a>
+Loops
+<a href="sjasmman11.html">Macros</a>
+<a href="sjasmman12.html">Listing&nbsp;format</a>
+</div>
+<div class="tekst">
+<h3>Loops</h3><h5>
+<a href="#s0">Repeat</a><br>
+<a href="#s1">While</a><br>
+<a href="#s2">Nested loops</a><br>
+<a href="#s3">Exit and continue</a><br>
+</h5>
+<p>Sjasm supports two loop statements: REPEAT and WHILE. You can use the REPEAT and WHILE statements to repeat a block of statements a number of times.</p>
+<a name="s0"></a><h4>Repeat</h4>
+<p>REPEAT repeats the block of statements between REPEAT and ENDREPEAT the given number of times. @# Will contain the number of iterations, starting with 0.</p>
+<pre>
+  repeat 3
+  byte @#
+  endrepeat
+</pre>
+<p>expands to:</p>
+<pre>
+  byte 0
+  byte 1
+  byte 2
+</pre>
+<a name="s1"></a><h4>While</h4>
+<p>WHILE repeats the block as long as its argument is not zero. Again, @# contains the number of iterations and the block should end with ENDWHILE.</p>
+<pre>
+counter:=3
+  while counter
+  byte counter,@#
+counter:=counter-1
+  endwhile
+</pre>
+<p>expands to:</p>
+<pre>
+  byte 3,0
+  byte 2,1
+  byte 1,2
+</pre>
+<a name="s2"></a><h4>Nested loops</h4>
+<p>Loops can be nested and you can use @@#, @@@# and so on the access the number of iterations of the outer loops:</p>
+<pre>
+  repeat 2
+  repeat 3
+  byte @#,@@#
+  endrepeat
+  endrepeat
+</pre>
+<p>expands to:</p>
+<pre>
+  byte 0,0
+  byte 1,0
+  byte 2,0
+  byte 0,1
+  byte 1,1
+  byte 2,1
+</pre>
+<a name="s3"></a><h4>Exit and continue</h4>
+<p>To exit a loop, use BREAK. You could use this to exit an endless loop:</p>
+<pre>
+  while 1
+l:=l+1
+  if l=3
+    break
+  endif
+  endwhile
+</pre>
+<p>To continue with the next iteration, use CONTINUE:</p>
+<pre>
+  repeat 5
+  if @#&lt;3
+    continue
+  endif
+  byte @#
+  endrepeat
+</pre>
+<p>this outputs:</p>
+<pre>
+  byte 3
+  byte 4
+</pre>
+</div>
+<div class="navi">
+<a href="sjasmman0.html">Introduction</a>
+<a href="sjasmman1.html">Command&nbsp;line&nbsp;options</a>
+<a href="sjasmman2.html">Source&nbsp;Format</a>
+<a href="sjasmman3.html">Labels</a>
+<a href="sjasmman4.html">Expressions</a>
+<a href="sjasmman5.html">Z80&nbsp;Assembly&nbsp;syntax</a>
+<a href="sjasmman6.html">Data&nbsp;definition</a>
+<a href="sjasmman7.html">Output;&nbsp;paging&nbsp;and&nbsp;code&nbsp;parts</a>
+<a href="sjasmman8.html">File&nbsp;handling</a>
+<a href="sjasmman9.html">Conditional&nbsp;assembly</a>
+Loops
+<a href="sjasmman11.html">Macros</a>
+<a href="sjasmman12.html">Listing&nbsp;format</a>
+</div>
+<div class="menu">
+<ul><li><i>Sjasm 0.42c manual</i></li>
+</ul>
+</div>
+
+<div class="voetnoot">Copyright 2011 XL2S Entertainment</div>
+<div class="xl2sweblogo"></div>
+</body></html>

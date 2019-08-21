@@ -1,0 +1,89 @@
+EDITING COMMAND LINES
+---------------------
+
+	     When  typing  in a command line to  MSX-DOS,  a  simple
+	editing facility is available for correction of mistakes  or
+	the re-entering and editing of previous commands.
+
+	     Typing  ordinary  characters at the keyboard cause  the
+	characters  to  appear on the screen as would  be  expected.
+	Typing most control characters cause them to be  represented
+	by  a '^' symbol followed by the control letter.  Exceptions
+	are carriage return (CTRL-M), line feed (CTRL-J), tab (CTRL-
+	I),  CTRL-C,  CTRL-N,  CTRL-P,  CTRL-S.  These  perform  the
+	following functions:
+
+	     CTRL-C    - this acts as a 'break' key.  A more drastic
+			 and preferred 'break' key is CTRL-STOP.
+
+	     CTRL-N    - this  turns  the printer  off  after  being
+			 turned on by CTRL-P.
+	     CTRL-P    - this  turns the printer on.  When  on,  all
+			 characters  printed on the screen are  also
+			 printed on the printer.
+
+	     CTRL-S    - this  suspends all character  output  until
+			 another key is pressed.
+
+	     The  line is entered when the 'enter' (carriage return)
+	key is pressed.
+
+	     Some  other control characters have the same effect  as
+	the  special  editing  keys  described  hereafter,  as  they
+	generate the same key code (e.g. backspace key is equivalent
+	to CTRL-H).
+
+	     At  any  point  whilst typing in a  command  line,  the
+	backspace  key (marked BS on most MSX machines) can be  used
+	to  delete  the  character immediately to the  left  of  the
+	cursor in the normal way.
+
+	     The  cursor  left and right keys will move  the  cursor
+	left  and right along the line.  Typing a character at  this
+	point will overwrite the character currently underneath  the
+	cursor.
+
+	     Pressing  the  insert  key  (marked  INS  on  most  MSX
+	machines) will toggle to 'insert mode',  and the cursor will
+	change  to an underline cursor to indicate this.  Instead of
+	the characters being typed overwriting the characters  under
+	the cursor,  they will instead be inserted before the cursor
+	character,  the  remaining characters to the end of the line
+	being moved one position to the right.
+
+	     The  delete key (marked DEL on most MSX machines)  will
+	delete the character under the cursor and move the remaining
+	characters to the end of the line one position to the left.
+
+	     The home key (marked 'HOME' on most MSX machines)  will
+	move the cursor to the start of the line.
+
+	     Pressing  ESC,  CTRL-U or CTRL-X will clear the line to
+	allow a new one to be entered.
+
+	     The  command  editor  also keeps  a  list  of  previous
+	commands entered,  up to a limit of 256 characters. Pressing
+	the  cursor  up  key will move up the list and  display  the
+	previous  command line entered,  allowing this  old  command
+	line  to be edited and re-entered.  Pressing the cursor down
+	key  will similarly move to the next old command  line  that
+	was entered.
+
+	     If a previous command line is changed,  then it will be
+	used  as the new command line and added to the bottom of the
+	list.  If it was not changed,  then it will not be added  to
+	the  list and the current command line will be the next  one
+	which  was originally entered.  This allows a whole sequence
+	of previous commands to be entered easily.
+
+	     The  list of previous commands is in fact circular  and
+	moving off the top or bottom will move to the last or  first
+	command in the list respectively.
+
+	     The  features  described here are in fact available  to
+	many programs that MSX-DOS can execute.  In any program that
+	does  'line inputs',  each line can be edited  as  described
+	above.  Previous  lines can be recalled for re-entering  and
+	editing,  although the list of previous lines will of course
+	include previous commands.
+

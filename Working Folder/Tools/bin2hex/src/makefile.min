@@ -1,0 +1,61 @@
+# makefile.min	Makefile for building with the MinGW (GNU) C Compiler.
+# Copyright (c) 1996-2005 by Christopher Heng. All rights reserved.
+
+# $Id: makefile.min,v 1.2 2005/03/06 05:40:49 chris Exp $
+
+# This makefile requires the GNU make to work (we use the GNU extensions).
+
+# Define the following if you need
+#
+#	DEBUG	to add debugging information, eg "make DEBUG=1 all"
+
+
+ifdef DEBUG
+CDEBUG = -g
+LDEBUG = -g
+else
+CDEBUG = -O2
+LDEBUG = -s
+endif
+
+# programs
+CC = gcc
+CD = cd
+CP = copy
+INSTALL = install
+LD = gcc
+
+# flags
+CFLAGS = $(DEFINES) $(TFLAG) $(CDEBUG) -c -Wall
+GZIPFLAGS = -9
+LDFLAGS = $(LDEBUG)
+
+# directories
+LIBDIR = lib
+
+# filenames
+BINTOH = bintoh.exe
+BINTOHMAN = bintoh.1
+BINFROMH = binfromh.exe
+
+# lists of filenames
+# Linux, BSD, and other Unix-type systems already have a fully-functioning 
+# and thoroughly-debugged version of getopt()
+OBJS = bin2froh.o
+
+# implicit rules
+.c.o:
+	$(CC) $(CFLAGS) $<
+
+# user visible rules
+all: $(BINTOH) $(BINFROMH)
+
+# real rules
+$(BINTOH): $(OBJS)
+	$(CC) $(LDFLAGS) -o $(BINTOH) $(OBJS)
+
+$(BINFROMH): $(BINTOH)
+	$(CP) $(BINTOH) $(BINFROMH)
+
+# objects
+bin2froh.o: bin2froh.c config.h version.h

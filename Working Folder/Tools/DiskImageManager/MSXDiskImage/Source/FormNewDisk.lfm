@@ -1,0 +1,52 @@
+object NewDiskForm: TNewDiskForm
+  Left = 0
+  Height = 82
+  Top = 0
+  Width = 190
+  BorderStyle = bsToolWindow
+  Caption = 'Create Disk Image'
+  ClientHeight = 82
+  ClientWidth = 190
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  OnCreate = FormCreate
+  OnShow = FormShow
+  LCLVersion = '1.2.6.0'
+  object TitleLabel: TLabel
+    Left = 8
+    Height = 13
+    Top = 5
+    Width = 173
+    Caption = 'Enter new DSK name (no extension)'
+    ParentColor = False
+  end
+  object NameEdit: TEdit
+    Left = 8
+    Height = 21
+    Top = 24
+    Width = 173
+    TabOrder = 0
+  end
+  object CreateButton: TButton
+    Left = 8
+    Height = 25
+    Top = 50
+    Width = 82
+    Caption = '&Create'
+    Default = True
+    OnClick = CreateButtonClick
+    TabOrder = 1
+  end
+  object AbortButton: TButton
+    Left = 99
+    Height = 25
+    Top = 50
+    Width = 82
+    Cancel = True
+    Caption = '&Abort'
+    ModalResult = 2
+    TabOrder = 2
+  end
+end

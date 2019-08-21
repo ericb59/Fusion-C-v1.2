@@ -1,0 +1,4 @@
+{
+	"shell_cmd": "make CompFile=$file_name",
+	"working_dir": "$file_path"
+}

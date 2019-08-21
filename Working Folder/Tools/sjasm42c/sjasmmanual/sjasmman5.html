@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+  <title>Sjasm 0.42 manual - XL2S Entertainment</title>
+  <meta name="title" content="XL2S Entertainment - Software for MSX computers">
+  <meta name="description" content="XL2S Entertainment - Software for MSX computers">
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+  <meta http-equiv="content-style-type" content="text/css">
+  <link rel="stylesheet" href="stijl.css" type="text/css">
+</head>
+  
+<body>
+<div class="titelbalk"><h1>XL2S Entertainment</h1></div>
+<div class="menu">
+<ul><li><i>Sjasm 0.42c manual</i></li>
+</ul>
+</div>
+<div class="navi"><a href="sjasmmanual.html">Sjasm manual</a> > Z80 Assembly syntax</div><div class="navi">
+<a href="sjasmman0.html">Introduction</a>
+<a href="sjasmman1.html">Command&nbsp;line&nbsp;options</a>
+<a href="sjasmman2.html">Source&nbsp;Format</a>
+<a href="sjasmman3.html">Labels</a>
+<a href="sjasmman4.html">Expressions</a>
+Z80&nbsp;Assembly&nbsp;syntax
+<a href="sjasmman6.html">Data&nbsp;definition</a>
+<a href="sjasmman7.html">Output;&nbsp;paging&nbsp;and&nbsp;code&nbsp;parts</a>
+<a href="sjasmman8.html">File&nbsp;handling</a>
+<a href="sjasmman9.html">Conditional&nbsp;assembly</a>
+<a href="sjasmman10.html">Loops</a>
+<a href="sjasmman11.html">Macros</a>
+<a href="sjasmman12.html">Listing&nbsp;format</a>
+</div>
+<div class="tekst">
+<h3>Z80 Assembly syntax</h3><h5>
+<a href="#s0">Undocumented instructions</a><br>
+<a href="#s1">R800 CPU</a><br>
+<a href="#s2">Extended instructions</a><br>
+<a href="#s3">Z80 instruction set</a><br>
+</h5>
+<p>In general, Sjasm follows the original Zilog notation for the instructions.</p>
+<p>Differences with Z80 mnemonics:</p>
+<ul><li>You can use S and NS (sign/no sign) instead of the M and P conditions.</li>
+<li>You can use JP HL, JP IX and JP IY instead of JP (HL) and so on.</li>
+<li>You can use square brackets instead of parentheses for indirection. So LD A,[HL] is the same as LD A,(HL). You can enforce the use of brackets with a command line option.</li>
+<li>The A register is optional as operand with some instructions. ADD 3 and ADD A,3 are the same.</li>
+</ul>
+<a name="s0"></a><h4>Undocumented instructions</h4>
+<p>As you probably know the Z80 recognizes more instructions than just the official ones. Sjasm recognizes all undocumented instructions, so you can use:</p>
+<ul><li>ixl, ixh, iyl and iyh registers</li>
+<li>sll or sli</li>
+<li>out (c),0</li>
+<li>in (c) or in f,(c)</li>
+<li>rlc (ix+0),b and friends</li>
+</ul>
+<a name="s1"></a><h4>R800 CPU</h4>
+<p>For some reason the designers of the R800 did not implement all of the Z80 instructions. Because of this none of the undocumented instructions of the Z80 work on the R800, except the use of the ixl, ixh, iyl and iyh registers.</p>
+<p>Sjasm does not understand the official R800 mnemonics, so you should use the corresponding Z80 ones. MULUB and MULUW are of course recognized.</p>
+<a name="s2"></a><h4>Extended instructions</h4>
+<p>In the best Sjasm tradition, in addition to the real undocumented instructions some fake extended instructions have been added.</p>
+<p>In all places where a 16 bit register pair is used as an indirection, you can add a ++ increment or a -- decrement operator. There should be no space between the register and the operator. Both pre and post increment and decrement are supported.</p>
+<p>Examples:</p>
+<pre>
+  ld a,(hl++)     ; ld a,(hl)\ inc hl
+  ld a,(++bc)     ; inc bc\ ld a,(bc)
+  ld (iy++ +5),b  ; ld (iy+5),b\ inc iy
+  add a,(--ix)    ; dec ix\ add a,(ix+0)
+  bit 1,(hl--)    ; bit 1,(hl)\ dec hl
+</pre>
+<p>This does not work with the stack pointer, so EX (SP++),HL does not work.</p>
+<p>The jump instructions have also been 'improved'. If you use DJNZ. (with dot) instead of DJNZ, Sjasm will use DEC B\ JP NZ,x if the jump target is out of range. Similarly, JP. and JR. use JR where possible, and JP if not.</p>
+<p>You can inverse the condition used by conditional jumps and calls with the exclamation mark (!):</p>
+<pre>
+  call !c, DoTheWork   ; call nc, DoTheWork
+  jp !pe, Oops         ; jp po, Oops
+  jr !nc, .loop        ; jr c, .loop
+</pre>
+<p>This makes it easier to create conditional macros:</p>
+<pre>
+  macro addc cond, reg, this
+  jr !cond,.skip
+  add reg, this
+.skip
+  endmacro
+</pre>
+<p>with this macro</p>
+<pre>
+  addc nc, hl, de
+</pre>
+<p>expands to:</p>
+<pre>
+  jr c,.skip
+  add hl,de
+.skip
+</pre>
+<a name="s3"></a><h4>Z80 instruction set</h4>
+<p>Add more information - like all recognized instructions - here :)</p>
+</div>
+<div class="navi">
+<a href="sjasmman0.html">Introduction</a>
+<a href="sjasmman1.html">Command&nbsp;line&nbsp;options</a>
+<a href="sjasmman2.html">Source&nbsp;Format</a>
+<a href="sjasmman3.html">Labels</a>
+<a href="sjasmman4.html">Expressions</a>
+Z80&nbsp;Assembly&nbsp;syntax
+<a href="sjasmman6.html">Data&nbsp;definition</a>
+<a href="sjasmman7.html">Output;&nbsp;paging&nbsp;and&nbsp;code&nbsp;parts</a>
+<a href="sjasmman8.html">File&nbsp;handling</a>
+<a href="sjasmman9.html">Conditional&nbsp;assembly</a>
+<a href="sjasmman10.html">Loops</a>
+<a href="sjasmman11.html">Macros</a>
+<a href="sjasmman12.html">Listing&nbsp;format</a>
+</div>
+<div class="menu">
+<ul><li><i>Sjasm 0.42c manual</i></li>
+</ul>
+</div>
+
+<div class="voetnoot">Copyright 2011 XL2S Entertainment</div>
+<div class="xl2sweblogo"></div>
+</body></html>

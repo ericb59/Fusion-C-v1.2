@@ -1,0 +1,148 @@
+body {
+  color: black;
+  background: white;
+  margin: 0 auto 0 auto;
+  max-width: 1024px;
+}
+
+div.tekst {
+  background: transparent;
+  font-family: "bookman old style", verdana, sans-serif;
+  position: relative;
+  left: 15%;
+  width: 70%;
+  z-index: 3;
+  margin: 1em 0 1em 0;
+}
+
+.tekst b {
+  font-family: verdana, sans-serif;
+}
+
+.tekst h3 {
+  color: blue;
+  font-family: verdana, sans-serif;
+  font-size: 1.5em;
+  margin: 0px 0.5em 0px 0.5em;
+  letter-spacing: -0.05em;
+}
+
+.tekst h4 {
+  color: blue;
+  font-family: verdana, sans-serif;
+  margin: 0px 0.5em 0px 0.5em;
+}
+
+.tekst h5 {
+  color: blue;
+  font-family: verdana, sans-serif;
+}
+
+a {
+  color: blue;
+}
+
+pre {
+  background: #F0F0FF;
+  padding: 2px;
+}
+
+div.xl2sweblogo {
+  background: url("xl2sweblogo3.png") no-repeat 0px 0px transparent;
+  overflow: hidden;
+  position: absolute;
+  left: 30px;
+  top: 50px;
+  height: 512px;
+  width: 172px;
+  z-index: 0;
+}
+
+div.titelbalk {
+  font-family: verdana, "arial black", sans-serif;
+  overflow: hidden;
+  position:relative;
+  width: 98%;
+  text-align: center;
+  letter-spacing: -0.1em;
+  vertical-align: middle;
+  z-index: 3;
+}
+
+.titelbalk h1 {
+  margin: 0;
+  border: 0;
+  padding: 0.4em;
+}
+
+div.menu {
+  font-family: verdana, sans-serif;
+  font-weight: 600;
+  color: white;
+  background-color: blue;
+  position: relative;
+  left: 10%;
+  width: 80%;
+  z-index: 4;
+  text-align: center;
+}
+
+.menu i {
+  color: white;
+  background-color: black;
+  margin: 0.5em;
+  padding: 0.1em;
+  text-decoration: none;
+}
+
+.menu a {
+  color: white;
+  margin: 0.5em;
+  padding: 0.1em;
+  text-decoration: none;
+}
+
+.menu a:hover {
+  color: black;
+  background-color: white;
+  text-decoration: none;
+}
+
+.menu li {
+  display: inline;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.menu ul {
+  display: inline;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+div.navi {
+  background: transparent;
+  font-family: verdana, sans-serif;
+  font-size: small;
+  position: relative;
+  left: 15%;
+  width: 70%;
+  z-index: 3;
+  margin: 1em 0 1em 0;
+}
+
+div.voetnoot {
+  font-family: verdana, sans-serif;
+  font-size: small;
+  position: relative;
+  width: 98%;
+  z-index: 4;
+  text-align: center;
+  margin: 0.5em;
+}
+
+img {
+  margin: 0.3em;
+}

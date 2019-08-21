@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Default"/>
+    <Units Count="33">
+      <Unit0>
+        <Filename Value="MSXDiskImage.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="19"/>
+        <UsageCount Value="88"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="FormMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="FormMain"/>
+        <EditorIndex Value="0"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="88"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\..\MSXEngine\MSXDisk.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="MSXDisk"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="88"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\..\MSXEngine\XSStream.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="XSStream"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="752"/>
+        <CursorPos X="3" Y="757"/>
+        <UsageCount Value="88"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="FormNewDisk.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="NewDiskForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="FormNewDisk"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="17" Y="11"/>
+        <UsageCount Value="88"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="C:\Lazarus\fpc\2.6.4\source\rtl\objpas\sysutils\datih.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="71"/>
+        <CursorPos X="4" Y="91"/>
+        <UsageCount Value="4"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\..\XPEngine\XPRoutine.pas"/>
+        <UnitName Value="XPRoutine"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="7"/>
+        <UsageCount Value="12"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\..\XPEngine\XPEngine.pas"/>
+        <UnitName Value="XPEngine"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="909"/>
+        <CursorPos X="10" Y="7"/>
+        <UsageCount Value="6"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\..\XPEngine\XPCPU.pas"/>
+        <UnitName Value="XPCPU"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="111"/>
+        <CursorPos X="1" Y="150"/>
+        <UsageCount Value="4"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="C:\Lazarus\lcl\include\treeview.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="5359"/>
+        <CursorPos X="1" Y="5369"/>
+        <UsageCount Value="4"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="C:\Lazarus\lcl\include\control.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="2088"/>
+        <CursorPos X="1" Y="2109"/>
+        <UsageCount Value="4"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="C:\Lazarus\lcl\include\wincontrol.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="5306"/>
+        <CursorPos X="1" Y="5327"/>
+        <UsageCount Value="4"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="C:\Lazarus\lcl\lclmessageglue.pas"/>
+        <UnitName Value="LCLMessageGlue"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="98"/>
+        <CursorPos X="1" Y="123"/>
+        <UsageCount Value="4"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="C:\Lazarus\lcl\interfaces\win32\win32callback.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="2598"/>
+        <CursorPos X="1" Y="2634"/>
+        <UsageCount Value="4"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="C:\Lazarus\lcl\interfaces\win32\win32object.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="346"/>
+        <CursorPos X="1" Y="367"/>
+        <UsageCount Value="4"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="C:\Lazarus\fpc\2.6.4\source\rtl\objpas\sysutils\filutilh.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="27"/>
+        <CursorPos X="3" Y="49"/>
+        <UsageCount Value="5"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="C:\Lazarus\fpc\2.6.4\source\packages\fcl-db\src\base\db.pas"/>
+        <UnitName Value="db"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="111"/>
+        <CursorPos X="35" Y="133"/>
+        <UsageCount Value="5"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="C:\Lazarus\lcl\shellctrls.pas"/>
+        <UnitName Value="ShellCtrls"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="790"/>
+        <CursorPos X="3" Y="822"/>
+        <UsageCount Value="5"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="C:\Lazarus\lcl\comctrls.pp"/>
+        <UnitName Value="ComCtrls"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="876"/>
+        <CursorPos X="16" Y="888"/>
+        <UsageCount Value="6"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="C:\Lazarus\packager\registration\fcllaz.pas"/>
+        <UnitName Value="fcllaz"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="1"/>
+        <UsageCount Value="5"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="C:\Lazarus\fpc\2.6.4\source\rtl\inc\systemh.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="939"/>
+        <CursorPos X="11" Y="955"/>
+        <UsageCount Value="5"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="C:\Lazarus\lcl\interfaces\win32\win32int.pp"/>
+        <UnitName Value="Win32Int"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="6"/>
+        <CursorPos X="26" Y="21"/>
+        <UsageCount Value="5"/>
+      </Unit21>
+      <Unit22>
+        <Filename Value="C:\Lazarus\fpc\2.6.4\source\rtl\objpas\sysutils\diskh.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="10" Y="20"/>
+        <UsageCount Value="5"/>
+      </Unit22>
+      <Unit23>
+        <Filename Value="C:\Lazarus\fpc\2.6.4\source\rtl\objpas\sysutils\finah.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="13"/>
+        <CursorPos X="10" Y="31"/>
+        <UsageCount Value="17"/>
+      </Unit23>
+      <Unit24>
+        <Filename Value="C:\Lazarus\fpc\2.6.4\source\rtl\objpas\sysutils\fina.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="340"/>
+        <CursorPos X="1" Y="350"/>
+        <UsageCount Value="17"/>
+      </Unit24>
+      <Unit25>
+        <Filename Value="C:\Lazarus\fpc\2.6.4\source\rtl\win32\system.pp"/>
+        <UnitName Value="System"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="23"/>
+        <CursorPos X="2" Y="38"/>
+        <UsageCount Value="6"/>
+      </Unit25>
+      <Unit26>
+        <Filename Value="C:\Lazarus\fpc\2.6.4\source\rtl\inc\objpash.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="177"/>
+        <CursorPos X="23" Y="192"/>
+        <UsageCount Value="6"/>
+      </Unit26>
+      <Unit27>
+        <Filename Value="C:\Lazarus\fpc\2.6.4\source\rtl\inc\wstringh.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="15"/>
+        <CursorPos X="11" Y="30"/>
+        <UsageCount Value="16"/>
+      </Unit27>
+      <Unit28>
+        <Filename Value="C:\Lazarus\lcl\include\statuspanels.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="4"/>
+        <CursorPos X="1" Y="29"/>
+        <UsageCount Value="10"/>
+      </Unit28>
+      <Unit29>
+        <Filename Value="C:\Lazarus\lcl\include\statuspanel.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="117"/>
+        <CursorPos X="1" Y="132"/>
+        <UsageCount Value="9"/>
+      </Unit29>
+      <Unit30>
+        <Filename Value="C:\Lazarus\fpc\2.6.4\source\rtl\objpas\classes\classesh.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="334"/>
+        <CursorPos X="15" Y="349"/>
+        <UsageCount Value="20"/>
+      </Unit30>
+      <Unit31>
+        <Filename Value="C:\Lazarus\fpc\2.6.4\source\rtl\objpas\classes\lists.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="803"/>
+        <CursorPos X="3" Y="805"/>
+        <UsageCount Value="20"/>
+      </Unit31>
+      <Unit32>
+        <Filename Value="C:\Lazarus\fpc\2.6.4\source\rtl\inc\wstrings.inc"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="950"/>
+        <CursorPos X="3" Y="957"/>
+        <UsageCount Value="8"/>
+      </Unit32>
+    </Units>
+    <General>
+      <ActiveWindowIndexAtStart Value="0"/>
+    </General>
+    <JumpHistory Count="20" HistoryIndex="19">
+      <Position1>
+        <Filename Value="FormMain.pas"/>
+        <Caret Line="319" Column="19" TopLine="300"/>
+      </Position1>
+      <Position2>
+        <Filename Value="FormMain.pas"/>
+        <Caret Line="394" Column="30" TopLine="379"/>
+      </Position2>
+      <Position3>
+        <Filename Value="FormMain.pas"/>
+        <Caret Line="352" Column="27" TopLine="349"/>
+      </Position3>
+      <Position4>
+        <Filename Value="FormMain.pas"/>
+        <Caret Line="228" Column="1" TopLine="226"/>
+      </Position4>
+      <Position5>
+        <Filename Value="FormMain.pas"/>
+        <Caret Line="239" Column="11" TopLine="231"/>
+      </Position5>
+      <Position6>
+        <Filename Value="FormMain.pas"/>
+        <Caret Line="57" Column="15" TopLine="43"/>
+      </Position6>
+      <Position7>
+        <Filename Value="FormMain.pas"/>
+        <Caret Line="355" Column="25" TopLine="353"/>
+      </Position7>
+      <Position8>
+        <Filename Value="FormMain.pas"/>
+        <Caret Line="57" Column="15" TopLine="43"/>
+      </Position8>
+      <Position9>
+        <Filename Value="FormMain.pas"/>
+        <Caret Line="426" Column="1" TopLine="403"/>
+      </Position9>
+      <Position10>
+        <Filename Value="FormMain.pas"/>
+        <Caret Line="356" Column="14" TopLine="343"/>
+      </Position10>
+      <Position11>
+        <Filename Value="FormMain.pas"/>
+        <Caret Line="361" Column="10" TopLine="346"/>
+      </Position11>
+      <Position12>
+        <Filename Value="FormMain.pas"/>
+        <Caret Line="428" Column="12" TopLine="403"/>
+      </Position12>
+      <Position13>
+        <Filename Value="FormMain.pas"/>
+        <Caret Line="360" Column="17" TopLine="353"/>
+      </Position13>
+      <Position14>
+        <Filename Value="FormMain.pas"/>
+        <Caret Line="379" Column="1" TopLine="366"/>
+      </Position14>
+      <Position15>
+        <Filename Value="FormMain.pas"/>
+        <Caret Line="423" Column="1" TopLine="406"/>
+      </Position15>
+      <Position16>
+        <Filename Value="FormMain.pas"/>
+        <Caret Line="417" Column="28" TopLine="402"/>
+      </Position16>
+      <Position17>
+        <Filename Value="FormMain.pas"/>
+        <Caret Line="351" Column="21" TopLine="322"/>
+      </Position17>
+      <Position18>
+        <Filename Value="FormMain.pas"/>
+        <Caret Line="343" Column="21" TopLine="308"/>
+      </Position18>
+      <Position19>
+        <Filename Value="FormNewDisk.pas"/>
+        <Caret Line="65" Column="34" TopLine="39"/>
+      </Position19>
+      <Position20>
+        <Filename Value="FormMain.pas"/>
+        <Caret Line="248" Column="50" TopLine="231"/>
+      </Position20>
+    </JumpHistory>
+  </ProjectSession>
+  <Debugging>
+    <Watches Count="5">
+      <Item1>
+        <Expression Value="FDirCount"/>
+      </Item1>
+      <Item2>
+        <Expression Value="ndir"/>
+      </Item2>
+      <Item3>
+        <Expression Value="AFileName"/>
+      </Item3>
+      <Item4>
+        <Expression Value="FDirOffset"/>
+      </Item4>
+      <Item5>
+        <Expression Value="n"/>
+      </Item5>
+    </Watches>
+  </Debugging>
+  <EditorMacros Count="0"/>
+</CONFIG>

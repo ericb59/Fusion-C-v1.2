@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+  <title>Sjasm 0.42 manual - XL2S Entertainment</title>
+  <meta name="title" content="XL2S Entertainment - Software for MSX computers">
+  <meta name="description" content="XL2S Entertainment - Software for MSX computers">
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+  <meta http-equiv="content-style-type" content="text/css">
+  <link rel="stylesheet" href="stijl.css" type="text/css">
+</head>
+  
+<body>
+<div class="titelbalk"><h1>XL2S Entertainment</h1></div>
+<div class="menu">
+<ul><li><i>Sjasm 0.42c manual</i></li>
+</ul>
+</div>
+<div class="navi"><a href="sjasmmanual.html">Sjasm manual</a> > Labels</div><div class="navi">
+<a href="sjasmman0.html">Introduction</a>
+<a href="sjasmman1.html">Command&nbsp;line&nbsp;options</a>
+<a href="sjasmman2.html">Source&nbsp;Format</a>
+Labels
+<a href="sjasmman4.html">Expressions</a>
+<a href="sjasmman5.html">Z80&nbsp;Assembly&nbsp;syntax</a>
+<a href="sjasmman6.html">Data&nbsp;definition</a>
+<a href="sjasmman7.html">Output;&nbsp;paging&nbsp;and&nbsp;code&nbsp;parts</a>
+<a href="sjasmman8.html">File&nbsp;handling</a>
+<a href="sjasmman9.html">Conditional&nbsp;assembly</a>
+<a href="sjasmman10.html">Loops</a>
+<a href="sjasmman11.html">Macros</a>
+<a href="sjasmman12.html">Listing&nbsp;format</a>
+</div>
+<div class="tekst">
+<h3>Labels</h3><h5>
+<a href="#s0">Modules</a><br>
+<a href="#s1">Local labels</a><br>
+<a href="#s2">Reusable labels</a><br>
+<a href="#s3">Value assignment</a><br>
+<a href="#s4">Storage maps</a><br>
+</h5>
+<p>Labels are case-sensitive and may be of any reasonable length. Label definitions should start on the beginning of a line, and do not have to be followed by a : (colon). Labels should start with a letter or an _ (underscore). The following characters may be chosen from letters, numbers and the _ (underscore) and . (dot). The '.' is also used to separate module names, labels and local labels, and will be inserted as needed.</p>
+<a name="s0"></a><h4>Modules</h4>
+<p>Labels are local to the current module if there is a module defined. You can define a module with the MODULE command.</p>
+<pre>
+  module main
+label         ; main.label
+  module vdp
+label         ; vdp.label
+</pre>
+<p>The ENDMODULE command without arguments ends the current module and restores the previous one:</p>
+<pre>
+  module main
+label1         ; main.label1
+  module vdp
+label2         ; vdp.label2
+  endmodule
+label3         ; main.label3
+</pre>
+<p>ENDMODULE with an argument ends the named module and all nested ones:</p>
+<pre>
+  module main
+label1         ; main.label1
+  module vdp
+label2         ; vdp.label2
+  module sound
+label3         ; sound.label3
+  endmodule vdp
+label4         ; main.label4
+</pre>
+<a name="s1"></a><h4>Local labels</h4>
+<p>When a label does not start with a . (dot), it is a non-local label. When a label does start with a . (dot), it is local to the previous non-local label. The following example defines two labels: label and label.local:</p>
+<pre>
+label
+.local
+</pre>
+<p>All labels are local to the current module: </p>
+<pre>
+  module main
+label
+.local
+</pre>
+<p>Here the following labels are defined: main.label and main.label.local.</p>
+<p>If you start the label with an ! (exclamation mark) the non-local label will not be used as such in the local label system:</p>
+<pre>
+label1
+!label2
+.local
+</pre>
+<p>This defines label1, label2 and label1.local as labels, and not label2.local. Use a @ to by-pass the label processor, and use the label as is:</p>
+<pre>
+  module main
+label1
+@label2
+.local
+</pre>
+<p>This defines main.label1, label2 and main.label2.local. As you see, label2 will still be used as non-local label. To prevent this you could use !@label2:</p>
+<pre>
+  module main
+label1       ; main.label1
+!@label2     ; label2
+.local       ; main.label1.local
+</pre>
+<p>When you use a label in an expression the . (dot) and @ operators work the same: . will use the label as local, and @ will use the label as-is:</p>
+<pre>
+chicken
+  ld a,(.hop)        ; chicken.hop
+.hop
+  ld a,(@..go)       ; ..go
+</pre>
+<p>When used inside macros or loops, labels behave somewhat different. See the chapter about macros for more information.</p>
+<a name="s2"></a><h4>Reusable labels</h4>
+<p>It is possible to use numbers as labels, which can be reused as many times as desired. They may only consist of decimal digits (0-9). These temporary labels can only be used as code locations, and can only be used as operands of jump or call instructions.</p>
+<p>To jump to a numbered label, use the number followed by an F for forward branches or a B for backward branches:</p>
+<pre>
+1		; define label 1
+	jp 1b	; jump to label 1, searching backward
+1	jp 2f	; jump to label 2, searching forward
+	jp 1b	; jump to the line with 'jp 2f'.
+2		; define label 2
+</pre>
+<a name="s3"></a><h4>Value assignment</h4>
+<p>A defined label will get the value of the current code location, unless one of the following commands is used: =, EQU, := or #.</p>
+<p>EQU gives the label a permanent value:</p>
+<pre>
+label equ 13
+</pre>
+<p>Instead of EQU = (equal) can be used:</p>
+<pre>
+label = 13
+</pre>
+<p>When you give the label a value with :=, this value can be overwritten later.</p>
+<pre>
+label := 13
+label := label+1
+</pre>
+<p>This is useful when programming loops.</p>
+<a name="s4"></a><h4>Storage maps</h4>
+<p>As said before, normally the code location counter is used to assign a value to a label. With the # command it is possible to assign the current map location to a label. Afterwards the map counter is incremented by the given amount.</p>
+<pre>
+  map 13
+label3 # 10
+label4 # 5
+label5 # 10
+</pre>
+<p>label3 will get 13 as value, label4 23, label5 28, and the map location will be 38. You could also use the following to get the same result, but storage maps are easier to read and to update.</p>
+<pre>
+label3 = 13
+label4 = label3+10
+label5 = label4+5
+</pre>
+<p>The MAP command stores the current map location and puts a new value in the map location counter. The stored map location can be restored with ENDMAP.</p>
+<pre>
+  map 100h
+label1 #|  map 200h
+label2 #
+  endmap
+label3 #
+</pre>
+<p>Here, label1 and label3 will be 100h and label2 200h.</p>
+<p>It is possible to align the map counter with the MAPALIGN command. When the alignment value is omitted, 4 is assumed. Instead of MAPALIGN ## can be used:</p>
+<pre>
+  map 100h
+label1 # 3  ; 100h
+      ## 2
+label2 # 2  ; 104h
+</pre>
+</div>
+<div class="navi">
+<a href="sjasmman0.html">Introduction</a>
+<a href="sjasmman1.html">Command&nbsp;line&nbsp;options</a>
+<a href="sjasmman2.html">Source&nbsp;Format</a>
+Labels
+<a href="sjasmman4.html">Expressions</a>
+<a href="sjasmman5.html">Z80&nbsp;Assembly&nbsp;syntax</a>
+<a href="sjasmman6.html">Data&nbsp;definition</a>
+<a href="sjasmman7.html">Output;&nbsp;paging&nbsp;and&nbsp;code&nbsp;parts</a>
+<a href="sjasmman8.html">File&nbsp;handling</a>
+<a href="sjasmman9.html">Conditional&nbsp;assembly</a>
+<a href="sjasmman10.html">Loops</a>
+<a href="sjasmman11.html">Macros</a>
+<a href="sjasmman12.html">Listing&nbsp;format</a>
+</div>
+<div class="menu">
+<ul><li><i>Sjasm 0.42c manual</i></li>
+</ul>
+</div>
+
+<div class="voetnoot">Copyright 2011 XL2S Entertainment</div>
+<div class="xl2sweblogo"></div>
+</body></html>

@@ -1,0 +1,21 @@
+Begin4
+Title:          bin2froh
+Version:        1.0.0
+Entered-date:   2012-06-22
+Description:    Binary files, like Bitmap, have binary format ,while C 
+      compiler requires that they are converted to char arrays in a C 
+		header file.
+		bin2froh comprises two programs, "bintoh" and "binfromh", which convert
+      binary files to/from C header files. Use "bintoh" to convert binary
+      files to C header files, and "binfromh" to revert the works done by
+      "bintoh".
+Keywords:       bintoh, bin2h, binfromh, binary file, C header, convert, 
+		UEFI, BMP, bitmap file
+Author:         Ming Chen
+Maintained-by:  Ming Chen
+Primary-site:   https://sourceforge.net/projects/bin2froh
+Alternate-site:
+Original-site:  
+Platforms:      Linux, Windows, Mac OS X, FreeBSD, OpenBSD, MSDOS, FreeDOS, Unix
+Copying-policy: GPL
+End

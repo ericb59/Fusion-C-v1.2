@@ -1,0 +1,49 @@
+ Pletter v0.4a - XL2S Entertainment 2007
+-=============---==================------
+
+The compressor supports different look back buffer sizes; each size needs a different de-compressor. This is of course done to make it as difficult as possible to use ;-) I suggest keeping one size per type of data or something like that. Mode 1 comes closest to the BitBuster format, if you would like to compare them.
+
+ What is changed
+-===============-
+
+- pletter.cpp has been improved and should compress faster.
+
+ How to compress
+-===============-
+The compressor only works on PC (or any other system that is able to get the source compiled):
+pletter <mode> <source file> [<destination file>]
+
+The mode indicates the look back buffer size:
+  8 -   256 bytes
+  9 -   640 bytes
+  0 -  1152 bytes
+  1 -  2176 bytes
+  2 -  4224 bytes
+  3 -  8320 bytes
+  4 - 16512 bytes
+
+The sourcefile is the file to compress. When the destination file is omitted, it will be constructed the following way: sourcefilename+plet+mode
+
+So: pletter 1 xl2slogo.sc2
+Will (hopefully ;) result in a file called: xl2slogo.sc2.plet1
+
+ How to decompress
+-=================-
+I only included MSX decompressors. Include the right decompressor mode ('uitpakmode') in the source (there are different modes, remember? ;-), and call the appropriate pakuit routine with the start of the compressed data in HL and the address where it should go to in DE.
+
+ License
+-=======-
+
+This is experimental software, and it is very well possible that it is of no use at all to you. Better not kill any original files :-) We don’t care what you do with Pletter. However, since we claim Pletter is based upon BitBuster, here's the bitbuster license:
+
+Copyright (c) 2002-2003 Team Bomba
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Have fun with it.
+
+sjoerd.

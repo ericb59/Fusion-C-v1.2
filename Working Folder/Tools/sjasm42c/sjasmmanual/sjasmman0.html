@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+  <title>Sjasm 0.42 manual - XL2S Entertainment</title>
+  <meta name="title" content="XL2S Entertainment - Software for MSX computers">
+  <meta name="description" content="XL2S Entertainment - Software for MSX computers">
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+  <meta http-equiv="content-style-type" content="text/css">
+  <link rel="stylesheet" href="stijl.css" type="text/css">
+</head>
+  
+<body>
+<div class="titelbalk"><h1>XL2S Entertainment</h1></div>
+<div class="menu">
+<ul><li><i>Sjasm 0.42c manual</i></li>
+</ul>
+</div>
+<div class="navi"><a href="sjasmmanual.html">Sjasm manual</a> > Introduction</div><div class="navi">
+Introduction
+<a href="sjasmman1.html">Command&nbsp;line&nbsp;options</a>
+<a href="sjasmman2.html">Source&nbsp;Format</a>
+<a href="sjasmman3.html">Labels</a>
+<a href="sjasmman4.html">Expressions</a>
+<a href="sjasmman5.html">Z80&nbsp;Assembly&nbsp;syntax</a>
+<a href="sjasmman6.html">Data&nbsp;definition</a>
+<a href="sjasmman7.html">Output;&nbsp;paging&nbsp;and&nbsp;code&nbsp;parts</a>
+<a href="sjasmman8.html">File&nbsp;handling</a>
+<a href="sjasmman9.html">Conditional&nbsp;assembly</a>
+<a href="sjasmman10.html">Loops</a>
+<a href="sjasmman11.html">Macros</a>
+<a href="sjasmman12.html">Listing&nbsp;format</a>
+</div>
+<div class="tekst">
+<h3>Introduction</h3><h5>
+<a href="#s0">New in Sjasm 0.42c</a><br>
+<a href="#s1">Differences with SjASM version 0.3</a><br>
+<a href="#s2">Known bugs</a><br>
+<a href="#s3">To do</a><br>
+<a href="#s4">The assembling process</a><br>
+</h5>
+<p>Sjasm 0.4 is still not quite finished yet, and neither is this manual. Although Sjasm can do more than described here, everything that is in here should work as advertised.</p>
+<a name="s0"></a><h4>New in Sjasm 0.42c</h4>
+<ul><li>Changed the format of the error messages to be compatible with Microsoft Visual Studio.</li>
+<li>Changed some error messages.</li>
+<li>Probably some small improvements here and there.</li>
+</ul>
+<p>New in Sjasm 0.42b8</p>
+<ul><li>Nothing is new, just removed some comments ~8^)</li>
+</ul>
+<p>New in Sjasm 0.4 BETA 7</p>
+<ul><li>Fixed XOR HL,HL. This should generate an error message.</li>
+<li>Hacked EX AF,AF'.</li>
+<li>Added DEFB, DEFW and friends.</li>
+</ul>
+<p>New in Sjasm 0.4 BETA 6</p>
+<ul><li>Fixed 'unexpected' ascmap error.</li>
+<li>Fixed error reports without list file.</li>
+<li>Fixed more small bugs.</li>
+<li>Added page range to PAGE command.</li>
+<li>Added incbin.list, jr., djnz. and jp.</li>
+</ul>
+<p>New in Sjasm 0.4 BETA 5</p>
+<ul><li>Fixed Sjasm endless loop.</li>
+<li>Changed :: operator.</li>
+<li>Added ## code part align option.</li>
+<li>Added more text to this manual.</li>
+</ul>
+<p>New in Sjasm 0.4 BETA 4</p>
+<ul><li>Fixed Sjasm crash while using structures.</li>
+<li>Added more flexible code part page specification.</li>
+</ul>
+<p>New in Sjasm 0.4 BETA 3</p>
+<ul><li>Fixed WHILE loops.</li>
+<li>Improved code part sort.</li>
+<li>Added check on negative page numbers.</li>
+</ul>
+<p>New in Sjasm 0.4 BETA 2</p>
+<ul><li>Fixed UPDATE command.</li>
+<li>Fixed jumps to numbered labels.</li>
+<li>Fixed INCBIN file length check.</li>
+<li>Added ERROR command.</li>
+<li>Added CODE! overlay code parts.</li>
+<li>Added more text to this manual.</li>
+</ul>
+<p>New in Sjasm 0.4 BETA 1</p>
+<ul><li>Everything was new ~8^)</li>
+</ul>
+<a name="s1"></a><h4>Differences with SjASM version 0.3</h4>
+<p>Sjasm version 0.4 is largely rewritten, and in some places the syntax and meaning of commands and operators has changed compared to previous versions of Sjasm. Some differences:</p>
+<ul><li>New name: Sjasm instead of SjASM.</li>
+<li>DC, DZ, ABYTEC and so on only accept strings.</li>
+<li>Character constants are 8 bit. No LD HL,'ab' anymore.</li>
+<li>Structures cannot be nested.</li>
+<li>The &quot;16 bit fake instructions&quot; like LD HL,DE or LDI A,(HL) have been replaced or removed.</li>
+<li>PUSH and POP can have only one operand.</li>
+<li>The way to update files has changed.</li>
+<li>Commands cannot start with a dot.</li>
+<li>Command line options have changed.</li>
+</ul>
+<p>You can work your way around some of the differences by writing some macros.</p>
+<a name="s2"></a><h4>Known bugs</h4>
+<p>Sjasm is still prototype-experimental-beta-like, so there may be some bugs - not that we know of any at this time.</p>
+<p>If you encounter a bug, we would like to hear it. Please make sure it is a bug (in Sjasm or in this manual), and give a (small) source example if possible. Use info@xl2s.tk to contact us.</p>
+<a name="s3"></a><h4>To do</h4>
+<p>In random order:</p>
+<ul><li>Make the error system look more intelligent</li>
+<li>Make the code part placement more intelligent</li>
+<li>Add command line options</li>
+<li>Maybe add some predefined functions like random, sine and such</li>
+</ul>
+<ul><li>Improve this manual</li>
+<li>Add timing information to the listing?</li>
+</ul>
+<a name="s4"></a><h4>The assembling process</h4>
+<p>Sjasm will process your code a couple of times. Conceptually you could say Sjasm uses four passes:</p>
+<ul><li>Pass 1</li>
+<li>Pass 2</li>
+<li>Pass 3</li>
+<li>Pass 4</li>
+</ul>
+<p>The first pass is the pre-processor pass. The pre-processor does the following in this order:</p>
+<ul><li>Remove all comments</li>
+<li>Concatenate lines you split up</li>
+<li>Process define commands</li>
+<li>Replace text macros and macro functions</li>
+<li>Process the white space killer</li>
+<li>Process other pre-processor commands like if, macro, while and struct</li>
+<li>Cut multiple statement lines in pieces</li>
+<li>Expand procedure macros</li>
+</ul>
+<p>In the first pass you can only use (or reference) labels that are defined before you use them.</p>
+<p>In the second pass Sjasm tries to figure out what values all labels should get, and in which order it should place all the code parts. It is not that difficult to make it impossible for Sjasm to do this, and make Sjasm take literally forever to complete this pass.</p>
+<p>When all labels have the right values Sjasm generates the output in the third pass. After that, Sjasm goes over the whole code again to generate the listing file, and to see if it can generate some more error messages.</p>
+</div>
+<div class="navi">
+Introduction
+<a href="sjasmman1.html">Command&nbsp;line&nbsp;options</a>
+<a href="sjasmman2.html">Source&nbsp;Format</a>
+<a href="sjasmman3.html">Labels</a>
+<a href="sjasmman4.html">Expressions</a>
+<a href="sjasmman5.html">Z80&nbsp;Assembly&nbsp;syntax</a>
+<a href="sjasmman6.html">Data&nbsp;definition</a>
+<a href="sjasmman7.html">Output;&nbsp;paging&nbsp;and&nbsp;code&nbsp;parts</a>
+<a href="sjasmman8.html">File&nbsp;handling</a>
+<a href="sjasmman9.html">Conditional&nbsp;assembly</a>
+<a href="sjasmman10.html">Loops</a>
+<a href="sjasmman11.html">Macros</a>
+<a href="sjasmman12.html">Listing&nbsp;format</a>
+</div>
+<div class="menu">
+<ul><li><i>Sjasm 0.42c manual</i></li>
+</ul>
+</div>
+
+<div class="voetnoot">Copyright 2011 XL2S Entertainment</div>
+<div class="xl2sweblogo"></div>
+</body></html>

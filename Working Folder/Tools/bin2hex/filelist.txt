@@ -1,0 +1,54 @@
+Distribution file list and directory structure
+Copyright (c) 2012 by Ming Chen. All rights reserved.
+-----------------------------------------------------------------
+
+# Main directory
+
+   bintoh.exe       Precompiled Win32 console application
+   binfromh.exe     Precompiled Win32 console application
+
+   readme.txt       Read this file first
+   filelist.txt     You're currently reading this file
+   bin2froh.html    Bin2froh manual (HTML)
+   bin2froh.lsm     Brief information about bin2froh (for the Linux Software Map)
+   COPYING          Text file containing the GNU General Public License v2
+
+
+# source code and makefiles
+
+src\
+
+   bin2froh.c       Main program and functions
+   config.h         Change variables here if you're porting bin2froh
+   version.h        Version number header
+
+   bintoh.1         Linux/Unix man page for bin2froh
+
+   # Makefiles for other MSDOS/Windows compilers
+
+   makefile.bc      Borland C++ 4.5x/5.0x Makefile
+   makefile.dj2     DJGPP 2.X Makefile
+   makefile.dm      Digital Mars Makefile
+   makefile.lcc     LCC-Win32 Makefile
+   makefile.min     MinGW Makefile
+   makefile.vs8     Visual Studio 2005 makefile
+   makefile.wcc     Watcom Makefile
+
+   # Makefiles for Linux
+
+   Makefile         Linux makefile
+   makefile.gcc     Duplicate of Makefile
+
+# Miscellaneous source files (for MSDOS/Windows compilation)
+
+src\lib\
+
+   getopt.c         getopt() for deficient systems
+   getopt.h
+
+
+# Empty Directories for "make" to use for various platforms/targets
+
+src\bin
+
+src\lib\bin

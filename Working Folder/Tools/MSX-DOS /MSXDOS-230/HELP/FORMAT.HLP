@@ -1,0 +1,42 @@
+FORMAT
+------
+
+Format:      FORMAT [d:]
+
+Purpose:     Formats (initializes) a disk.
+
+Use:	     The  specified or default drive is formatted,  and  all
+	data on the disk will be destroyed.
+
+	     After  giving  a  FORMAT  command,  an  option  may  be
+	prompted for, allowing the required format of the disk to be
+	selected.  The exact nature of these prompts depends on  the
+	manufacturer of the MSX machine.
+
+	     After formatting, there will be no files or directories
+	on  the disk,  and the maximum amount of disk space will  be
+	free. The disk will not have a volume name, but can be given
+	one with the VOL command.  To turn the disk into a boot disk
+	so  that  MSX-DOS  can  be started up  from  it,  the  files
+	MSXDOS2.SYS and COMMAND2.COM must be copied onto it with the
+	COPY command.
+
+Examples:
+
+	FORMAT B:
+	1 - Single sided
+	2 - Double sided
+	? 2
+	All data on drive B: will be destroyed
+	Press any key to continue...
+
+	     The  command was given to format the disk in drive  B:.
+	In  this case,  the options available were to select  either
+	double sided or single sided, and double sided was selected.
+	The standard warning prompt was then printed.
+
+	FORMAT
+
+	     This  will  format the current drive after the  prompts
+	given above.
+

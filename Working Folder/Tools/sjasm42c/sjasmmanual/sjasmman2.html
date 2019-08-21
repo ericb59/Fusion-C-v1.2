@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+  <title>Sjasm 0.42 manual - XL2S Entertainment</title>
+  <meta name="title" content="XL2S Entertainment - Software for MSX computers">
+  <meta name="description" content="XL2S Entertainment - Software for MSX computers">
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+  <meta http-equiv="content-style-type" content="text/css">
+  <link rel="stylesheet" href="stijl.css" type="text/css">
+</head>
+  
+<body>
+<div class="titelbalk"><h1>XL2S Entertainment</h1></div>
+<div class="menu">
+<ul><li><i>Sjasm 0.42c manual</i></li>
+</ul>
+</div>
+<div class="navi"><a href="sjasmmanual.html">Sjasm manual</a> > Source Format</div><div class="navi">
+<a href="sjasmman0.html">Introduction</a>
+<a href="sjasmman1.html">Command&nbsp;line&nbsp;options</a>
+Source&nbsp;Format
+<a href="sjasmman3.html">Labels</a>
+<a href="sjasmman4.html">Expressions</a>
+<a href="sjasmman5.html">Z80&nbsp;Assembly&nbsp;syntax</a>
+<a href="sjasmman6.html">Data&nbsp;definition</a>
+<a href="sjasmman7.html">Output;&nbsp;paging&nbsp;and&nbsp;code&nbsp;parts</a>
+<a href="sjasmman8.html">File&nbsp;handling</a>
+<a href="sjasmman9.html">Conditional&nbsp;assembly</a>
+<a href="sjasmman10.html">Loops</a>
+<a href="sjasmman11.html">Macros</a>
+<a href="sjasmman12.html">Listing&nbsp;format</a>
+</div>
+<div class="tekst">
+<h3>Source Format</h3><h5>
+<a href="#s0">Comments</a><br>
+<a href="#s1">Multi statement lines</a><br>
+<a href="#s2">White space killer</a><br>
+<a href="#s3">Repeat count</a><br>
+</h5>
+<p>In general, the format of a source line is as follows:</p>
+<pre>
+[label[:]] [repeat] [operation [operands]] [comment]
+</pre>
+<p>The fields should be separated by spaces or tabs.</p>
+<p>Labels should start in the first column and are case-sensitive: 'Start' is different from 'start'. The : (colon) is ignored.</p>
+<p>In general, labels must not be used with assembler commands. Putting a label before IF, IFDEF, DEFINE, MACRO, WHILE, REPEAT, ENDMACRO, ENDWHILE, INCLUDE and so on will make Sjasm not recognize the command.</p>
+<p>The repeat field is used to specify how many times the operation should be executed and should be specified within square brackets ('[' and ']'). The default is one time. Most assembler commands do not allow a repeat count.</p>
+<p>The operation is an instruction mnemonic or an assembler command and must not start in the first column. The operation should be in the same case: 'add' and 'ADD' are recognized, but 'Add' is not.</p>
+<p>Most instructions and commands operate on one or more operands, which should be separated by commas most of the times.</p>
+<p>The following example uses all fields:</p>
+<pre>
+MulBy8:	[3]	add	a, a	; a=a*8
+</pre>
+<a name="s0"></a><h4>Comments</h4>
+<p>The assembler ignores comments. Sjasm supports two kinds of comments: line based and block based. A line based comment starts with a ; (semicolon) or a C++-like // (double slash) and ends at the end of the line. A comment may start anywhere on the source line, also on column one:</p>
+<pre>
+; comment
+  ld a,7   // comment
+</pre>
+<p>The C-like block comment uses /* to indicate the start and */ to indicate the end of a comment. These block comments may be nested and expanded over more lines. Block comments are replaced with a space character. Some examples:</p>
+<pre>
+ld /* comment */ a,80
+
+/*
+/* nested comment */
+*/
+
+ ld/*
+ this will be ld a,3
+ */a,3
+</pre>
+<a name="s1"></a><h4>Multi statement lines</h4>
+<p>The \ (backslash) is used as line operator. If it is placed at the end of a line (but before the comment field), the next line extends the current line:</p>
+<pre>
+MulBy8: \
+[3] \
+add \	; backslash at the end of a line, as comments are ignored
+a, a	; a=a*8
+</pre>
+<p>When the \ is used in the middle of a line, it indicates the start of a new line:</p>
+<pre>
+Maal8: add a,a\ add a,a\ add a,a ; a=a*8
+</pre>
+<p>Note the space after the backslash; it is needed here because the operation field must not start in column one.</p>
+<a name="s2"></a><h4>White space killer</h4>
+<p>The &gt;&lt; (angle brackets) operator removes any spaces or tabs:</p>
+<pre>
+  l &gt;&lt; d a,3
+</pre>
+<p>becomes:</p>
+<pre>
+  ld a,3
+</pre>
+<p>To use this operator inside strings, precede the string with a @ (at):</p>
+<pre>
+  byte @'hi &gt;&lt; mom!'
+</pre>
+<p>becomes:</p>
+<pre>
+  byte 'himom!'
+</pre>
+<p>This is useful for use in macros, to generate label names.</p>
+<a name="s3"></a><h4>Repeat count</h4>
+<p>When you want to repeat an instruction a couple of times, you can specify how many times the instruction should be executed within square brackets ('[' and ']').</p>
+<p>So instead of this:</p>
+<pre>
+  inc hl
+  inc hl
+  add a,a
+  add a,a
+  add a,a
+  add a,a
+</pre>
+<p>you could program this:</p>
+<pre>
+[2] inc hl
+[4] add a,a
+</pre>
+<p>You can use % (percent sign) to get the current iteration, starting with 0.</p>
+<p>So</p>
+<pre>
+[4] add a,%
+</pre>
+<p>is the same as:</p>
+<pre>
+  add a,0
+  add a,1
+  add a,2
+  add a,3
+</pre>
+<p>% Might be more useful when you use it to define data.</p>
+<p>You can repeat the repeat field, and use %%, %%% and so on the get the repeat count of the outer loops:</p>
+<pre>
+[2][3]byte %,%%
+</pre>
+<p>is the same as:</p>
+<pre>
+ byte 0,0
+ byte 1,0
+ byte 2,0
+ byte 0,1
+ byte 1,1
+ byte 2,1
+</pre>
+</div>
+<div class="navi">
+<a href="sjasmman0.html">Introduction</a>
+<a href="sjasmman1.html">Command&nbsp;line&nbsp;options</a>
+Source&nbsp;Format
+<a href="sjasmman3.html">Labels</a>
+<a href="sjasmman4.html">Expressions</a>
+<a href="sjasmman5.html">Z80&nbsp;Assembly&nbsp;syntax</a>
+<a href="sjasmman6.html">Data&nbsp;definition</a>
+<a href="sjasmman7.html">Output;&nbsp;paging&nbsp;and&nbsp;code&nbsp;parts</a>
+<a href="sjasmman8.html">File&nbsp;handling</a>
+<a href="sjasmman9.html">Conditional&nbsp;assembly</a>
+<a href="sjasmman10.html">Loops</a>
+<a href="sjasmman11.html">Macros</a>
+<a href="sjasmman12.html">Listing&nbsp;format</a>
+</div>
+<div class="menu">
+<ul><li><i>Sjasm 0.42c manual</i></li>
+</ul>
+</div>
+
+<div class="voetnoot">Copyright 2011 XL2S Entertainment</div>
+<div class="xl2sweblogo"></div>
+</body></html>

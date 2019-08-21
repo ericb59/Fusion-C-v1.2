@@ -1,0 +1,22 @@
+ECHO
+
+[書式]	ECHO [テキスト]
+
+[機能]	指定したテキストを表示する.
+
+[解説]	テキストをそのまま画面に表示します.
+	テキストを指定しないと空行が出力されます.
+
+	このコマンドはECHOという環境変数によって制御されるバッ
+	チファイル中の'echo'の状態とは別ですので混同しないよう
+	にしてください.
+
+[例]	ECHO AUTOEXEC batch file executed
+
+	AUTOEXEC batch file executed
+
+	指定のテキスト('AUTOEXEC batch file executed')が画面に
+	出力される.
+
+	ECHO
+	パラメータが与えられていないので, 空行のみが出力される.

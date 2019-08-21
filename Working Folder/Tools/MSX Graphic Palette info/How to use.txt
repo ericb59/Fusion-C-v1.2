@@ -1,0 +1,29 @@
+From MSX2 SCREEN8 ".PIC" file to Photoshop:
+
+1 - Open as... (Select the ".PIC" file) then choose "Open as "Photoshop Raw (*.RAW)
+2 - On the dialog, put:
+	Width: 256 pixels
+	Height: 212 pixels
+	Channels: 1
+	Depht: 8 bits
+	Header size: 7 bytes
+	Retain When Saving: ticked
+3 - It will open the image as grayscale. Go to the menu Image -> Mode then change to Indexed Color.
+4 - Go to the menu Image -> Mode -> Color Table then load the MSX Color Palette.act.
+
+
+From Photoshop to MSX2 SCREEN8 ".PIC" file:
+
+1 - You can use the image you already open as instructions above or create a new image from the File menu with the following info:
+	Width: 256 pixels
+	Height: 212 pixels
+	Resolution: 72dpi
+    Color Mode: Grayscale 8 bit
+    Background Contents: White
+Then go to the menu Image -> Mode then change to Indexed Color then go again to the menu Image -> Mode -> Color Table then load the MSX Color Palette.act.
+2 - Load and resize any image to fit (maximum size 256 x 212 pixels) on this MSX "template" image that we created/loaded .
+3 - Copy the image then paste on our MSX "template" image.
+4 - Save as Photoshop Raw (*.RAW)
+5 - On the dialog, put the header with 7 bytes.
+6 - Rename the image extension as ".PIC" instead of ".RAW".
+

@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+  <title>Sjasm 0.42 manual - XL2S Entertainment</title>
+  <meta name="title" content="XL2S Entertainment - Software for MSX computers">
+  <meta name="description" content="XL2S Entertainment - Software for MSX computers">
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+  <meta http-equiv="content-style-type" content="text/css">
+  <link rel="stylesheet" href="stijl.css" type="text/css">
+</head>
+  
+<body>
+<div class="titelbalk"><h1>XL2S Entertainment</h1></div>
+<div class="menu">
+<ul><li><i>Sjasm 0.42c manual</i></li>
+</ul>
+</div>
+<div class="navi"><a href="sjasmmanual.html">Sjasm manual</a> > Conditional assembly</div><div class="navi">
+<a href="sjasmman0.html">Introduction</a>
+<a href="sjasmman1.html">Command&nbsp;line&nbsp;options</a>
+<a href="sjasmman2.html">Source&nbsp;Format</a>
+<a href="sjasmman3.html">Labels</a>
+<a href="sjasmman4.html">Expressions</a>
+<a href="sjasmman5.html">Z80&nbsp;Assembly&nbsp;syntax</a>
+<a href="sjasmman6.html">Data&nbsp;definition</a>
+<a href="sjasmman7.html">Output;&nbsp;paging&nbsp;and&nbsp;code&nbsp;parts</a>
+<a href="sjasmman8.html">File&nbsp;handling</a>
+Conditional&nbsp;assembly
+<a href="sjasmman10.html">Loops</a>
+<a href="sjasmman11.html">Macros</a>
+<a href="sjasmman12.html">Listing&nbsp;format</a>
+</div>
+<div class="tekst">
+<h3>Conditional assembly</h3><h5>
+</h5>
+<p>With the conditional commands you can test a condition and assemble the following block of statements or skip it, based on the condition. The condition is only checked in the first pass.</p>
+<p>All conditional commands follow the same syntax:</p>
+<pre>
+  IF &lt;condition&gt;
+  &lt;statements&gt;
+  ELSEIF &lt;condition&gt;
+  &lt;statements&gt;
+  ELSE
+  &lt;statements&gt;
+  ENDIF
+</pre>
+<p>The statements following the IF command are processed when the condition is true or non-zero. The ELSEIF block is optional, and is processed when the IF condition and the previous ELSEIF conditions were not met. You can use as much ELSEIF blocks as you like. The ELSE block is also optional and can be used only once. If none of the IF and ELSEIF conditions was met, the statements following the ELSE command are processed. An if block should end with ENDIF.</p>
+<p>Sjasm recognises the following conditional commands:</p>
+<p>The ELSEIF variants can be constructed by placing ELSE before the IF command, for example: ELSEIFNNUM, ELSEIF, ELSEIFIN, etc.</p>
+<b>IF</b> &lt;expression&gt;
+<p>The following statements are processed if the expression evaluates to a non-zero value.</p>
+<b>IFB</b> &lt;argument&gt;
+<p>The following statements are processed if the argument is empty.</p>
+<b>IFDEF</b> &lt;identifier&gt;
+<p>The following statements are processed if the identifier is a text macro.</p>
+<b>IFDIF</b> &lt;argument1&gt;,&lt;argument2&gt;
+<p>The following statements are processed if argument1 is different from </p>
+<p>argument2.</p>
+<b>IFDIFI</b>  &lt;argument1&gt;,&lt;argument2&gt;
+<p>The case-insensitive version of IFDIF.</p>
+<b>IFEXISTS</b> &lt;filename&gt;
+<p>The following statements are processed if the file exists.</p>
+<b>IFID</b> &lt;argument&gt;
+<p>The following statements are processed if the argument could be a label.</p>
+<b>IFIDN</b> &lt;argument1&gt;,&lt;argument2&gt;
+<p>The following statements are processed if argument1 is identical to argument2.</p>
+<b>IFIDNI</b> &lt;argument1&gt;,&lt;argument2&gt;
+<p>The case-insensitive version of IFIDN.</p>
+<b>IFIN</b> &lt;argument&gt;,&lt;list&gt;
+<p>The following statements are processed if the argument exists in the list.</p>
+<b>IFINI</b> &lt;argument&gt;,&lt;list&gt;
+<p>The case-insensitive version of IFIN.</p>
+<b>IFNUM</b> &lt;argument&gt;
+<p>The following statements are processed if the argument could be a number.</p>
+<b>IFSTR</b> &lt;argument&gt;
+<p>The following statements are processed if the argument could be a string.</p>
+<b>IFNB</b> &lt;argument&gt;
+<p>The following statements are processed if the argument is not empty.</p>
+<b>IFNDEF</b> &lt;identifier&gt;
+<p>The following statements are processed if the identifier is not a text macro.</p>
+<b>IFNEXISTS</b> &lt;filename&gt;
+<p>The following statements are processed if the file does not exist.</p>
+<b>IFNID</b> &lt;argument&gt;
+<p>The following statements are processed if the argument could not be a label.</p>
+<b>IFNNUM</b> &lt;argument&gt;
+<p>The following statements are processed if the argument could not be a number.</p>
+<b>IFNSTR</b> &lt;argument&gt;
+<p>The following statements are processed if the argument could not be a string.</p>
+</div>
+<div class="navi">
+<a href="sjasmman0.html">Introduction</a>
+<a href="sjasmman1.html">Command&nbsp;line&nbsp;options</a>
+<a href="sjasmman2.html">Source&nbsp;Format</a>
+<a href="sjasmman3.html">Labels</a>
+<a href="sjasmman4.html">Expressions</a>
+<a href="sjasmman5.html">Z80&nbsp;Assembly&nbsp;syntax</a>
+<a href="sjasmman6.html">Data&nbsp;definition</a>
+<a href="sjasmman7.html">Output;&nbsp;paging&nbsp;and&nbsp;code&nbsp;parts</a>
+<a href="sjasmman8.html">File&nbsp;handling</a>
+Conditional&nbsp;assembly
+<a href="sjasmman10.html">Loops</a>
+<a href="sjasmman11.html">Macros</a>
+<a href="sjasmman12.html">Listing&nbsp;format</a>
+</div>
+<div class="menu">
+<ul><li><i>Sjasm 0.42c manual</i></li>
+</ul>
+</div>
+
+<div class="voetnoot">Copyright 2011 XL2S Entertainment</div>
+<div class="xl2sweblogo"></div>
+</body></html>

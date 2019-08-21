@@ -1,0 +1,29 @@
+XL2
+H 7 areas 4 global symbols
+S _main Ref0000
+S .__.ABS. Def0000
+A _CODE size C flags 0 addr 0
+A _HEADER size 0 flags 8 addr 0
+A _HEADER0 size 6 flags 8 addr 100
+A _DATA size 2 flags 0 addr 0
+S _heap_top Def0000
+A _GSINIT size 0 flags 0 addr 0
+A _GSFINAL size 1 flags 0 addr 0
+A _HEAP size 0 flags 0 addr 0
+S _HEAP_start Def0000
+T 00 01
+R 00 00 02 00
+T 00 01 CD 02 00 C3 00 00
+R 00 00 02 00 00 03 03 00 00 06 00 00
+T 00 00
+R 00 00 00 00
+T 00 00 D5 11 00 00 ED 53 00 00 D1 C3 00 00
+R 00 00 00 00 00 04 06 00 00 08 03 00 02 0C 00 00
+T 00 00
+R 00 00 03 00
+T 00 00 00 00
+R 00 00 03 00
+T 00 00 C9
+R 00 00 05 00
+T 00 00
+R 00 00 06 00

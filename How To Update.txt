@@ -1,0 +1,14 @@
+How to Update from Fusion-C 1.0, or 1.1  to Fusion-C 1.2
+
+All versions are using the same folder structure.
+
+If you made changes inside the Fusion-C files, or Fusion-C folder save them
+in another place.
+
+Now just copy 
+ 	"Working Folder/fusion-c/""	over your existing "fusion-c" folder (Must be inside Working Folder, if you did not change default structure)
+	"Working Folder/Tools"		over your existing "Tool" folder
+	"Working Folder/Makefile"	over your existing Makefile file
+	"Working Folder/compil.bat"	over your existing compil.bat file
+
+that’s all.

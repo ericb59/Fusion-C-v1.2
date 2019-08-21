@@ -1,0 +1,100 @@
+.TH bin2froh 1 "Version 1.0.0" "2012"
+.SH NAME
+bin2froh
+\- Converts binary file(s) to/from C header file(s).
+.SH SYNOPSIS
+.B bintoh
+[
+.I options
+] [file...]
+.br
+.B binfromh
+[
+.I options
+] [file...]
+.br
+.SH DESCRIPTION
+Binary files, like Bitmap, have binary format ,while C compiler requires 
+that they are converted to char arrays in a C header file.
+.I bintoh
+converts binary file(s) TO C header file(s), while
+.I binfromh
+converts binary file(s) FROM C header file(s).
+.PP
+The programs accept multiple filenames and wildcards as their arguments.
+You may also use them in a pipe.
+If either program finds its input redirected, it will process stdin
+and place the output on stdout.
+.SH OPTIONS
+.TP
+.BI \-a
+Abort processing files on error in any file in a list of files. Normally,
+the program will simply skip to process the next file on the command line
+when it encounters any errors. This option causes it to abort on errors.
+.TP
+.BI \-c <num>
+<num> of columns of the C-style char array.Note this option is only applied
+when binary file(s) are converting to C header files.
+.TP
+.BI \-e <name>
+Uses a specific output file name extension, with or without a leading
+period (.). the program inserts the period automatically if it does not
+appear in <name>. If no extension is given, the default extension is ".h"
+for C header files, and ".bin" for binary files. Note the program would
+only change the extension of the corresponding input file, while keep all
+others the same.
+.TP
+.BI \-f
+Convert binary file(s) FROM C header file(s). This forces the program to convert
+the file in a particular direction. By default, if the program is named
+.I bintoh
+or
+.I bin2h,
+it will assume that the input file is in binary format and convert it to
+C format. If the program is named
+.I binfromh,
+it will assume that the input file is in C format and convert it to
+binary format. Using the
+.I \-f
+option forces the program to convert binary file(s) FROM input file(s)
+regardless of how the program is named. Likewise, using the
+.I \-t
+option forces the program to convert input file(s) TO C header file(s)
+regardless of the name of the program.
+.TP
+.BI \-h
+Display a short help screen on the program usage and quit.
+.TP
+.BI \-l <file>
+Log debug messages to <file>. Note that if your command line has an
+error, such as when you specify an unknown option, the error message for the
+command line option error will be issued to stderr instead and not logged.
+.TP
+.BI \-o
+Overwrite output file(s) if already exist (no backup). By default, the program
+will create a backup file if the output file already exist. Use -o will not
+create the backup file.
+.TP
+.BI \-s <name>
+Symbol <name> of the C-style char array. Note this option is only applied
+when binary file(s) are converting to C header files. And it cannot separate
+the symbol names for multiple input files. The default symbol name is Bin_Raw.
+.TP
+.BI \-t
+Convert binary file(s) to C header file(s). See the
+.I \-f
+option above for more information.
+.TP
+.BI \-v
+Verbose.
+.TP
+.BI \-V
+Show version message and quit.
+.SH AUTHOR
+The program and its documentation are copyrighted (c) 2012 by Ming Chen.
+All rights reserved. They are distributed under the terms of the
+GNU General Public License Version 2.
+.PP
+The latest version of bin2froh can be obtained from
+.br
+https://sourceforge.net/projects/bin2froh

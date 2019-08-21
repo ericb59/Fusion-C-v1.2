@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+  <title>Sjasm 0.42 manual - XL2S Entertainment</title>
+  <meta name="title" content="XL2S Entertainment - Software for MSX computers">
+  <meta name="description" content="XL2S Entertainment - Software for MSX computers">
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+  <meta http-equiv="content-style-type" content="text/css">
+  <link rel="stylesheet" href="stijl.css" type="text/css">
+</head>
+  
+<body>
+<div class="titelbalk"><h1>XL2S Entertainment</h1></div>
+<div class="menu">
+<ul><li><i>Sjasm 0.42c manual</i></li>
+</ul>
+</div>
+<div class="navi"><a href="sjasmmanual.html">Sjasm manual</a> > Expressions</div><div class="navi">
+<a href="sjasmman0.html">Introduction</a>
+<a href="sjasmman1.html">Command&nbsp;line&nbsp;options</a>
+<a href="sjasmman2.html">Source&nbsp;Format</a>
+<a href="sjasmman3.html">Labels</a>
+Expressions
+<a href="sjasmman5.html">Z80&nbsp;Assembly&nbsp;syntax</a>
+<a href="sjasmman6.html">Data&nbsp;definition</a>
+<a href="sjasmman7.html">Output;&nbsp;paging&nbsp;and&nbsp;code&nbsp;parts</a>
+<a href="sjasmman8.html">File&nbsp;handling</a>
+<a href="sjasmman9.html">Conditional&nbsp;assembly</a>
+<a href="sjasmman10.html">Loops</a>
+<a href="sjasmman11.html">Macros</a>
+<a href="sjasmman12.html">Listing&nbsp;format</a>
+</div>
+<div class="tekst">
+<h3>Expressions</h3><h5>
+<a href="#s0">Numeric constants</a><br>
+<a href="#s1">Character constants</a><br>
+<a href="#s2">String constants</a><br>
+<a href="#s3">Operators</a><br>
+</h5>
+<p>Expressions consist of labels, constants and operators.</p>
+<a name="s0"></a><h4>Numeric constants</h4>
+<p>Numeric constants should always start with a digit or $, # or %. The following formats are supported:</p>
+<pre>
+12     decimal
+12d    decimal
+0ch    hexadecimal
+0xc    hexadecimal
+$c     hexadecimal
+#c     hexadecimal
+1100b  binary
+%1100  binary
+14q    octal
+14o    octal
+</pre>
+<p>All these constants can have underscores in them to group bits, nibbles, thousands or bytes and so on:</p>
+<pre>
+1100_001_1b  ; same as 11000011b
+1_200        ; same as 1200
+</pre>
+<a name="s1"></a><h4>Character constants</h4>
+<p>Character constants are single characters surrounded by single or double quotes. When double quotes are used, the following escape sequences are recognized:</p>
+<pre>
+\\ 92
+\? 63
+\' 39
+\&quot; 34
+\A 7
+\B 8
+\D 127
+\E 27
+\F 12
+\N 10
+\R 13
+\T 9
+\V 11
+</pre>
+<p>Character constants can be used in expressions. Examples would be: 'p', &quot;\v&quot; and '&quot;'.</p>
+<a name="s2"></a><h4>String constants</h4>
+<p>String constants are two or more characters surrounded by single or double quotes and cannot be used in expressions. When double quotes are used the same escape sequences are recognized as with character constants surrounded by double quotes. Some examples:</p>
+<pre>
+&quot;it's fun to be here&quot;
+'how much &quot;fun&quot; do you want?'
+&quot;hoppa\n&quot;
+</pre>
+<a name="s3"></a><h4>Operators</h4>
+<p>The following operators may be used in expressions:</p>
+<pre>
+()    (x)      change the operator precedence
+
+$     $        current program location
+#     #        current page
+%     %        current repeat iteration
+:     :label   page of label
+::    ::page   highest address in page
+
+!     !x       logical not
+~     ~x       complement
++     +x       does nothing
+-     -x       minus
+low   low x    low 8 bits of 16 bit value
+high  high x   high 8 bits of 16 bit value
+not   not x    logical not
+
+**    x**y     power
+
+*     x*y      multiplication
+/     x/y      division
+%     x%y      modulo
+mod   x mod y  modulo
+
++     x+y      addition
+-     x-y      subtraction
+
+&lt;&lt;    x&lt;&lt;y     shift left
+&gt;&gt;    x&gt;&gt;y     shift right signed
+&gt;&gt;&gt;   x&gt;&gt;&gt;y    shift right unsigned
+shl   x shl y  shift left
+shr   x shr y  shift right signed
+
+&lt;?    x&lt;?y     minimum
+&gt;?    x&gt;?y     maximum
+
+&lt;     x&lt;y      less than
+&gt;     x&gt;y      greater than
+&lt;=    x&lt;=y     equal or less than
+&gt;=    x&gt;=y     equal or greater than
+
+=     x=y      equal
+==    x==y     equal
+!=    x!=y     not equal
+
+&amp;     x&amp;y      bitwise and
+and   x and y  bitwise and
+
+^     x^y      bitwise xor
+xor   x xor y  bitwise xor
+
+|     x|y      bitwise or
+or    x or y   bitwise or
+
+:     x:y      x*256+y
+</pre>
+<p>Here are some examples of valid expressions:</p>
+<pre>
+  3&lt;&lt;2                 ; 12
+  1+1                  ; 2
+  high (8000h+(3&amp;1))   ; 80h
+  3&gt;?5                 ; 5
+</pre>
+<p>Sjasm ignores overflow.</p>
+</div>
+<div class="navi">
+<a href="sjasmman0.html">Introduction</a>
+<a href="sjasmman1.html">Command&nbsp;line&nbsp;options</a>
+<a href="sjasmman2.html">Source&nbsp;Format</a>
+<a href="sjasmman3.html">Labels</a>
+Expressions
+<a href="sjasmman5.html">Z80&nbsp;Assembly&nbsp;syntax</a>
+<a href="sjasmman6.html">Data&nbsp;definition</a>
+<a href="sjasmman7.html">Output;&nbsp;paging&nbsp;and&nbsp;code&nbsp;parts</a>
+<a href="sjasmman8.html">File&nbsp;handling</a>
+<a href="sjasmman9.html">Conditional&nbsp;assembly</a>
+<a href="sjasmman10.html">Loops</a>
+<a href="sjasmman11.html">Macros</a>
+<a href="sjasmman12.html">Listing&nbsp;format</a>
+</div>
+<div class="menu">
+<ul><li><i>Sjasm 0.42c manual</i></li>
+</ul>
+</div>
+
+<div class="voetnoot">Copyright 2011 XL2S Entertainment</div>
+<div class="xl2sweblogo"></div>
+</body></html>

@@ -1,0 +1,180 @@
+;-Sound effects player test------------------------------------;
+;                                                              ;
+; Тестовая программа, использующая Minimal ayFX player.        ;
+; Проигрывает эффекты на штатном AY; при наличии второго AY по ;
+; схеме NedoPC можно включить музыку для проигрывания на нём.  ;
+; Клавиши 1-0,Q-P,A-L,Z-M,SS,CS проигрывают эффекты 0..38      ;
+; (можно загрузить банк с меньшим количеством эффектов),       ;
+; клавиша 'пробел' включает/выключает музыку на втором AY.     ;
+;                                                              ;
+;--------------------------------------------------------------;
+
+sfxBankAd	EQU #a000	;адрес банка эффектов
+musInitAd	EQU #c000	;адрес скомпилированной музыки (PT3)
+musPlayAd	EQU musInitAd+5
+musShutAd	EQU musInitAd+8
+
+
+	ORG #6200
+
+	ENT $
+	
+	di
+	ld sp,#61ff
+	
+	ld hl,sfxBankAd	;инициализация плеера эффектов
+	call AFXINIT
+	
+	call musInitAd	;инициализация музыки
+	
+	xor a			;музыка по умолчанию выключена
+	ld (tsMusEnable+1),a
+
+	ld hl,intProc	;перемещаем обработчик прерывания в #bdbd
+	ld de,#bdbd
+	ld bc,intProcEnd-intProc
+	ldir
+	
+	ld hl,#be00		;таблица прерывания для адреса #bdbd
+	ld de,#be01
+	ld bc,#0100
+	ld a,h
+	ld i,a
+	ld (hl),#bd
+	ldir
+	im 2
+	ei
+	
+mainLoop			;основной цикл
+
+	halt
+	
+	ld b,4			;цикл опроса клавиш
+	ld hl,tblRowNum
+keyLoop
+	push bc
+	
+	ld b,(hl)		;проверка текущего левого полуряда
+	ld c,#fe
+	inc hl
+	in a,(c)
+	ld b,5
+	ld c,(hl)
+	inc hl
+keyRowL
+	rra
+	call nc,playSfx
+	inc c
+	djnz keyRowL
+	
+	ld b,(hl)		;проверка текущего правого полуряда
+	ld c,#fe
+	inc hl
+	in a,(c)
+	ld b,5
+	ld c,(hl)
+	inc hl
+keyRowR
+	rra
+	call nc,playSfx
+	dec c
+	djnz keyRowR
+
+	pop bc
+	djnz keyLoop
+	
+	jr mainLoop
+	
+	
+	
+playSfx				;запуск эффекта
+	push af
+	push bc
+	push hl
+
+	ld a,39			;эффект номер 39 = клавиша 'пробел'
+	cp c
+	jr nz,playSfx0	;переход, если пробел не нажат
+	
+	ld hl,tsMusEnable+1
+	ld a,(hl)		;инвертируем флаг включения музыки
+	inc a
+	ld (hl),a
+	and 1
+	jr nz,playSfx1	;переход, если музыка была включена
+	
+	halt			;музыка выключена, выключаем каналы AY
+	di
+	ld a,1
+	call aySelChip
+	call musShutAd
+	ei
+	jr playSfx1
+	
+playSfx0
+	ld a,(sfxBankAd);проверка на наличие эффекта в банке
+	dec a
+	cp c
+	jr c,playSfx2	;переход, если в банке нет столько эффектов
+	ld a,c			;собственно запуск эффекта
+	call AFXPLAY
+
+playSfx1
+	halt			;задержка после нажатия клавиши
+	halt
+	halt
+	halt
+	
+playSfx2
+	pop hl
+	pop bc
+	pop af
+	ret
+	
+	
+aySelChip			;процедура выбора нужного AY
+	ld bc,#fffd
+	xor b
+	out (c),a
+	ret
+	
+#F "ayfxplay.a80"	;включаем исходник плеера эффектов
+
+;табличка для опроса полурядов клавиатуры
+;первый байт - старший байт адреса порта
+;второй байт - стартовый номер эффекта для полуряда
+
+tblRowNum
+	DB #f7,#00,#ef,#09,#fb,#0a,#df,#13
+	DB #fd,#14,#bf,#1d,#fe,#1e,#7f,#27
+
+
+
+	
+intProc				;обработчик прерывания
+	push af
+	push bc
+	push de
+	push hl
+
+tsMusEnable	EQU $-intProc+#bdbd	;адрес метки после перемещения
+	ld a,0			;музыка включена?
+	and 1
+	jr z,noMusic
+	
+	ld a,1			;выбираем второй AY
+	call aySelChip
+	call musPlayAd	;проигрываем музыку
+	
+noMusic
+	xor a			;выбираем первый AY
+	call aySelChip
+	call AFXFRAME	;проигрываем эффекты
+
+	pop hl
+	pop de
+	pop bc
+	pop af
+	ei
+	ret
+intProcEnd

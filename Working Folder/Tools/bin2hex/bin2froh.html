@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- Copyright 2012 Ming Chen. All rights reserved. -->
+<title>bin2froh - Converts binary file(s) to/from C header file(s)</title>
+<style type="text/css">
+h1, h2, p { font-family: Arial, Helvetica, sans-serif ; }
+dt {
+	font-family: Arial, Helvetica, sans-serif ;
+	font-weight: bold ;
+}
+dd {
+	font-family: Arial, Helvetica, sans-serif ;
+}
+span.programname {
+	font-weight: bold ;
+}
+span.optionchar {
+	font-weight: bold ;
+}
+span.filename {
+	font-family: "Courier New", Courier, monospace ;
+}
+p.copyright {
+	font-family: Arial, Helvetica, sans-serif ;
+	font-size: 90% ;
+}
+</style>
+</head>
+<body>
+
+<h1>bin2froh - Converts binary file(s) to/from C header file(s)</h1>
+
+<h2>Synopsis</h2>
+
+<p>
+<span class="programname">bintoh</span> [options] [<span class="filename">file...</span>]<br />
+<span class="programname">binfromh</span> [options] [<span class="filename">file...</span>]<br />
+</p>
+
+<h2>Description</h2>
+
+<p>
+Binary files, like Bitmap, have binary format ,while C compiler requires 
+that they are converted to char arrays in a C header file.
+<span class="programname">bintoh</span>
+converts binary file(s) TO C header file(s), while
+<span class="programname">binfromh</span>
+converts binary file(s) FROM C header file(s).
+</p>
+
+<p>
+The programs accept multiple filenames and wildcards as their arguments.
+You may also use them in a pipe.
+If either program finds its input redirected, it will process stdin
+and place the output on stdout.
+</p>
+
+<h2>Options</h2>
+
+<dl>
+<dt>-a</dt>
+<dd>
+Abort processing files on error in any file in a list of files. Normally,
+the program will simply skip to process the next file on the command line
+when it encounters any errors. This option causes it to abort on errors.
+</dd>
+<dt>-c &lt;num&gt;</dt>
+<dd>
+&lt;num&gt; of columns of the C-style char array.Note this option is only applied
+when binary file(s) are converting to C header files.
+</dd>
+<dt>-e &lt;name&gt;</dt>
+<dd>
+Uses a specific output file name extension, with or without a leading
+period (.). the program inserts the period automatically if it does not
+appear in &lt;name&gt;. If no extension is given, the default extension is "h"
+for C header files, and "bin" for binary files. Note the program would
+only change the extension of the corresponding input file, while keep all
+others the same.
+</dd>
+<dt>-f</dt>
+<dd>
+Convert binary file(s) FROM C header file(s). This forces the program to convert
+the file in a particular direction. By default, if the program is named
+<span class="programname">bintoh</span> or <span class="programname">bin2h</span>
+it will assume that the input file is in binary format and convert it to
+C format. If the program is named <span class="programname">binfromh</span> it
+will assume that the input file is in C format and convert it to binary format.
+Using the <span class="optionchar">-f</span> option forces the program to
+convert binary file(s) FROM input file(s) regardless of how the program is
+named. Likewise, using the <span class="optionchar">-t</span> option forces
+the program to convert input file(s) TO C header file(s) regardless of the
+name of the program.
+</dd>
+<dt>-h</dt>
+<dd>
+Display a short help screen on the program usage and quit.
+</dd>
+<dt>-l &lt;file&gt;</dt>
+<dd>
+Log debug messages to &lt;file&gt;. Note that if your command line has an
+error, such as when you specify an unknown option, the error message for the
+command line option error will be issued to stderr instead and not logged.
+</dd>
+<dt>-o</dt>
+<dd>
+Overwrite output file(s) if already exist (no backup). By default, the program
+will create a backup file if the output file already exist. Use -o will not
+create the backup file.
+</dd>
+<dt>-s &lt;name&gt;</dt>
+<dd>
+Symbol &lt;name&gt; of the C-style char array. Note this option is only applied
+when binary file(s) are converting to C header files. And it cannot separate
+the symbol names for multiple input files. The default symbol name is Bin_Raw.
+</dd>
+<dt>-t</dt>
+<dd>
+Convert binary file(s) to C header file(s). See the <span class="optionchar">-f</span>
+option above for more information.
+</dd>
+<dt>-v</dt>
+<dd>
+Verbose.
+</dd>
+<dt>-V</dt>
+<dd>
+Show version message and quit.
+</dd>
+</dl>
+
+<h2>Author</h2>
+
+<p>
+The program and its documentation are copyrighted &copy; 2012 by Ming Chen.
+All rights reserved. They are distributed under the terms of the GNU
+General Public License Version 2.
+</p>
+
+<p>
+The latest version of bin2froh can be obtained from
+<a href="https://sourceforge.net/projects/bin2froh" target="_top">https://sourceforge.net/projects/bin2froh</a>.
+</p>
+
+<hr />
+
+<p class="copyright">
+Copyright &copy; 2012 Ming Chen. All rights reserved.
+</p>
+
+</body>
+</html>
