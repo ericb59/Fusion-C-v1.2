@@ -1,2 +1,3 @@
-you can Download OpenMSX System Roms from :
-http://msx.ebsoft.fr/OpenMSX-ROMS.zip
+
+All system Roms to use with openMSX.
+Copy the content of this folder insisde the share/systemrom/ of your openMSX installation folder
