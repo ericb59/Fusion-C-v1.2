@@ -79,3 +79,13 @@ void FT_ScreenCopy(char x1, char y1, char dx, char dy, char x2, char y2, char sr
     fLMMM(&t);
 }
 
+// Round function
+//
+int FT_round(float n)
+{
+  if (n<0.0)
+      return (int)(n-0.5);
+  else
+      return (int)(n+0.5);
+}
+

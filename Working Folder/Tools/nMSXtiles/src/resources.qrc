@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>../res/pipagerardo.png</file>
+        <file>../res/pentacour.png</file>
+        <file>../res/qt.png</file>
+        <file>../res/nMSXtiles.ico</file>
+    </qresource>
+</RCC>

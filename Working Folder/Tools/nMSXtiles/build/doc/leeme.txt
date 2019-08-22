@@ -1,0 +1,91 @@
+nMSXTiles v0.9.1
+================
+
+nMSXTiles v0.8.2
+================
+Manual y cambios en nMSXTilesv0.8.2.html o nMSXTilesv0.8.2.pdf
+
+nMSXtiles v0.8.1
+================
+Editor de pantallas, tiles y sprites para el screen 2 del MSX.
+
+Guía rápida
+-----------
+Crear un nuevo proyecto en el que se podrán editar los tiles y asignarlos a posiciones de la pantalla.
+
+El Bank0 permite editar los 256 tiles correspondientes a la parte superior de la pantalla. 
+El Bank1 sería los mismo para los de la mitad de la pantalla y el Bank2 para la parte inferior.
+
+Haciendo click sobre un tile de un banco se seleccionará. El botón <<FromBank>> permite editar el tile
+en el editor de patrones de la parte derecha. El botón <<ToBank>> copirá el tile editado en la posición
+del banco que esté seleccionada.
+
+Haciendo click sobre una posición de la pantalla asignará el tile que haya seleccionado en los bancos.
+Hay que tener en cuenta a que zona de la pantalla corresponde cada banco, es decir, no se pueden asignar 
+tiles del banco 0 a la parte media o inferior de la pantalla.
+
+El editor de patrones tiene en cuenta las restricciones de color del Screen 2.  Las etiquetas Foregr y Backgr indican 
+si los clicks sobre el editor marcarán píxels de primer plano o de fondo respectivamente. En la columna derecha se
+muestran los colores de primer plano y fondo seleccionados para cada fila del patrón. Para cambiar el color
+bastará con hacer click sobre el que se quiera cambiar y después click en el color deseado de la paleta situada
+en la parte superior.
+
+Nuevas funcionalidades versión 0.8.1:
+	* Intercambio de tiles dentro de un banco sin que se modifique el diseño de la pantalla.
+	* Tratamiento dentro de un mismo proyecto de conjuntos de pantallas de hasta 64x64 pantallas.
+	* Varios añadidos menores que se podrán consultar en http://code.google.com/p/nmsxtiles/w/list (en construcción).
+	
+
+Nuevas funcionalidades versión 0.4:
+    * Deshacer: CTRL + Z: Esta versión permite deshacer la opción "To Bank" y el asignar un Tile a la pantalla.
+    * Copiar y pegar un bloque de tiles de pantalla. Por ejemplo, un árbol ya colocado en pantalla, formado por 4 tiles, 
+	  será posible seleccionarlo y mediante CTRL+C y CTRL+V copiarlo en otras posiciones de la pantalla.
+    * Con el botón derecho del ratón se asigna el primer tile del banco a esa posición. Es decir, se pone un cero, "se borra".
+	* Pasando por encima de la pantalla muestra en la casilla de la parte derecha el número del tile asignado.
+Nuevas funcionalidades versión 0.5:
+	* Dibuja el área de selección.
+	* Dibuja el cursor en la zona de definición de pantalla.
+Nuevas funcionalidades versión 0.6:
+	* Permite desplazar píxels en la zona de definición de tiles.
+	* Flip horizontal y vertical en la zona de definición de tiles.
+	* Exporta la pantalla y los tiles en formato binario comprimido con Pletter v0.5b. ( Pletter es un compresor ejecutado sobre PC con un decompresor para MSX, creado por XL2S Entertainment [http://home.wanadoo.nl/smastijn/pletter.html] )
+	* Importa y Exporta projectos de Polka! v1.2. ( Polka! es un editor gráfico para SCREEN 2 y SCREEN 4, que se ejecuta sobre Windows, creador por Wolf_ [ http://es.msx.org/downcat43p1.html ] )
+	* Añadida opción Load from library, que permite grabar secciones de un fichero de tiles de nMSXtiles en cualquiera de los bancos de tiles del proyecto activo.	
+Versión 0.6.6
+  * (Error corregido){Export ASM data hexadecimal menu}: Desactivado si no hay proyecto activo.
+  * Seleccionando un área de la pantalla es posible rellenarla con el tile seleccionado.
+  * Añadida entrada al menú {Screen} para rellenar la pantalla con los tiles del 1 al 255.
+  * Al importar un fichero PNG no se rellena automáticamente la pantalla con los tiles del 1 al 255.
+  * La entrada de menú {Tiles blocks of} permite copiar a la pantalla los X*Y tiles contiguos seleccionados del banco. Por ejemplo, seleccionando un árbol de 2x2 tiles y copiándolo sobre un área de 10x4 tiles de la pantalla, la rellenaría de árboles.
+  * Añadida entrada de menú para exportar los bancos de tiles como un fichero PNG.
+  * Añadida entrada para importar un fichero PNG creado con nMSXtiles a los bancos. Es una opción parecida a la de importar un fichero PNG pero no pedirá paleta al haberse creado con nMSXtiles.
+Versión 0.6.7
+  * Se puede exportar parte de la pantalla.
+  * Se puede exportar la pantalla a un fichero PNG.
+  * (Error corregido) {Tiles Tools->Group Tiles} desactivado si no hay un proyecto activo.
+  * (Error corregido) Pregunta para guardar el proyecto antes de salir de la aplicación.
+
+Versión 0.7.1
+  * Corregido error al importar algunos ficheros de Polka.
+  
+Sprites
+-------
+El editor de sprites permite crear hasta cuatro conjuntos de cuatro planos de sprites cada uno. Los controles combo con
+las etiquetas "Plane 0..3" definen los colores para cada plano de sprite del conjunto seleccionado (combo inferior).
+El botón izquierdo del ratón dibujará un punto del color seleccionado en la posición actual. El botón derecho del ratón
+borrará el punto actual para los cuatro planos de sprites.
+
+Permite exportar los datos a un fichero de texto con una notación fácil e intuitiva.
+
+Compilación
+-----------
+Está disponible el código fuente y ha sido compilado y probado en Windows y Linux.
+Se han utilizado las librerías Qt4 de Trolltech. En Windows se ha compilado con el MinGW.
+
+Para cualquier duda, crítica o alabanzas varias está disponible mi e-mail al pie de este archivo.
+
+
+-------------------
+Ramón de las Heras Gómiz
+mzgalious@yahoo.es
+www.pentacour.com

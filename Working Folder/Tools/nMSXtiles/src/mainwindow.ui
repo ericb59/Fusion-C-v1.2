@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>718</width>
+    <height>476</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>nMSXTiles</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/res/nMSXtiles.ico</normaloff>:/res/nMSXtiles.ico</iconset>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QMdiArea" name="mdiArea">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>721</width>
+      <height>471</height>
+     </rect>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOn</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOn</enum>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>718</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuProject">
+    <property name="title">
+     <string>Project</string>
+    </property>
+    <addaction name="action_Project_New"/>
+    <addaction name="action_Project_Load"/>
+    <addaction name="action_Project_Save"/>
+    <addaction name="action_Project_Save_as"/>
+    <addaction name="action_Project_Close"/>
+    <addaction name="separator"/>
+    <addaction name="action_Project_Quit"/>
+   </widget>
+   <widget class="QMenu" name="menuScreen">
+    <property name="title">
+     <string>Screen</string>
+    </property>
+    <addaction name="action_Screen_New"/>
+    <addaction name="action_Screen_Load"/>
+    <addaction name="action_Screen_Save"/>
+    <addaction name="action_Screen_Save_as"/>
+    <addaction name="separator"/>
+    <addaction name="action_Screen_Export_Screen"/>
+    <addaction name="action_Screen_Export_SC2"/>
+    <addaction name="separator"/>
+    <addaction name="action_Screen_Import_SC2"/>
+   </widget>
+   <widget class="QMenu" name="menuPalette">
+    <property name="title">
+     <string>Palette</string>
+    </property>
+    <addaction name="action_Palette_New"/>
+    <addaction name="action_Palette_Load"/>
+    <addaction name="action_Palette_Save"/>
+    <addaction name="action_Palette_Save_as"/>
+    <addaction name="separator"/>
+    <addaction name="action_Palette_Export_ASM"/>
+    <addaction name="action_Palette_Export_VDP"/>
+   </widget>
+   <widget class="QMenu" name="menuTiles">
+    <property name="title">
+     <string>Tiles</string>
+    </property>
+    <addaction name="action_Tiles_New"/>
+    <addaction name="action_Tiles_Load"/>
+    <addaction name="action_Tiles_Save"/>
+    <addaction name="action_Tiles_Save_as"/>
+    <addaction name="action_Tiles_Load_from_Library"/>
+    <addaction name="separator"/>
+    <addaction name="action_Tiles_Export_ASM_data"/>
+    <addaction name="action_Tiles_Export_ASM_data_Hexadecimal"/>
+    <addaction name="action_Tiles_Export_bin_data"/>
+    <addaction name="action_Tiles_Export_bin_data_compressed_whith_Pletter"/>
+    <addaction name="separator"/>
+   </widget>
+   <widget class="QMenu" name="menuSprites_1">
+    <property name="title">
+     <string>Sprites 1</string>
+    </property>
+    <addaction name="action_Sprites_1_New"/>
+    <addaction name="action_Sprites_1_Load"/>
+    <addaction name="action_Sprites_1_Save"/>
+    <addaction name="action_Sprites_1_Save_as"/>
+    <addaction name="action_Sprites_1_Close"/>
+    <addaction name="separator"/>
+    <addaction name="action_Sprites_1_Export"/>
+   </widget>
+   <widget class="QMenu" name="menuAbout">
+    <property name="title">
+     <string>About</string>
+    </property>
+    <addaction name="action_About_nMSXtiles"/>
+    <addaction name="action_About_pentacour"/>
+    <addaction name="action_About_pipagerardo"/>
+    <addaction name="action_About_QT"/>
+   </widget>
+   <widget class="QMenu" name="menuTiles_Tools">
+    <property name="title">
+     <string>Tiles Tools</string>
+    </property>
+    <addaction name="action_Tiles_Tools_Copy"/>
+    <addaction name="action_Tiles_Tools_Paste"/>
+    <addaction name="action_Tiles_Tools_Paste_colors"/>
+    <addaction name="action_Tiles_Tools_Undo"/>
+    <addaction name="separator"/>
+    <addaction name="action_Tiles_Tools_Reorder_colors"/>
+    <addaction name="action_Tiles_Tools_Group_Tiles"/>
+    <addaction name="action_Tiles_Tools_Exchange_tiles"/>
+   </widget>
+   <widget class="QMenu" name="menuScreen_Tools">
+    <property name="title">
+     <string>Screen Tools</string>
+    </property>
+    <addaction name="action_Screen_Tools_Fill_Screen_whith_tiles_1_to_255"/>
+   </widget>
+   <widget class="QMenu" name="menuSprites_2">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="title">
+     <string>Sprites 2</string>
+    </property>
+    <addaction name="action_Sprites_2_New"/>
+    <addaction name="action_Sprites_2_Load"/>
+    <addaction name="action_Sprites_2_Save"/>
+    <addaction name="action_Sprites_2_Save_as"/>
+    <addaction name="action_Sprites_2_Close"/>
+    <addaction name="separator"/>
+    <addaction name="action_Sprites_2_Export"/>
+   </widget>
+   <widget class="QMenu" name="menuPNG_Tools">
+    <property name="title">
+     <string>PNG Tools</string>
+    </property>
+    <addaction name="action_PNG_Tools_Export_PNG_Screen_file"/>
+    <addaction name="action_PNG_Tools_Export_Map_PNG_file"/>
+    <addaction name="action_PNG_Tools_Export_PNG_Tiles_file"/>
+    <addaction name="separator"/>
+    <addaction name="action_PNG_Tools_Import_PNG_Tiles_file"/>
+   </widget>
+   <widget class="QMenu" name="menuPalette_Tools">
+    <property name="title">
+     <string>Palette Tools</string>
+    </property>
+    <addaction name="action_Palette_Tools_Change_Palette"/>
+   </widget>
+   <addaction name="menuProject"/>
+   <addaction name="menuScreen"/>
+   <addaction name="menuPalette"/>
+   <addaction name="menuTiles"/>
+   <addaction name="menuScreen_Tools"/>
+   <addaction name="menuPalette_Tools"/>
+   <addaction name="menuTiles_Tools"/>
+   <addaction name="menuPNG_Tools"/>
+   <addaction name="menuSprites_1"/>
+   <addaction name="menuSprites_2"/>
+   <addaction name="menuAbout"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <action name="action_Project_New">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>New</string>
+   </property>
+  </action>
+  <action name="action_Project_Load">
+   <property name="text">
+    <string>Load</string>
+   </property>
+  </action>
+  <action name="action_Project_Save">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="action_Project_Save_as">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Save as...</string>
+   </property>
+  </action>
+  <action name="action_Project_Close">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Close</string>
+   </property>
+  </action>
+  <action name="action_Project_Quit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+  </action>
+  <action name="action_Screen_New">
+   <property name="text">
+    <string>New</string>
+   </property>
+  </action>
+  <action name="action_Screen_Load">
+   <property name="text">
+    <string>Load</string>
+   </property>
+  </action>
+  <action name="action_Screen_Save">
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="action_Screen_Save_as">
+   <property name="text">
+    <string>Save as...</string>
+   </property>
+  </action>
+  <action name="action_Screen_Export_Screen">
+   <property name="text">
+    <string>Export Map / Screen</string>
+   </property>
+  </action>
+  <action name="action_PNG_Tools_Export_Map_PNG_file">
+   <property name="text">
+    <string>Export PNG Map File</string>
+   </property>
+  </action>
+  <action name="action_PNG_Tools_Export_PNG_Screen_file">
+   <property name="text">
+    <string>Export PNG Screen File</string>
+   </property>
+  </action>
+  <action name="action_Tiles_New">
+   <property name="text">
+    <string>New</string>
+   </property>
+  </action>
+  <action name="action_Tiles_Load">
+   <property name="text">
+    <string>Load</string>
+   </property>
+  </action>
+  <action name="action_Tiles_Save">
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="action_Tiles_Save_as">
+   <property name="text">
+    <string>Save as...</string>
+   </property>
+  </action>
+  <action name="action_Tiles_Load_from_Library">
+   <property name="text">
+    <string>Load from Library</string>
+   </property>
+  </action>
+  <action name="action_Tiles_Export_ASM_data">
+   <property name="text">
+    <string>Export ASM data...</string>
+   </property>
+  </action>
+  <action name="action_Tiles_Export_ASM_data_Hexadecimal">
+   <property name="text">
+    <string>Export ASM data Hexadecimal...</string>
+   </property>
+  </action>
+  <action name="action_Tiles_Export_bin_data">
+   <property name="text">
+    <string>Export bin data...</string>
+   </property>
+  </action>
+  <action name="action_Tiles_Export_bin_data_compressed_whith_Pletter">
+   <property name="text">
+    <string>Export bin data Pletter...</string>
+   </property>
+  </action>
+  <action name="action_PNG_Tools_Export_PNG_Tiles_file">
+   <property name="text">
+    <string>Export PNG Tiles file</string>
+   </property>
+  </action>
+  <action name="action_PNG_Tools_Import_PNG_Tiles_file">
+   <property name="text">
+    <string>Import PNG Tiles file</string>
+   </property>
+  </action>
+  <action name="action_Tiles_Create_PNG_Palette_file">
+   <property name="text">
+    <string>Create PNG Palette file</string>
+   </property>
+  </action>
+  <action name="action_Tiles_Tools_Reorder_colors">
+   <property name="text">
+    <string>Reorder colors</string>
+   </property>
+  </action>
+  <action name="action_Tiles_Tools_Copy">
+   <property name="text">
+    <string>Copy</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="action_Tiles_Tools_Paste">
+   <property name="text">
+    <string>Paste</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
+   </property>
+  </action>
+  <action name="action_Tiles_Tools_Paste_colors">
+   <property name="text">
+    <string>Paste colors</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+G</string>
+   </property>
+  </action>
+  <action name="action_Tiles_Tools_Undo">
+   <property name="text">
+    <string>Undo</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
+  </action>
+  <action name="action_Tiles_Tools_Group_Tiles">
+   <property name="text">
+    <string>Group Tiles</string>
+   </property>
+  </action>
+  <action name="action_Sprites_1_New">
+   <property name="text">
+    <string>New</string>
+   </property>
+  </action>
+  <action name="action_Sprites_1_Load">
+   <property name="text">
+    <string>Load</string>
+   </property>
+  </action>
+  <action name="action_Sprites_1_Save">
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="action_Sprites_1_Save_as">
+   <property name="text">
+    <string>Save as...</string>
+   </property>
+  </action>
+  <action name="action_Sprites_1_Close">
+   <property name="text">
+    <string>Close</string>
+   </property>
+  </action>
+  <action name="action_Sprites_1_Export">
+   <property name="text">
+    <string>Export...</string>
+   </property>
+  </action>
+  <action name="action_Screen_Tools_Fill_Screen_whith_tiles_1_to_255">
+   <property name="text">
+    <string>Fill Screen whith tiles  1 to 255</string>
+   </property>
+  </action>
+  <action name="action_Tiles_Tools_Exchange_tiles">
+   <property name="text">
+    <string>Exchange tiles</string>
+   </property>
+  </action>
+  <action name="action_About_nMSXtiles">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/nMSXtiles.ico</normaloff>:/res/nMSXtiles.ico</iconset>
+   </property>
+   <property name="text">
+    <string>nMSXtiles</string>
+   </property>
+  </action>
+  <action name="action_Palette_Load">
+   <property name="text">
+    <string>Load</string>
+   </property>
+  </action>
+  <action name="action_Palette_Save">
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="action_Palette_New">
+   <property name="text">
+    <string>New</string>
+   </property>
+  </action>
+  <action name="action_Palette_Save_as">
+   <property name="text">
+    <string>Save as...</string>
+   </property>
+  </action>
+  <action name="action_Palette_Export_ASM">
+   <property name="text">
+    <string>Export Palette ASM</string>
+   </property>
+  </action>
+  <action name="action_About_pipagerardo">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/pipagerardo.png</normaloff>:/res/pipagerardo.png</iconset>
+   </property>
+   <property name="text">
+    <string>pipagerardo</string>
+   </property>
+  </action>
+  <action name="action_About_QT">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/qt.png</normaloff>:/res/qt.png</iconset>
+   </property>
+   <property name="text">
+    <string>QT</string>
+   </property>
+  </action>
+  <action name="action_About_pentacour">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/pentacour.png</normaloff>:/res/pentacour.png</iconset>
+   </property>
+   <property name="text">
+    <string>pentacour</string>
+   </property>
+  </action>
+  <action name="action_Palette_Tools_Change_Palette">
+   <property name="text">
+    <string>Change Palette</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="action_Palette_Export_VDP">
+   <property name="text">
+    <string>Export Palette VDP</string>
+   </property>
+  </action>
+  <action name="action_Screen_Import_SC2">
+   <property name="text">
+    <string>Import Screen SC2</string>
+   </property>
+  </action>
+  <action name="action_Screen_Export_SC2">
+   <property name="text">
+    <string>Export Screen SC2</string>
+   </property>
+  </action>
+  <action name="action_Sprites_2_New">
+   <property name="text">
+    <string>New</string>
+   </property>
+  </action>
+  <action name="action_Sprites_2_Load">
+   <property name="text">
+    <string>Load</string>
+   </property>
+  </action>
+  <action name="action_Sprites_2_Save">
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="action_Sprites_2_Save_as">
+   <property name="text">
+    <string>Save as...</string>
+   </property>
+  </action>
+  <action name="action_Sprites_2_Close">
+   <property name="text">
+    <string>Close</string>
+   </property>
+  </action>
+  <action name="action_Sprites_2_Export">
+   <property name="text">
+    <string>Export</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

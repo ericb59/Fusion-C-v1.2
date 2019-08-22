@@ -1,0 +1,193 @@
+﻿// QList m_ScreenSelection,  m_ScreenSelectionCopy;
+// CTile m_CopyTile;    // La baldoas a copiar
+// QPoint m_SelTile;    // La baldosa seleccionada
+// CTile tile = m_TilesBank[m_SelTile.x()][m_SelTile.y()];
+
+// CTile m_CopyTile;        // La baldosa a copiar
+// QPoint m_SelTile;        // La baldosa seleccionada
+// int x = m_MouseX / 16;
+// int y = m_MouseY / 16;
+// m_Screen[m_MapScreenX][m_MapScreenY][y*32+x] = m_SelTile.x();
+// m_TilesBank[m_SelTile.x()][m_SelTile.y()] = m_CopyTile;
+
+
+
+
+int m_MapScreenX;               // Las habitación actual dentro del ancho del mapa
+int m_MapScreenY;               // Las habitación actual dentro del alto del mapa
+ui->m_pGrMapWidth->value();     // El ancho en habitaciones del mapa
+ui->m_pGrMapHeight->value();    // El alto  en habitaciones del mapa
+
+int m_LastBank;                 // Banco actual ?
+int m_LastBankX;
+int m_LastBankY;
+
+
+void CScreenW::OnRadBack()
+void CScreenW::OnRadFore()
+
+void CScreenW::OnPalBackClick( int, int )
+void CScreenW::OnPalForeClick( int, int )
+
+
+------------------------------------------------------------
+Importar SC2:
+
+------------------------------------------------------------
+m_pScreen->LoadScreen( m_ScreenFile );
+
+// El mapa de 64 x 64 habitaciones y tres bancos de 256 nombres
+int m_Screen[64][64][256*3];
+    m_Screen[x][y][i]
+    i = 32*24
+
+------------------------------------------------------------
+m_pScreen->LoadTiles( m_TilesFile );
+
+// Tres bancos de baldosas de 256 baldosas cada banco
+CTile m_TilesBank[256][3];
+
+
+void CScreenW::UpdateScreen() {
+    int i;
+    int row, col;
+    QImage image;
+    image = QImage( 32*16, 24*16, QImage::Format_RGB32 );
+    for( i = 0; i < 3; i++ ) {
+        for( row = 0; row < 8; row++ ) {
+            for( col = 0; col < 32; col++ ) {
+                PaintTile( &image, m_TilesBank[ m_Screen[m_MapScreenX][m_MapScreenY][(i*8+row)*32+col] ][ i ], col*16, (i*8+row)*16, 2 );
+                        }
+                }
+        }
+        m_pLblScreen->put_Image( image );
+}
+
+------------------------------------------------------------
+
+
+// ---------------------------------------------------------
+// SCREEN 2 / GRAPHIC 2
+//
+// 0000H - 07FFH	-->	Pattern generator table 1 -> 256 * 8 = 2048
+// 0800H - 0FFFH	-->	Pattern generator table 2 -> 256 * 8 = 2048
+// 1000H - 17FFH	-->	Pattern generator table 3 -> 256 * 8 = 2048
+// de 0000H a 17FFH = 1800H -> 6144 bytes
+
+// 1800H - 18FFH	-->	Pattern name table 1 -> 256
+// 1900H - 19FFH	-->	Pattern name table 2 -> 256
+// 1A00H - 1AFFH	-->	Pattern name table 3 -> 256
+// de 1800H a 1AFFH = 300H -> 768 bytes
+
+// 1B00H - 1B7FH	-->	Sprite attribute table
+// de 1B00H a 1B7FH = 80H -> 128 bytes
+
+// 1B80H - 1BAFH	-->	Palette table
+// 1BB0H - 1FFFH	--> ???
+// de 1B80H a 1FFFH = 480H -> 1152 bytes a cero
+
+// 2000H - 27FFH	-->	Colour table 1 -> 256 * 8 = 2048
+// 2800H - 2FFFH	-->	Colour table 2 -> 256 * 8 = 2048
+// 3000H - 37FFH	-->	Colour table 3 -> 256 * 8 = 2048
+// de 2000H a 37FFH = 1800H -> 6144
+
+// 3800H - 3FFFH	-->	Sprite generator table
+// ---------------------------------------------------------
+
+// FORMATO SC2
+// -------------
+// byte	FE						0xFE
+// word	Dirección inicial		0x00 0x00
+// word	Direccion final			0xFF 0x37
+// word	Direccion de arranque	0x00 0x00
+//
+// La dirección de arranque sólo se usa con BLOAD"CAS:",R
+// Para copiar a la VRAM usar BLOAD"CAS:",S
+//
+// 10 SCREEN 2
+// 20 BLOAD"NOMBRE.SC2",S
+// 30 GOTO 30
+//
+// COLOR 1,2,2:SCREEN 2:BLOAD"foo.sc2",S:A$=INPUT$(1)
+//
+// La Cabecera:
+// 7 bytes { 0xFE, 0x00, 0x00, 0xFF, 0x37, 0x00, 0x00 }
+//
+// La Tabla de Patrones:
+// 		2048 bytes
+//		2048 bytes
+//		2048 bytes
+// 6144 bytes de la chr
+//
+// La Tabla de Nombres:
+//		256 bytes de 0x00 a 0xFF
+//		256 bytes de 0x00 a 0xFF
+//		256 bytes de 0x00 a 0xFF
+// 768 bytes de nombres
+
+// Los Atributos de Sprite: 32 sprites x 4 bytes = 128 bytes
+// 128 bytes de { 0xD1 0x00 0x00 0xF0 } a { 0xD1 0x00 0x1F 0xF0 }
+//
+// 1152 bytes a cero
+//
+// La Tabla de Colores
+// 		2048 bytes
+// 		2048 bytes
+// 		2048 bytes
+// 6144 bytes de la clr
+//
+// Total = 7 + 6144 + 768 + 128 + 1152 + 6144 = 14343 bytes
+
+
+
+------------------------------------------------------------
+El Undo falla entre bancos
+------------------------------------------------------------
+Hacer un visualizador de todo el mapa
+------------------------------------------------------------
+
+
+El tamaño de las habitaciones es fijo a 32 x 24 baldosas.
+Hay que conseguir que se pueda modificar...
+
+512 + 3 + 3 =
+384 + 3 + 3 =
+
+archivo:    cscreenw.cpp
+linea:      88
+
+m_pLblScreen = new CLabelBtn( ui->m_pFrmScreen, 32*16, 24*16 );
+m_pLblScreen->setGeometry( 3, 3, 32*16, 24*16 );
+    m_pLblScreen->setMouseTracking( true );
+    m_pLblScreen->show();
+
+
+m_screen_width  = 32 * 16;
+m_screen_height = 24 * 16;
+
+El contenedor:
+    QFrame      ui->m_pFrmScreen        setGeometry( 23, 24, 518, 391 )
+
+    CLabelBtn   m_pLblScreen            setGeometry( 3, 3, m_screen_width, m_screen_height );
+
+    CLabelBtn   m_pLblSelection         setGeometry( 0, 0, 0, 0 );
+                                        setFrameShape( QFrame::Box );
+                                        setFrameShadow( QFrame::Raised );
+
+
+// El mapa consta de 64 x 64 habitaciones de 3 bancos de 256 baldosas
+int m_Screen[64][64][256*3];	//Codi de Tile assignat
+unsigned char m_Buffer[256*3*64*64]; // Buffer para copiar el mapa
+
+// La habitación en el mapa, está fijada a un máximo de 64 x 64
+int m_MapScreenX;
+int m_MapScreenY;
+
+// Las etiquetas de filas y columnas...
+QLabel *m_pColsLabels[32];
+QLabel *m_pRowsLabels[24];
+
+CTile m_TilesBank[256][3];
+
+
+------------------------------------------------------------

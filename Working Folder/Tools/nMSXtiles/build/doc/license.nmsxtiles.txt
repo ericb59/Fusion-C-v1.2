@@ -1,0 +1,1 @@
+nMSXtiles v0.9.1 is licensed under the GNU LGPL v3 license.
