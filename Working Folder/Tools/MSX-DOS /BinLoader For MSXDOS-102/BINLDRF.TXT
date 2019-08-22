@@ -1,0 +1,60 @@
+----------------------------------------
+   BINARY FILE LOADER  v1.02 par GDX
+
+             MODE D'EMPLOI
+----------------------------------------
+
+ BINLOAD.COM peut charger et d'exécuter sous MSX-DOS 1/2 les fichiers au
+ format binaire (.BIN) qui normalement démarrent sous BASIC avec
+ l'instruction BLOAD.
+
+
+Confiruration minimum requise :
+
+- MSX 64 Ko
+- MSX-DOS 1
+
+
+Procédure à suivre :
+
+ A partir d'une ligne de commande du MSX-DOS entrez la commande sous
+ la forme suivante.
+
+ BINLDR Filename.Ext
+
+ L'extension du nom du fichier sera ".BIN" par défaut.
+ Lorsque le nom du fichier est omis, l'aide s'affiche.
+
+
+Options:
+
+ Pendant le chargement du fichier, vous pouvez presser les touches suivantes
+ pour modifier l'environnement.
+
+[JIKOU] (MSX Turbo R)
+
+- Comme la plupart des programmes ont été prévus pour fonctionner sur MSX 1
+  ou 2, le mode Z80 est automatiquement sélectionné à l'exécution sur
+  MSX Turbo R. La touche [JIKOU] (à droite de la barre espace) permet de
+  sélectionner le mode "R800 avec ROM".
+
+[SHIFT]
+
+- Cette touche désinstalle les disques du système et stoppe leur moteur.
+  C'est utile si vous avez un disque dur et que vous avez l'intention de
+  jouer un long moment.
+
+Remarque : Plus de programmes fonctionnent en appuyant sur [CTRL]
+           à l'initialisation du MSX jusqu'au bip sonore (même lorsqu'on
+           presse [SHIFT] pendant le chargement du jeu). Cela peut être
+           utile pour les logiciels qui ont besoin du disque.
+
+[SELECT]
+
+- Cette touche empêche l'arrêt du moteur des disques.
+
+Historique des versions :
+- v1.02: La touche [SHIFT] remplace [RETURN] pour désactiver les disques.
+	 Correction d'un bug dans le test de la version MSX.
+- v1.01: Correction des touches et suppression du curseur.
+- v1.00: Première version.

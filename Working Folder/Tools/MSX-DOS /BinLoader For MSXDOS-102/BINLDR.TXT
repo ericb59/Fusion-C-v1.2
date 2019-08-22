@@ -1,0 +1,56 @@
+--------------------------------------------
+      BINARY FILE LOADER  v1.02 By GDX
+
+	           MANUAL
+--------------------------------------------
+
+ BINLOAD.COM can load and run under MSX-DOS 1/2 binary format files that
+ normally start under BASIC with the BLOAD instruction.
+
+
+Minimum requirements:
+
+- MSX 64kB
+- MSX-DOS 1
+
+
+Use:
+
+ From a command line of MSX-DOS enter the command as the following form.
+
+ BINLDR Filename.Ext
+
+ File name extension become ".BIN" by default.
+ When the file name is omitted, help is displayed.
+
+
+Options:
+
+ While loading the file, you can press the following keys to change the
+ environment.
+
+[JIKOU] (MSX Turbo R)
+
+- Since most programs are designed to run on MSX 1 or 2, the Z80 mode is
+  automatically selected when running on MSX Turbo R. [JIKOU] key (on the
+  right side of the space bar) selects the R800 mode with ROM. In this mode,
+  some programs may run too fast.
+
+[SHIFT]
+
+- This key uninstalls the drives from the system and stops their motor.
+  This is useful if you have a hard drive and you intend to play long time.
+
+  Note: More programs work by pressing [CTRL] until the beep during the MSX
+        initialization (even if you press [SHIFT] during loading). It can
+        be useful for software that need floppy drive.
+
+[SELECT]
+
+- This key prevents the disc motor from shunt down.
+
+Versions History:
+- v1.02: [SHIFT] key replaces [RETURN] to disable the disks.
+         Fixed a bug in the MSX version test.
+- v1.01: Fix keys and cursor removing.
+- v1.00: First release.
