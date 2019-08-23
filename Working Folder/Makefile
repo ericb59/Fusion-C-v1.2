@@ -44,8 +44,9 @@ crt0 = $(INCLUDEDIR)crt0_msxdos.rel
 # use this crt0 if you want to pass parameters to your program
 #crt0 = $(INCLUDEDIR)crt0_msxdos_advanced.rel
 
-INC1 = $(INCLUDEDIR)g9klib.rel
-INC2 = $(INCLUDEDIR)gr8net-tcpip.rel
+# INC1 = $(INCLUDEDIR)g9klib.rel
+# INC2 = $(INCLUDEDIR)gr8net-tcpip.rel
+
 #INC3 = $(INCLUDEDIR)
 #INC4 = $(INCLUDEDIR)
 #INC5 = $(INCLUDEDIR)
