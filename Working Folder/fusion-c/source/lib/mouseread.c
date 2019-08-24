@@ -8,7 +8,7 @@
 |             |_|  \__,_|___/_|\___/|_| |_| *               |
 |                                                           |
 |               The MSX C Library for SDCC                  |
-|                   V1.1b -   july  2019                    |
+|                   V1.2 - 08 2019                          |
 |                                                           |
 |                Eric Boez &  Fernando Garcia               |
 |                                                           |
@@ -112,7 +112,5 @@ __asm
             djnz    WTTR3
             ret
 
-
 __endasm;
-
 }

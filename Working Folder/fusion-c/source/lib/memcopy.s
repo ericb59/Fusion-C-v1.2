@@ -7,7 +7,7 @@
 ;|             |_|  \__,_|___/_|\___/|_| |_| *               |
 ;|                                                           |
 ;|               The MSX C Library for SDCC                  |
-;|                   V1.0 - 09-10-11 2018                    |
+;|                   V1.2 - 08 2019                          |
 ;|                                                           |
 ;|                Eric Boez &  Fernando Garcia               |
 ;|                                                           |
@@ -31,7 +31,7 @@
 
 ;--- proc	MEMCPY
 ;
-;	void	MemCopy( int *dst, int *src, int n )
+;	void	MemCopy( char *dst, char *src, int n )
 ;
 
 _MemCopy::

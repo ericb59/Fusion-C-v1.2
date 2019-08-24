@@ -8,7 +8,7 @@
 |             |_|  \__,_|___/_|\___/|_| |_| *               |
 |                                                           |
 |               The MSX C Library for SDCC                  |
-|                   V1.0 - 09-10-11 2018                    |
+|                   V1.2 - 08 2019                          |
 |                                                           |
 |                Eric Boez &  Fernando Garcia               |
 |                                                           |
@@ -25,20 +25,20 @@
 
 
 // Width of screen in text mode
-void Width(char n)
+void Width(unsigned char n)
 {
-    int m;
+    unsigned char m;
 
-    m=Peek(0xFCAF);
+    m=Peek(0xFCAF); // get actual screen mode
 
     if (m==0)
     {
-        Poke(0xF3AE,n);
+        Poke(0xF3AE,n); // set column number for SCREEN 0
         Screen(0);
     }
     if (m==1)
     {
-        Poke(0xF3AF,n);
+        Poke(0xF3AF,n); // set column number for SCREEN 1
         Screen(1);
     }
 }

@@ -8,7 +8,7 @@
 |             |_|  \__,_|___/_|\___/|_| |_| *               |
 |                                                           |
 |               The MSX C Library for SDCC                  |
-|                   V1.0 - 09-10-11 2018                    |
+|                   V1.2 - 08 2019                          |
 |                                                           |
 |                Eric Boez &  Fernando Garcia               |
 |                                                           |
@@ -53,7 +53,7 @@ bit  7     6     5     4     3     2     1     0
   9  NUM4  NUM3  NUM2  NUM1  NUM0  NUM/  NUM+  NUM*
  10  NUM.  NUM,  NUM-  NUM9  NUM8  NUM7  NUM6  NUM5
 ============================================================================= */
-char GetKeyMatrix(char line)
+char GetKeyMatrix(char line) __naked
 {
 line;
 __asm

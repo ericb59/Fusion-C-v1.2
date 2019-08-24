@@ -8,7 +8,7 @@
 |             |_|  \__,_|___/_|\___/|_| |_| *               |
 |                                                           |
 |               The MSX C Library for SDCC                  |
-|                   V1.1b  -   july 2019                    |
+|                   V1.2 - 08 2019                          |
 |                                                           |
 |                Eric Boez &  Fernando Garcia               |
 |                                                           |
@@ -20,34 +20,32 @@
 //
 // Mouse control and button test function - return values to Structure
 // 
-// MousePOrt must be 1 or 2
+// MousePort must be 1 or 2
 
 #include "../../header/msx_fusion.h"
-unsigned int MouseReadTo(unsigned char MousePort, MOUSE_DATA *md) __naked
+
+void MouseReadTo(unsigned char MousePort, MOUSE_DATA *md) __naked
 {
 MousePort;
-
+md;
 __asm
         ; Routine to read the mouse by direct accesses (works on MSX1/2/2+/turbo R)
         ;
-        ; Input: DE = 01310h for mouse in port 1 (D = 00010011b, E = 00010000b)
-        ;        DE = 06C20h for mouse in port 2 (D = 01101100b, E = 00100000b)
-        ; Output: H = X-offset, L = Y-offset (H = L = 255 if no mouse)
+        ; Input: MousePort = 1 or 2
+        ;        md (MOUSE_DATA) including dx, dy, left button (1=OFF 0=ON), right button (1=OFF 0=ON)
         
         push ix
         ld ix,#0
         add ix,sp
-;        ld e,4(ix)
-;        ld d,5(ix)
 
         ld a,4(ix)
         ld l,5(ix)
         ld h,6(ix)
 
-		ld de,#0x1310 ; for mouse in joyport 1
+		ld de,#0x1310 ; DE = 01310h for mouse in port 1 (D = 00010011b, E = 00010000b)
 		and #02
 		jr z,GTMOUS
-		ld de,#0x6C20 ; for mouse in joyport 2
+		ld de,#0x6C20 ; DE = 06C20h for mouse in port 2 (D = 01101100b, E = 00100000b)
 
         GTMOUS:
 			di               ; DI useless if the routine is used during an interrupt
@@ -62,7 +60,6 @@ __asm
             call    GTOFST  ; Read bits 3-0 of the x-offset
             and #0x0F
             or  c
-;            ld  h,a ; Store combined x-offset
 			ld (hl),a
 			inc hl
             call    GTOFST  ; Read bits 7-4 of the y-offset
@@ -77,7 +74,6 @@ __asm
             ld  b,a
             and #0x0F
             or c
-;            ld l,a          ; Store combined y-offset
 			ld (hl),a
 			ld a,b
 			and #0x10
@@ -112,7 +108,6 @@ __asm
 			in  a,(#0xA1)    ; preserve LED code/Kana state
 			and #0x80
 			or  d            ; mouse1 x0010011b / mouse2 x1101100b
-;            ld a,d
             out (#0xA1),a    ; first pin8=1, at second pass pin8=0 and so on
             xor e            ; reverse pin 8 state
             ld d,a           ;
@@ -139,7 +134,6 @@ __asm
         WTTR3:
             djnz    WTTR3
             ret
-
 
 __endasm;
 

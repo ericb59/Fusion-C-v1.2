@@ -21,8 +21,10 @@
 
 
 /*  For MSX Turbo-R Only. Play PCM from VRAM adress */
-void PCMPlay(int start, int lenght)  __naked
+void PCMPlay(int start, int length)  __naked
 {
+start;
+length;
         __asm
         push ix
        
@@ -40,9 +42,9 @@ void PCMPlay(int start, int lenght)  __naked
         ld   iy,(0xFCC0)      ; mainrom slotaddress
         call 0x001c           ; interslotcall
         ei
-        pop IY
-        pop IX
-        ret 
 
+        pop  iy
+        pop  ix
+        ret
         __endasm;
 }

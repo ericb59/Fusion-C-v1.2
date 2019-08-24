@@ -8,7 +8,7 @@
 |             |_|  \__,_|___/_|\___/|_| |_| *               |
 |                                                           |
 |               The MSX C Library for SDCC                  |
-|                   V1.0 - 09-10-11 2018                    |
+|                   V1.2 - 08 2019                          |
 |                                                           |
 |                Eric Boez &  Fernando Garcia               |
 |                                                           |
@@ -36,11 +36,11 @@
 
 void PutSprite( char sprite_no, char pattern_no,  char x,  char y,  char ec_color ) {
 
-    DisableInterupt();
+    DisableInterrupt();
     VpokeFirst( Peekw( ATRBAS ) + (unsigned int)(sprite_no << 2) );
     VpokeNext( y );
     VpokeNext( x );
     VpokeNext( pattern_no );
     VpokeNext( ec_color );
-    EnableInterupt();
+    EnableInterrupt();
 }

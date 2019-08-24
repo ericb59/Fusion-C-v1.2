@@ -8,7 +8,7 @@
 |             |_|  \__,_|___/_|\___/|_| |_| *               |
 |                                                           |
 |               The MSX C Library for SDCC                  |
-|                   V1.0 - 09-10-11 2018                    |
+|                   V1.2 - 08 2019                          |
 |                                                           |
 |                Eric Boez &  Fernando Garcia               |
 |                                                           |
@@ -51,20 +51,21 @@
  Input    : [char] register number (0 to 13)
  Output   : [char] value 
 ============================================================================= */
-char GetSound(char reg){
+char GetSound(char reg) __naked
+{
 reg;
 __asm
-  push IX
-  ld   IX,#0
-  add  IX,SP
+  push ix
+  ld   ix,#0
+  add  ix,sp
   
-  ld   A,4(IX)
-  out  (#AY0index),A
-  in   A,(#AY0read)
+  ld   a,4(ix)
+  out  (#AY0index),a
+  in   a,(#AY0read)
   
-  ld   L,A
+  ld   l,a
   
-  pop  IX  
+  pop  ix
 __endasm;
 }
 

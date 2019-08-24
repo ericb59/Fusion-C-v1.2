@@ -8,7 +8,7 @@
 |             |_|  \__,_|___/_|\___/|_| |_| *               |
 |                                                           |
 |               The MSX C Library for SDCC                  |
-|                   V1.0 - 02-04 - 2019                     |
+|                   V1.2 08 2019                            |
 |                                                           |
 |                Eric Boez &  Fernando Garcia               |
 |                                                           |
@@ -35,8 +35,8 @@ __asm
         push ix
         ld ix,#0
         add ix,sp
-        ld e,4(ix)                  ; length value  Byte high
-        ld d,5(ix)                  ; length value Byte low
+        ld e,4(ix)                  ; lenght value  Byte high
+        ld d,5(ix)                  ; lenght value Byte low
         ld c,6(ix)                  ; wait value
       
     Loop:
@@ -51,7 +51,7 @@ __asm
         dec de
         ld a,d
         or e
-        jp nz,Loop                  ; Loop  'length' times
+        jp nz,Loop                  ; Loop  'lenght' times
 
     pop ix                          ; end 
         

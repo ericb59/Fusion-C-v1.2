@@ -7,7 +7,7 @@
 ;|             |_|  \__,_|___/_|\___/|_| |_| *               |
 ;|                                                           |
 ;|               The MSX C Library for SDCC                  |
-;|                   V1.0 - 09-10-11 2018                    |
+;|                   V1.2 - 08 2019                          |
 ;|                                                           |
 ;|                Eric Boez &  Fernando Garcia               |
 ;|                                                           |
@@ -46,31 +46,23 @@ _PutText::
 	add ix,sp
 	ld l,4(ix)
 	ld h,5(ix)
-	ld (GRPACX),hl
+	ld (GRPACX),hl ; X
 	ld l,6(ix)
 	ld h,7(ix)
-	ld (GRPACY),hl
+	ld (GRPACY),hl ; Y
+	ld a,10(ix)
+	ld (LOGOPR),a  ; LogOp
 	ld l,8(ix)
 	ld h,9(ix)
-	push hl
-	ld l,10(ix)
-	ld h,#0
-	ld (LOGOPR),hl
-	pop hl
 
 	push iy
 lb_ptlp:	
-	ld	a,(hl)
-	or	a
-	jr	z, lb_ptEx
-  
-	;.db	#0xF7	; RST 30h
-	;.db	#0x80
-	;.dw	#0x008D	; GRPPRT displays character on graphics screen
+	ld   a,(hl)
+	or   a
+	jr   z, lb_ptEx
 
-
-	ld iy, (0xFCC0)		; mainrom slotaddress (reference)
-	ld ix, #0x008D		; bios (api) address
+	ld   iy,(0xFCC0)		; mainrom slotaddress (reference)
+	ld   ix,#0x008D		; bios (api) address
 	call 0x001c	; interslotcall
 	ei
 	

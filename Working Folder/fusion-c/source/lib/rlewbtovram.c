@@ -8,7 +8,7 @@
 |             |_|  \__,_|___/_|\___/|_| |_| *               |
 |                                                           |
 |               The MSX C Library for SDCC                  |
-|                   V1.1 - 02-04 - 2019                     |
+|                   V1.2 - 08 2019                          |
 |                                                           |
 |                Eric Boez &  Fernando Garcia               |
 |                                                           |
@@ -25,7 +25,7 @@
 */
 #include "../../header/msx_fusion.h"
 
-void RleVramDecompress(unsigned int *RamAddress) __naked
+void RleVramDecompress(unsigned char *RamAddress) __naked
 {
   RamAddress;
 
@@ -36,34 +36,34 @@ __asm
 
 _unRLEWBtoVRAM::
   push ix
-  ld ix,#0
-  add ix,sp
+  ld   ix,#0
+  add  ix,sp
       
-  ld  L,4(ix) ; Data RAM address
-  ld  H,5(ix)
+  ld   l,4(ix) ; Data RAM address
+  ld   h,5(ix)
 
   call unRLEWBVRAM
-  pop IX
+  pop  ix
   ret
 
 unRLEWBVRAM::
   
 ANALYZE:
-  ld   A,(HL)         ; get byte
+  ld   a,(hl)         ; get byte
   cp   #RLECONTROL                      
-  jr   NZ,WriteByte   ; if raw
+  jr   nz,WriteByte   ; if raw
   
-  inc  HL             ; get next byte 
-  ld   A,(HL)
-  or   A
-  jr   Z,WriteCONTROL ;if A=0 then write one $80  ($80 $0)
+  inc  hl             ; get next byte 
+  ld   a,(hl)
+  or   a
+  jr   z,WriteCONTROL ;if A=0 then write one $80  ($80 $0)
   cp   #0xFF          ;if A=$FF ($80 $FF) 
-  ret  Z              ;THEN exit
+  ret  z              ;THEN exit
   
                       ;$80 nn dd
-  ld   B,A            
-  inc  HL
-  ld   A,(HL)         ;get value
+  ld   b,a            
+  inc  hl
+  ld   a,(hl)         ;get value
   
 doRLE:
   out  (#0x98),A      ;write in VRAM
@@ -71,15 +71,15 @@ doRLE:
   nop
   djnz doRLE
   
-  inc  HL
+  inc  hl
   jr   ANALYZE
 
 WriteCONTROL:
-  ld   A,#RLECONTROL  ;write CONTROL value
+  ld   a,#RLECONTROL  ;write CONTROL value
   
 WriteByte:
-  out  (#0x98),A      ;write in VRAM
-  inc  HL
+  out  (#0x98),a      ;write in VRAM
+  inc  hl
   jr   ANALYZE
 
 __endasm;
@@ -88,7 +88,7 @@ __endasm;
 
 void RleWBToVram(unsigned int *RamAddress, unsigned int VramAddress) 
 {
- DisableInterupt();
+ DisableInterrupt();
  if(Peek( 0xFCAF ) >= 7 ) {
        VDPwriteNi( 14, (VramAddress >> 14) | (Peek( 0xFAF6 ) << 2) );
   }
@@ -100,5 +100,5 @@ void RleWBToVram(unsigned int *RamAddress, unsigned int VramAddress)
   OutPort( 0x99, ((unsigned char)(VramAddress >> 8) & 0x7F) | 0x40 );
 
   RleVramDecompress(RamAddress);
-  EnableInterupt();
+  EnableInterrupt();
 }
