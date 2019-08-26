@@ -1,7 +1,7 @@
 CLS
 @echo off
 echo " "    
-echo "  F U S I O N - C  V 1 . 2"
+echo "  F U S I O N - C  V 1 . 2 "
 echo " T h e   U l t i m a t e   SDCC   L i b r a r y   f o r   M S X "
 echo "  Eric Boez & Fernando Garcia 2018-2019 : Made for coders !"
 echo "_________________________________________________________________"

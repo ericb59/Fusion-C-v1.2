@@ -73,8 +73,6 @@ extern	void	PsetXY( int X,  int Y,  int colour );		/* method 2 by rst 30h, write
 extern	char	Point( int X,  int Y ); 					/* gets colour 0..15 of pixel at (X,Y)  */
 extern	char	PgetXY( int X,  int Y );					/* method 2 by rst 30h */
 
-//extern	void	SubLine( int X1,  int Y1, int DX,  int DY, int colour, char R45, char OP );
-
 extern	void	Line( int x1,  int y1,  int x2,  int y2, char color, char OP );  		/* draws line (X1,Y)1-(X2,Y2), with logical operation*/
 extern	void	Paint( int X, int Y, int colour, int border_colour );  					/* Paint for small regions. Split them if large. It is not the BASIC-subROM paint! Kind of bugPaint. Requires large stack of memory, slower than any image processing. */
 extern	void	Draw( char *drawcommands );												/* Remake of BASICs "draw" with original commands (except A,X) syntax. */

@@ -8,7 +8,7 @@
 |             |_|  \__,_|___/_|\___/|_| |_| *               |
 |                                                           |
 |               The MSX C Library for SDCC                  |
-|                   V1.2 - August -2019                    |
+|                   V1.2 - August -2019                     |
 |                                                           |
 |                Eric Boez &  Fernando Garcia               |
 |                                                           |
@@ -171,7 +171,7 @@ void 				RleWBToRam (unsigned int *RamSource, unsigned int *RamDest); 	// RLE De
 unsigned char 		JoystickRead(char joyNumber);								// Read Joystick Port (joynumber)
 unsigned char 		TriggerRead(char TriggerNumber);							// Read Button state (Joynnmber)
 unsigned int 		MouseRead(int  MousePort);									// Read Mouse Offset x and y
-unsigned int 		MouseReadTo(unsigned char MousePort, MOUSE_DATA *md); 		// Read Mouse Offset x and y, mouse button and return to the MOUSE_DATA Strucutre
+void		 		MouseReadTo(unsigned char MousePort, MOUSE_DATA *md); 		// Read Mouse Offset x and y, mouse button and return to the MOUSE_DATA Structure
 
 
 /* --------------------------------------------------------- */
