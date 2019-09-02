@@ -1,15 +1,15 @@
 ------------------------------------ FUSION-C
-Mar 20 aoû 2019 19:31:07 CEST
+Ven 30 aoû 2019 18:12:15 CEST
 ------------------------------------
-printf.c:88: warning 85: in function do_char unreferenced function argument : 'buf'
-printf.c:88: warning 85: in function do_char unreferenced function argument : 'c'
-getkeymatrix.c:74: warning 59: function 'GetKeyMatrix' must return value
-changecap.c:42: warning 85: in function ChangeCap unreferenced function argument : 'n'
-joystickread.c:45: warning 85: in function JoystickRead unreferenced function argument : 'joyNumber'
-triggerread.c:43: warning 85: in function TriggerRead unreferenced function argument : 'joyNumber'
-getcpu.c:43: warning 59: function 'GetCPU' must return value
-changecpu.c:41: warning 85: in function ChangeCPU unreferenced function argument : 'n'
-pcmplay.c:47: warning 85: in function PCMPlay unreferenced function argument : 'start'
-pcmplay.c:47: warning 85: in function PCMPlay unreferenced function argument : 'lenght'
-getsound.c:68: warning 59: function 'GetSound' must return value
-mousereadto.c:144: warning 85: in function MouseReadTo unreferenced function argument : 'md'
+printf.c:110: warning 196: pointer target lost const qualifier
+printf.c:111: warning 196: pointer target lost const qualifier
+------------------------------------ FUSION-C
+Ven 30 aoû 2019 19:49:09 CEST
+------------------------------------
+printf.c:110: warning 196: pointer target lost const qualifier
+printf.c:111: warning 196: pointer target lost const qualifier
+------------------------------------ FUSION-C
+Lun  2 sep 2019 17:10:01 CEST
+------------------------------------
+printf.c:110: warning 196: pointer target lost const qualifier
+printf.c:111: warning 196: pointer target lost const qualifier

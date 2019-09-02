@@ -205,7 +205,7 @@ extern	void G9InitSpritePattern( char );
 extern	void G9SetSprite( char );
 
 	/* Set blitter command write mask */
-extern	void G9SetCmdWriteMask( int );
+extern	void G9SetCmdWriteMask( unsigned int );
 
 	/* Set backdrop color
 	   input : backdropcolor */
@@ -225,7 +225,7 @@ extern	void G9WaitVsync( void );
 
 	/* DrawFilledBox left,top,width,height,color */
 //extern	void G9DrawFilledBox( int *, int );
-extern	void G9DrawFilledBox( int, int, int, int, int );
+extern	void G9DrawFilledBox( int, int, int, int, unsigned int );
 
 	/* DrawLine left,top,width,height,color */
 extern	void G9DrawLine( int, int, int, int, int );
