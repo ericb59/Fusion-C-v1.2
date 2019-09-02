@@ -3,7 +3,9 @@
 FUSION-c 1.2
 Changes :
 
-- add support of GFX9000/V990 and TCPIP for the Gr8NET. Both in beta version
+- added support of GFX9000/V990 and TCPIP for the Gr8NET. Both in beta version
+
+- New Library compilation Scripts
 
 - Fixed error or rewritten functions : 
 		RleWBToRam and RleWBToVram		(msx_fusion.h)
@@ -42,6 +44,9 @@ Changes :
 		lineandbox.c
 		vdptest5.c
 		vdptest8.c
+
+		GFX9000 examples Folder
+		Gr8NET_TCPIP Example Folder
 
 Updates on SublimeText Build System and Makefile Compilation script for MacOS users.
 Now the current file you are working on with SublimeText is detected and can be 
