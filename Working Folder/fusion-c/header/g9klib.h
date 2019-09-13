@@ -16,7 +16,7 @@
 |                                                           |
 |    This G9KLIB is a port of the ASM G9KLIB by Team Bomba  |
 |            https://www.teambomba.net/gfx9klib.html        |
-|                      By Sylvain Cregut                    |
+|                      By Sylvain G.                        |
 \___________________________________________________________/
 *                         (°□°)
 * 
@@ -166,10 +166,10 @@ extern	void G9DisplayDisable( void );
 	  nothing
 
 */
-extern	void G9SetScreenMode( char , char , char , char , char );
+extern	void G9SetScreenMode( unsigned char , unsigned char , unsigned char , unsigned char , unsigned char );
 
 /* pointer to palette, number of bytes to write*/
-extern	void G9InitPalette( void *, char );
+extern	void G9InitPalette( void *, unsigned char );
 
 /* Write palette data to the Gfx9000
 	inputs :
@@ -177,7 +177,7 @@ extern	void G9InitPalette( void *, char );
 	2 ; Palette pointer offset
 	3 ; Number of bytes to write
 */
-extern	void G9WritePalette( void *, char, char );
+extern	void G9WritePalette( void *, unsigned char, unsigned char );
 
 /* Read palette data from the Gfx9000
 	inputs :
@@ -185,7 +185,7 @@ extern	void G9WritePalette( void *, char, char );
 	2 ; Palette pointer offset
 	3 ; Number of bytes to write
 */
-extern	void G9ReadPalette( void *, char, char );
+extern	void G9ReadPalette( void *, unsigned char, unsigned char );
 
 /* Enable sprites/mouse cursor */
 extern	void G9SpritesEnable();
@@ -199,17 +199,17 @@ extern	void G9DisableAllSprites();
 /* %000xyz0 (not checked)
    xyz: bits A17,A16,A15 of VRAM address of the sprite pattern table start
        usually =4 (=> address is $10000)*/
-extern	void G9InitSpritePattern( char );
+extern	void G9InitSpritePattern( unsigned char );
 
 	/* sprite number (0 to 124) */
-extern	void G9SetSprite( char );
+extern	void G9SetSprite( unsigned char );
 
 	/* Set blitter command write mask */
 extern	void G9SetCmdWriteMask( unsigned int );
 
 	/* Set backdrop color
 	   input : backdropcolor */
-extern	void G9SetBackDropColor( char );
+extern	void G9SetBackDropColor( unsigned char );
 
 	/* Set blitter command color */
 extern	void G9SetCmdColor( int );
@@ -225,13 +225,13 @@ extern	void G9WaitVsync( void );
 
 	/* DrawFilledBox left,top,width,height,color */
 //extern	void G9DrawFilledBox( int *, int );
-extern	void G9DrawFilledBox( int, int, int, int, unsigned int );
+extern	void G9DrawFilledBox( unsigned int, unsigned int, unsigned int, unsigned int, unsigned int );
 
 	/* DrawLine left,top,width,height,color */
-extern	void G9DrawLine( int, int, int, int, int );
+extern	void G9DrawLine( unsigned int, unsigned int, unsigned int, unsigned int, unsigned int );
 
 	/*  x, y, color */
-extern	void G9SetPoint( int, int, int );
+extern	void G9SetPoint( unsigned int, unsigned int, unsigned int );
 
 	/*
   inputs : int X int Y
@@ -249,7 +249,7 @@ extern	void G9SetPoint( int, int, int );
   1st byte    color code low  byte
   2nd byte    color code high byte
 */
-extern	int  G9GetPoint( int, int );
+extern	int  G9GetPoint( unsigned int, unsigned int );
 
 	/* Adjust Gfx9000 display
 	horizontal adjust, vertical adjust
@@ -257,25 +257,25 @@ extern	int  G9GetPoint( int, int );
 	return 1: Error in horizontal adjust
 	return 2: Error in vertical adjust
 	*/
-extern	unsigned char G9SetAdjust( char, char );
+extern	unsigned char G9SetAdjust( unsigned char, unsigned char );
 
 	/*  Set vram write address */
-extern	void G9SetVramWrite( char, int );
+extern	void G9SetVramWrite( unsigned char, unsigned int );
 
 	/*  Set vram read address */
-extern	void G9SetVramRead( char, int );
+extern	void G9SetVramRead( unsigned char, unsigned int );
 
 	/* pointer to parameters (format: left,top,width,height) */
-extern	void G9SetupCopyRamToXY( int * );
+extern	void G9SetupCopyRamToXY( unsigned int * );
 
 	/* pointer to data, Bytes to copy */
-extern	void G9CopyRamToXY( void *, int );
+extern	void G9CopyRamToXY( void *, unsigned int );
 
 	/* pointer to parameters (format: left,top,width,height) */
 extern	void G9SetupCopyXYToRam( void * );
 
 	/* pointer to data, Bytes to copy */
-extern	void G9CopyXYToRam( void *, int );
+extern	void G9CopyXYToRam( void *, unsigned int );
 
 	/* pointer to bubber, number of bytes to send */
 extern	void G9CopyRamToVram( void *, int );
@@ -290,25 +290,25 @@ extern	void G9InitPatternMode();
 	   pattern number
 	   layer number (0=A,1=B)
 	*/
-extern	void G9SetPatternData( void *, int, char );
+extern	void G9SetPatternData( void *, unsigned int, unsigned char );
 
 	/* pointer to pattern data
 	   pattern number
 	   layer number (0=A,1=B) */
-extern	void G9GetPatternData( void *, int, char );
+extern	void G9GetPatternData( void *, unsigned int, unsigned char );
 
 	/* pattern number in generator table (on screen patterns 0 to A=8159,B=7679)
        pattern number in name table (on screen patterns 0 to 4095)
        layer number (0=A,1=B)			
  	*/
-extern	void G9SetPattern( int, int, char );
+extern	void G9SetPattern( unsigned int, unsigned int, unsigned char );
 
 	/* pattern number in generator table (on screen patterns 0 to A=8159,B=7679)
 	   layer number (0=A,1=B)
 
        return : pattern number in name table (on screen patterns 0 to 4095) 
  	*/
-extern	int  G9GetPattern( int, char );
+extern	int  G9GetPattern( unsigned int, unsigned char );
 
 	/* not finished ! 
 		pointer to data  (format: SrcAddress,DestAddress,NrBytes)
@@ -327,15 +327,15 @@ extern	void G9DisableLayerA();
 extern	void G9DisableLayerB();
 
 	/* ram address, destination tile, number of tiles */
-extern	void G9PrintTilesA( void *, int, char );
+extern	void G9PrintTilesA( void *, unsigned int, unsigned char );
 
 	/* ram address, destination tile, number of tiles */
-extern	void G9PrintTilesB( void *, int, char );
+extern	void G9PrintTilesB( void *, unsigned int, unsigned char );
 
 	/* interrupt function
 	   interruption line
 	 */
-extern	void G9SetIntLine( int );
+extern	void G9SetIntLine( unsigned int );
 
 /*  inputs : 
 	1 ; 0 = load data in vram, 1 = load font data in ram
@@ -344,7 +344,7 @@ extern	void G9SetIntLine( int );
    output :
         error code. O if Ok
 */
-extern	unsigned char G9OpenVff( char, int *, void * );
+extern	unsigned char G9OpenVff( unsigned char, unsigned int *, void * );
 
 /* inputs :
 	1 : Pointer to VFF object
@@ -374,24 +374,24 @@ extern	unsigned char G9OpenG9B( void *, void * );
  5 : Destination Y
  6 : Palette offset in bytes. Only valid with palette modes. If a = 255 palette not loaded
 */
-extern	unsigned char G9ReadG9B( void *, void *, int, int, int, char );
+extern	unsigned char G9ReadG9B( void *, void *, unsigned int, unsigned int, unsigned int, unsigned char );
 
 /*
  1 : Pointer to G9B/VFF object
 */
 extern	unsigned char G9Close( void * );
 
-extern	void G9PrintStringVram( void *, int, int );
+extern	void G9PrintStringVram( void *, unsigned int, unsigned int );
 
 /* pos x, pos y */
-extern	void G9Locate( int, int );
+extern	void G9Locate( unsigned int, unsigned int );
 
 /* Set scroll mode
    input: 0 = Roll by image space size
           1 = Roll by 256 lines
           2 = Roll by 512 lines
 */
-extern	void G9SetScrollMode( char );
+extern	void G9SetScrollMode( unsigned char );
 
 /* Set scroll X Layer A 
    input : number of pixels to scroll X */
