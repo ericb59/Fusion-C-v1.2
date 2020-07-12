@@ -1,12 +1,11 @@
-#!/bin/bash
 # OpenMSX Start Script
 # The emulator will be started only if it's not already active
 
 #MacOS
-if [ "$(uname -s)" == "Darwin" ]; then
+if [ "$(uname -s)" = "Darwin" ]; then
 	xopenmsx=`ps x | grep "openmsx " | grep -v grep`
 	 
-	if [ "${xopenmsx}" == "" ]; then
+	if [ "${xopenmsx}" = "" ]; then
 	  echo "...Now Starting OpenMsx "
 	  ./openMSX/openMSX.app/Contents/MacOS/openmsx -script ./openMSX/emul_start_config.txt | NULL
 	else
@@ -14,10 +13,10 @@ if [ "$(uname -s)" == "Darwin" ]; then
 	fi
 
 #Linux
-elif [ "$(uname -s)" == "Linux" ]; then
+elif [ "$(uname -s)" = "Linux" ]; then
 	xopenmsx=`pgrep "openmsx"`
 	
-	if [ "${xopenmsx}" == "" ]; then
+	if [ "${xopenmsx}" = "" ]; then
 		echo "...Now Starting OpenMSX "
 		/opt/openMSX/bin/openmsx -script ./openMSX/emul_start_config.txt
 	else
