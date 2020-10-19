@@ -7,7 +7,7 @@
 ;|             |_|  \__,_|___/_|\___/|_| |_| *               |
 ;|                                                           |
 ;|               The MSX C Library for SDCC                  |
-;|                   V1.0 - 09-10-11 2018                    |
+;|                   V1.3 - February 2020                    |
 ;|                                                           |
 ;|                Eric Boez &  Fernando Garcia               |
 ;|                                                           |
@@ -16,21 +16,38 @@
 ;|                                                           |
 ;\___________________________________________________________/
 ;
-	;--- crt0.s for MSX-DOS - by Konami Man, 11/2004
+    ;--- crt0.s for MSX-DOS - by Konami Man, 11/2004
+    ;    Advanced version: allows "int main(char** argv, int argc)",
+    ;    the returned value will be passed to _TERM on DOS 2,
+    ;    argv is always 0x100 (the startup code memory is recycled).
+        ;    Overhead: 112 bytes.
     ;
-	;    Advanced version: allows "int main(char** argv, int argc)",
-	;    the returned value will be passed to _TERM on DOS 2,
-	;    argv is always 0x100 (the startup code memory is recycled).
-    ;    Overhead: 112 bytes.
-	;
         ;    Compile programs with --code-loc 0x170 --data-loc X
         ;    X=0  -> global vars will be placed immediately after code
         ;    X!=0 -> global vars will be placed at address X
         ;            (make sure that X>0x100+code size)
 
-	.globl	_main
+    .globl  _main
+    .globl  l__INITIALIZED
+    .globl  l__INITIALIZER
+    .globl  s__INITIALIZED
+    .globl  s__INITIALIZER
 
-	.area _HEADER (ABS)
+;; Ordering of segments for the linker.
+    .area   _HOME
+    .area   _CODE
+    .area   _GSINIT
+    .area   _GSFINAL
+    .area   _INITIALIZER
+
+    .area   _DATA
+    .area   _INITIALIZED
+    .area   _BSEG
+    .area   _BSS
+    .area   _HEAP
+    .area   _STACK
+
+    .area _HEADER (ABS)
 
         .org    0x0100  ;MSX-DOS .COM programs start address
 
@@ -44,7 +61,7 @@ init:   call    gsinit
         ;    and the command line itself at 0x81 (up to 127 characters).
 
         ;* Check if there are any parameters at all
-
+        ld b,b
         ld      a,(#0x80)
         or      a
         ld      c,#0
@@ -134,12 +151,12 @@ cont:   ld      hl,#0x100
         push    hl
 
         ;--- Step 3: Call the "main" function
-	push de
-	ld de,#_HEAP_start
-	ld (_heap_top),de
-	pop de
+    push de
+    ld de,#_HEAP_start
+    ld (_heap_top),de
+    pop de
 
-	call    _main
+    call    _main
 
         ;--- Step 4: Program termination.
         ;    Termination code for DOS 2 was returned on L.
@@ -153,23 +170,32 @@ cont:   ld      hl,#0x100
 
         ;--- Program code and data (global vars) start here
 
-	;* Place data after program code, and data init code after data
+    ;* Place data after program code, and data init code after data
 
-	.area	_CODE
-	.area	_DATA
+    .area   _CODE
+    .area   _DATA
 _heap_top::
-	.dw 0
+    .dw 0
 
-gsinit: .area   _GSINIT
+    .area   _GSINIT
+gsinit:
+    ld  b,b
+    ld  bc, #l__INITIALIZER
+    ld  a, b
+    or  a, c
+    jr  Z, gsinit_next
+    ld  de, #s__INITIALIZED
+    ld  hl, #s__INITIALIZER
+    ldir
+gsinit_next:
+    .area   _GSFINAL
+    ret
 
-        .area   _GSFINAL
-        ret
-
-	;* These doesn't seem to be necessary... (?)
+    ;* These doesn't seem to be necessary... (?)
 
         ;.area  _OVERLAY
-	;.area	_HOME
+    ;.area  _HOME
         ;.area  _BSS
-	.area	_HEAP
+    .area   _HEAP
 
 _HEAP_start::
