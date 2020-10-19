@@ -10,8 +10,8 @@
 #|                     V1.2 - August 2019                    |
 #|                                                           |
 #|                                                           |
-#|               Compilation Script for MacOS                |
-#|                 (may be for linux too ! ?)                |
+#|          Compilation Script for MacOS and Linux           |
+#|                                                           |
 #|                                                           |
 #\___________________________________________________________/
 #
@@ -76,7 +76,7 @@ CCFLAGS = --code-loc $(ADDR_CODE) --data-loc $(ADDR_DATA) --disable-warning 196 
 all:  $(REL_FILES) $(COM_FILES) clean emulator
 
 %.ihx: %.c
-	@SDCC $(CCFLAGS) $^
+	@sdcc $(CCFLAGS) $^
 	@echo "..•̀ᴗ•́)و .. $(CC) is Processing ... !"
 
 %.com: %.ihx
