@@ -7,7 +7,7 @@
 ;|             |_|  \__,_|___/_|\___/|_| |_| *               |
 ;|                                                           |
 ;|               The MSX C Library for SDCC                  |
-;|                     V1.1   -  05-2019                     |
+;|                     V1.1   -  05-2019 updated 11/09/20    |
 ;|                                                           |
 ;|                Eric Boez &  Fernando Garcia               |
 ;|                                                           |
@@ -33,6 +33,7 @@ EXBRSA	=	0xFAF8
 SCRMOD	=	0xFCAF
 ACPAGE	=	0xFAF6
 MODE	=	0xFAFC
+ATRBAS  =   0xF928
 
 ;---------------------------
 ;	Return the VRAM Size of the MSX Computer 16/64/128 KB
@@ -51,17 +52,15 @@ _GetVramSize::
 	ret
 
 ;---------------------------
-
-
 ;	MODULE	LDIRVM
 ;
 ;	LDIRVM	moves block from memory to the VRAM.
 ;
-;   efinition : CopyRamToVram(void *SrcRamAddress, unsigned int DestVramAddress, unsigned int Length);
+;   Definition : CopyRamToVram(void *SrcRamAddress, unsigned int DestVramAddress, unsigned int Length);
 ;
 _CopyRamToVram::
 	push ix
- 
+ 	di
     ld   ix,#0
     add  ix,sp
 	ld   E,4(ix) ; SRC RAM address  
@@ -89,6 +88,7 @@ ldirvm_1:
 	jp	nz,ldirvm_1
 	dec	a
 	jp	nz,ldirvm_1
+	ei
 	pop  ix
 	ret
 
@@ -102,7 +102,7 @@ ldirvm_1:
 
 _CopyVramToRam::
 	push ix
- 
+ 	di
     ld   ix,#0
     add  ix,sp
 	ld   E,4(ix) ; SRC VRAM address
@@ -130,6 +130,7 @@ ldirmv_1:
 	jp	nz,ldirmv_1
 	dec	a
 	jp	nz,ldirmv_1
+	ei
 	pop ix
 	ret
 	
@@ -201,7 +202,49 @@ set_high:
 setaddress_1:
 	di
 	out	(c),l				; set the low address
-	ld	a,h				; prepare to set the middle address
+	ld	a,h					; prepare to set the middle address
 	and	#0b00111111
 	pop	de
 	ret
+
+;----------------------------
+;   MODULE	PUTSPRITE
+;
+;	PutSprite ( char sprite_no,  char pattern_no, char x,  char y,  char ec_color );
+;
+;	
+
+_PutSprite::
+	push  ix
+    ld ix,#0
+    add ix,sp
+    ld  a,4(ix) 	; sprite_no
+    rlca
+    rlca
+    ld hl,(ATRBAS)
+    		; add HL to A
+    add a,l 
+    ld l,a
+    adc a,h 
+    sub l 
+    ld h,a 
+	di 
+	
+    call SETWRT 
+    di
+	ld  c,#0x98
+    ld	a, 7 (ix)	; y
+    out (c),a
+    
+    ld	a, 6 (ix)	; x
+    out (c),a
+
+    ld	a, 5 (ix)	; pattern_no
+    out (c),a
+    
+    ld	a, 8 (ix)	; ec_color
+    out (c),a
+    ei
+    pop ix
+    
+    ret

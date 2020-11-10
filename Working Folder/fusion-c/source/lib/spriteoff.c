@@ -17,19 +17,33 @@
 |                                                           |
 \___________________________________________________________/
 */ 
-/*    sprite16
-|     Activate  Sprite data size 16x16 pixels
-|     2006/11/25    t.hara  
-|     2018 Eric Boez
+/*    spriteOff
+|     2018 Eric Boez Updated November 2020
 */
-#include "../../header/msx_fusion.h"
 
-#define RG08SAV  0xFFE7
-
-void SpriteOff(void)
+void SpriteOff(void) __naked
 {
-	unsigned char val;
-	val=Peek(RG08SAV) | 0b00000010;
-	VDPwriteNi(0x08,val);  /// Write to VDP Register 8
-	Poke(RG08SAV,val);
+	__asm
+
+	RG1SAV = 0xF3E0 
+	DPPAGE = 0xFAF5 
+	ATRBAS = 0xF928 
+	RG25SAV = 0xFFFA
+	RG2SAV = 0xF3E1
+	RG8SAV = 0xFFE7
+	RG9SAV = 0xFFE8 
+	
+  push ix
+  ld a,(RG8SAV)
+  or #0b00000010
+  ld (RG8SAV),a
+  ld b,a
+  ld c,#8
+  ld ix,#0x0047   ; Write VDP Bios
+  ld iy, (0xFCC0)	; mainrom slotaddress 
+  call 0x001c		; interslotcall
+  ei
+  pop ix
+  ret
+	__endasm;
 }

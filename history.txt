@@ -1,6 +1,30 @@
 
+—————————————————— 2020 - November ——————————————————
+Fusion-C 1.2b
+Fix Sprites Bug with MSX1 machines
+
+—————————————————— 2019 - October ——————————————————
+Fusion-C 1.2a
+
+ added function to library and to manual/book :
+ 		SetSC5ColorPalette 
+		SC2BoxFill
+		SetVDPWrite
+		SetVDPRead
+
+- Fixed error or rewritten functions : 
+		SC2Pset (New fast Pset routine for screen 2)
+		SC2Circle & SC2CircleFilled Definitions fixed
+		SetSpritePattern, MSX1 VDP fixed. + Faster routine
+		PutSprite, MSX1 VDP Fixed. + Faster routine
+		Vpoke & Vpeek, MSX1 VDP Fixed
+		
+
+Added Example :
+		sc5ColorBlink.c
+
 —————————————————— 2019 - August 14 ——————————————————
-FUSION-c 1.2
+FUSION-C 1.2
 Changes :
 
 - added support of GFX9000/V990 and TCPIP for the Gr8NET. Both in beta version

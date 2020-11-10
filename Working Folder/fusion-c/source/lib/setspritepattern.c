@@ -8,7 +8,7 @@
 |             |_|  \__,_|___/_|\___/|_| |_| *               |
 |                                                           |
 |               The MSX C Library for SDCC                  |
-|                   V1.2 - 08 2019                          |
+|                   V1.2 - 08 2019   Updated 11/9/2020      |
 |                                                           |
 |                Eric Boez &  Fernando Garcia               |
 |                                                           |
@@ -37,9 +37,6 @@
 /*  set sprite pattern                                       */
 /* --------------------------------------------------------- */
 void SetSpritePattern(  char pattern_no,  char* p_pattern,  char s_size ) {
-    DisableInterrupt();
-    VpokeFirst( Peekw( PATBAS ) + (pattern_no << 3) );
-    OutPorts( 0x98, p_pattern, s_size );
-    EnableInterrupt();
+    CopyRamToVram(p_pattern, Peekw( 0xF926 ) + (pattern_no << 3), s_size);
 }
 
