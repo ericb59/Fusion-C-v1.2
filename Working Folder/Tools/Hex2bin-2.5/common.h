@@ -74,10 +74,10 @@ void GetFilename(char *dest,char *src);
 void GetExtension(const char *str,char *ext);
 void PutExtension(char *Flnm, char *Extension);
 
-filetype    Filename;           /* string for opening files */
-char        Extension[MAX_EXTENSION_SIZE];       /* filename extension for output files */
+extern filetype    Filename;           /* string for opening files */
+extern char        Extension[MAX_EXTENSION_SIZE];       /* filename extension for output files */
 
-FILE        *Filin,             /* input files */
+extern FILE        *Filin,             /* input files */
             *Filout;            /* output files */
 
 #ifdef USE_FILE_BUFFERS
@@ -85,44 +85,44 @@ char		*FilinBuf,          /* text buffer for file input */
             *FiloutBuf;         /* text buffer for file output */
 #endif
 
-int Pad_Byte;
-bool Enable_Checksum_Error;
-bool Status_Checksum_Error;
-byte 	Checksum;
-unsigned int Record_Nb;
-unsigned int Nb_Bytes;
+extern int Pad_Byte;
+extern bool Enable_Checksum_Error;
+extern bool Status_Checksum_Error;
+extern byte 	Checksum;
+extern unsigned int Record_Nb;
+extern unsigned int Nb_Bytes;
 
 /* This will hold binary codes translated from hex file. */
-byte *Memory_Block;
-unsigned int Lowest_Address, Highest_Address;
-unsigned int Starting_Address, Phys_Addr;
-unsigned int Records_Start; // Lowest address of the records
-unsigned int Max_Length;
-unsigned int Minimum_Block_Size;
-unsigned int Ceiling_Address;
-unsigned int Floor_Address;
-int Module;
-bool Minimum_Block_Size_Setted;
-bool Starting_Address_Setted;
-bool Floor_Address_Setted;
-bool Ceiling_Address_Setted;
-bool Max_Length_Setted;
-bool Swap_Wordwise;
-bool Address_Alignment_Word;
-bool Batch_Mode;
-bool Verbose_Flag;
+extern byte *Memory_Block;
+extern unsigned int Lowest_Address, Highest_Address;
+extern unsigned int Starting_Address, Phys_Addr;
+extern unsigned int Records_Start; // Lowest address of the records
+extern unsigned int Max_Length;
+extern unsigned int Minimum_Block_Size;
+extern unsigned int Ceiling_Address;
+extern unsigned int Floor_Address;
+extern int Module;
+extern bool Minimum_Block_Size_Setted;
+extern bool Starting_Address_Setted;
+extern bool Floor_Address_Setted;
+extern bool Ceiling_Address_Setted;
+extern bool Max_Length_Setted;
+extern bool Swap_Wordwise;
+extern bool Address_Alignment_Word;
+extern bool Batch_Mode;
+extern bool Verbose_Flag;
 
-int Endian;
+extern int Endian;
 
-t_CRC Cks_Type;
-unsigned int Cks_Start, Cks_End, Cks_Addr, Cks_Value;
-bool Cks_range_set;
-bool Cks_Addr_set;
-bool Force_Value;
+extern t_CRC Cks_Type;
+extern unsigned int Cks_Start, Cks_End, Cks_Addr, Cks_Value;
+extern bool Cks_range_set;
+extern bool Cks_Addr_set;
+extern bool Force_Value;
 
-unsigned int Crc_Poly, Crc_Init, Crc_XorOut;
-bool Crc_RefIn;
-bool Crc_RefOut;
+extern unsigned int Crc_Poly, Crc_Init, Crc_XorOut;
+extern bool Crc_RefIn;
+extern bool Crc_RefOut;
 
 void VerifyChecksumValue(void);
 void VerifyRangeFloorCeil(void);

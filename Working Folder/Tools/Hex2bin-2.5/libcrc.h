@@ -24,7 +24,7 @@
 #ifndef _LIBCRC_H_
 #define _LIBCRC_H_
 
-void *crc_table;
+extern void *crc_table;
 
 void init_crc8_normal_tab(uint8_t polynom);
 void init_crc8_reflected_tab(uint8_t polynom);
