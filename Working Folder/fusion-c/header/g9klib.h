@@ -110,6 +110,15 @@
 #define G9BLUE 1
 
 typedef struct {
+ 	char sourceX;
+ 	char sourceY;
+ 	char destX;
+ 	char destY;
+ 	char width;
+	 char height;
+} G9K_COPY_XY_XY;
+
+typedef struct {
 	int  fileHandle; // Dos2 file handle of the openend G9B file
 	char bitDepth;   // 2,4,8 or 16 bit
 	char colorType;  // 0=64 color palette mode,64=256 color fixed ,128=YJK and 192=YUV mode
